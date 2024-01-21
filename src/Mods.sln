@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepairKit", "RepairKit\RepairKit.csproj", "{C48F0E7F-055E-41FD-A119-B4766A391D09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnSkillScroll", "UnSkillScroll\UnSkillScroll.csproj", "{BFDC206E-C660-4DCE-9FCE-049D3454BC4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C48F0E7F-055E-41FD-A119-B4766A391D09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C48F0E7F-055E-41FD-A119-B4766A391D09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C48F0E7F-055E-41FD-A119-B4766A391D09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDC206E-C660-4DCE-9FCE-049D3454BC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFDC206E-C660-4DCE-9FCE-049D3454BC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFDC206E-C660-4DCE-9FCE-049D3454BC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFDC206E-C660-4DCE-9FCE-049D3454BC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
