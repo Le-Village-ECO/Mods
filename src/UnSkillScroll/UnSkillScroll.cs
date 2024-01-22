@@ -31,39 +31,44 @@ namespace Eco.Mods.TechTree
 
             //if (!await player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc"))
             //    return null;
-            player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc");
+            var task = player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc");
 
-            if (level == max)  //Si le niveau de la spécialisation est égale au niveau maximum
+            Task.WaitAll(task);
+
+            if (task.Result == true)
             {
-                player.User.Skillset.Reset(SkillType, true);
-                player.User.UserXP.AddStars(stars);
+                if (level == max)  //Si le niveau de la spécialisation est égale au niveau maximum
+                {
+                    player.User.Skillset.Reset(SkillType, true);
+                    player.User.UserXP.AddStars(stars);
 
-                string message;
-                message = Localizer.Do($"Vous avez oublié {skill.MarkedUpName}.");
-                message += "\r\n";
-                message += Localizer.Do($"Vous avez récupéré {stars} étoile(s).");
-                //player.MsgLocStr(message);
-                player.OkBoxLocStr(message);
-            }
-            else
-            {
-                string message;
-                message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.MarkedUpName}.");
-                //player.MsgLocStr(message);
-                player.ErrorLocStr(message);
-            }
 
+                    string message;
+                    message = Localizer.Do($"Vous avez oublié {skill.MarkedUpName}.");
+                    message += "\r\n";
+                    message += Localizer.Do($"Vous avez récupéré {stars} étoile(s).");
+                    //player.MsgLocStr(message);
+                    player.OkBoxLocStr(message);
+                }
+                else
+                {
+                    string message;
+                    message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.MarkedUpName}.");
+                    //player.MsgLocStr(message);
+                    player.ErrorLocStr(message);
+                }
+            }
             //pack.PreTests.Add(() => player.User.GetWatchedWorkOrders.Any(workOrder => workOrder.Recipe.SkillsNeeded().Contains(skill.Type)) ? Result.FailLoc($"Cannot unspecialize while haveing a work order in progress that is using that specialization") : Result.Succeeded);
-            
+
             //Voir WorkPartyManager.cs 
             //var orders = player.User?.GetWatchedWorkOrders.Where(x => (x.ResourcePercentage < 1f || x.LaborPercentage < 1f) && (x.WorkParty == null || x.WorkParty.State > ProposableState.Active))
             //        .OrderByDescending(x => x.CreationTime).Take(2)
             //        .ToList();
             //if (!orders.Any()) { player?.OkBoxLoc($"Trouve pas 1 !"); return null; }
-            
-            var orders2 = player.User?.GetWatchedWorkOrders.Where(x => x.WorkParty == null && x.Recipe.SkillsNeeded().Contains(SkillType))
+
+            var orders2 = player.User?.GetWatchedWorkOrders.Where(x => x.WorkParty == null && x.Recipe!.SkillsNeeded().Contains(SkillType))
                     //.OrderByDescending(x=>x.CreationTime).Take(2)
-                    .ToList();            
+                    .ToList();
             if (!orders2.Any())
             {
                 player?.OkBoxLoc($"Encore un WO sur {SkillType} / {skill.Type} / {player.User} !!!!!!");
