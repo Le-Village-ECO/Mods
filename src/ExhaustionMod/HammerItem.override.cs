@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
+// Le village : retirer le coût calorique si épuisé
+
 namespace Eco.Mods.TechTree
 {
     using System;
