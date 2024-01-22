@@ -4,6 +4,7 @@
     using Eco.Core.Items;
     using Eco.Gameplay.Components;
     using Eco.Gameplay.Items;
+    using Eco.Gameplay.Items.Recipes;
     using Eco.Gameplay.Players;
     using Eco.Gameplay.Skills;
     using Eco.Shared.Localization;
@@ -15,13 +16,13 @@
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Biere")] // Defines the localized name of the item.
     [Weight(500)] // Defines how heavy the BakedCorn is.
-    [Tag("BakedFood", 1)]
+    [Tag("BakedFood")]
     [Ecopedia("Food", "Alcool", createAsSubPage: true)]
+    [LocDescription("Bouteille d'alcool concentré, je sens que j'ai une chance sur cinq de finir dans les vapes")] //The tooltip description for the food item.
     public partial class BiereItem : FoodItem
     {
 
         public override LocString DisplayNamePlural => Localizer.DoStr("Biere");
-        public override LocString DisplayDescription => Localizer.DoStr("Bouteille d'alcool gazeux, Produit à base de blé. ");
 
         public override float Calories => 1200;
         public override Nutrients Nutrition => new Nutrients() { Carbs = 5, Fat = 5, Protein = 25, Vitamins = 4 };

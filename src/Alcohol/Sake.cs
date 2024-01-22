@@ -4,6 +4,7 @@
     using Eco.Core.Items;
     using Eco.Gameplay.Components;
     using Eco.Gameplay.Items;
+    using Eco.Gameplay.Items.Recipes;
     using Eco.Gameplay.Players;
     using Eco.Gameplay.Skills;
     using Eco.Shared.Localization;
@@ -15,13 +16,13 @@
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Sake")] // Defines the localized name of the item.
     [Weight(500)] // Defines how heavy the BakedCorn is.
-    [Tag("BakedFood", 1)]
+    [Tag("BakedFood")]
     [Ecopedia("Food", "Alcool", createAsSubPage: true)]
+    [LocDescription("Bouteille d'alcool concentré, Produit à base de riz, trop en boire risque de me donner faim.")] //The tooltip description for the food item.
     public partial class SakeItem : FoodItem
     {
 
         public override LocString DisplayNamePlural => Localizer.DoStr("Sake");
-        public override LocString DisplayDescription => Localizer.DoStr("Bouteille d'alcool concentré, Produit à base de riz, trop en boire risque de me donner faim ");
 
         public override float Calories => 1200;
         public override Nutrients Nutrition => new Nutrients() { Carbs = 25, Fat = 5, Protein = 4, Vitamins = 5 };

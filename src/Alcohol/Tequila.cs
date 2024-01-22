@@ -5,6 +5,7 @@
     using Eco.Core.Items;
     using Eco.Gameplay.Components;
     using Eco.Gameplay.Items;
+    using Eco.Gameplay.Items.Recipes;
     using Eco.Gameplay.Players;
     using Eco.Gameplay.Skills;
     using Eco.Gameplay.Systems.Messaging.Notifications;
@@ -20,13 +21,13 @@
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Tequila")] // Defines the localized name of the item.
     [Weight(500)] // Defines how heavy the BakedCorn is.
-    [Tag("BakedFood", 1)]
+    [Tag("BakedFood")]
     [Ecopedia("Food", "Alcool", createAsSubPage: true)]
+    [LocDescription("Bouteille d'alcool, Produit à base de Figue de Barbarie.")] //The tooltip description for the food item.
     public partial class TequilaItem : FoodItem
     {
 
         public override LocString DisplayNamePlural => Localizer.DoStr("Tequila");
-        public override LocString DisplayDescription => Localizer.DoStr("Bouteille d'alcool, Produit à base de Figue de Barbarie. ");
 
         public override float Calories => 1200;
         public override Nutrients Nutrition => new Nutrients() { Carbs = 5, Fat = 4, Protein = 5, Vitamins = 25 };
