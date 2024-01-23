@@ -4,6 +4,7 @@ namespace Eco.Mods.TechTree
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Eco.Core.Utils;
     using Eco.Gameplay.Items;
     using Eco.Gameplay.Players;
@@ -12,7 +13,6 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Items;
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
-    using static Eco.Gameplay.Rooms.RoomUpdater;
 
     [Serialized]
     [LocDisplayName("UnSkill Scroll")]
@@ -22,42 +22,33 @@ namespace Eco.Mods.TechTree
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            //player.MsgLocStr($"Test ! {SkillType} / {itemStack} ");  //Boucherie / Eco.Mods.TechTree.ButcherySkill / 1 Page de competence : Boucherie
+            Task.Run(async () => await player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc"))
+                .ContinueWith(t => { if (t.Result == true) OnConfirmBoxOk(player); });
 
+            return base.OnUsed(player, itemStack);
+        }
+
+        public void OnConfirmBoxOk(Player player)
+        {
             var skill = player.User.Skillset[SkillType];  //Infos du SkillType du joueur
-            int stars = skill.Tier;  //Tier du SkillType et donc étoiles
-            int max = skill.MaxLevel;  //Niveau max du SkillType
-            int level = skill.Level;  //Niveau du User dans le SkillType
-
-            //if (!await player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc"))
-            //    return null;
-            var task = player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc");
-
-            Task.WaitAll(task);
-
-            if (task.Result == true)
+            if (skill.Level == skill.MaxLevel)  //Si le niveau de la spécialisation est égale au niveau maximum
             {
-                if (level == max)  //Si le niveau de la spécialisation est égale au niveau maximum
-                {
-                    player.User.Skillset.Reset(SkillType, true);
-                    player.User.UserXP.AddStars(stars);
+                player.User.Skillset.Reset(SkillType, true);
+                player.User.UserXP.AddStars(skill.Tier);
 
-
-                    string message;
-                    message = Localizer.Do($"Vous avez oublié {skill.MarkedUpName}.");
-                    message += "\r\n";
-                    message += Localizer.Do($"Vous avez récupéré {stars} étoile(s).");
-                    //player.MsgLocStr(message);
-                    player.OkBoxLocStr(message);
-                }
-                else
-                {
-                    string message;
-                    message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.MarkedUpName}.");
-                    //player.MsgLocStr(message);
-                    player.ErrorLocStr(message);
-                }
+                string message;
+                message = Localizer.Do($"Vous avez oublié {skill.MarkedUpName}.");
+                message += "\r\n";
+                message += Localizer.Do($"Vous avez récupéré {skill.Tier} étoile(s).");
+                player.OkBoxLocStr(message);
             }
+            else
+            {
+                string message;
+                message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.MarkedUpName}.");
+                player.ErrorLocStr(message);
+            }
+
             //pack.PreTests.Add(() => player.User.GetWatchedWorkOrders.Any(workOrder => workOrder.Recipe.SkillsNeeded().Contains(skill.Type)) ? Result.FailLoc($"Cannot unspecialize while haveing a work order in progress that is using that specialization") : Result.Succeeded);
 
             //Voir WorkPartyManager.cs 
@@ -66,19 +57,19 @@ namespace Eco.Mods.TechTree
             //        .ToList();
             //if (!orders.Any()) { player?.OkBoxLoc($"Trouve pas 1 !"); return null; }
 
-            var orders2 = player.User?.GetWatchedWorkOrders.Where(x => x.WorkParty == null && x.Recipe!.SkillsNeeded().Contains(SkillType))
-                    //.OrderByDescending(x=>x.CreationTime).Take(2)
-                    .ToList();
-            if (!orders2.Any())
-            {
-                player?.OkBoxLoc($"Encore un WO sur {SkillType} / {skill.Type} / {player.User} !!!!!!");
-                //return null;
-            }
-            else
-            {
-                player?.OkBoxLoc($"Aucun WO");
-            }
-
+            // var orders2 = player.User?.GetWatchedWorkOrders
+            //     .Where(x => x.WorkParty == null && x.Recipe!.SkillsNeeded().Contains(SkillType))
+            //     //.OrderByDescending(x=>x.CreationTime).Take(2)
+            //     .ToList();
+            // if (!orders2.Any())
+            // {
+            //     player?.OkBoxLoc($"Encore un WO sur {SkillType} / {skill.Type} / {player.User} !!!!!!");
+            //     //return null;
+            // }
+            // else
+            // {
+            //     player?.OkBoxLoc($"Aucun WO");
+            // }
 
             //  Supprimer le parchemin apres utilisation avec succes
             //            using (var changes = InventoryChangeSet.New(new Inventory[] { user.Inventory, itemStack.Parent }.Distinct(), user))
@@ -86,12 +77,10 @@ namespace Eco.Mods.TechTree
             //                changes.ModifyStack(itemStack, -1);
             //                var descriptionInventoryChanges = changes.DescribeWhatItAdds();
             //            }
-
-            return base.OnUsed(player, itemStack);
         }
     }
-    public abstract class UnSkillScroll<TSkill> : UnSkillScroll
-    where TSkill : Skill, new()
+
+    public abstract class UnSkillScroll<TSkill> : UnSkillScroll where TSkill : Skill, new()
     {
         public override Type SkillType => typeof(TSkill);
     }
