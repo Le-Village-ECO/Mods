@@ -3,27 +3,15 @@
 
 namespace Eco.Mods.TechTree
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using Eco.Gameplay.Blocks;
+    using Eco.Core.Items;
     using Eco.Gameplay.Components;
-    using Eco.Gameplay.DynamicValues;
     using Eco.Gameplay.Items;
-    using Eco.Gameplay.Objects;
-    using Eco.Gameplay.Players;
+    using Eco.Gameplay.Items.Recipes;
     using Eco.Gameplay.Skills;
-    using Eco.Gameplay.Systems;
-    using Eco.Gameplay.Systems.TextLinks;
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
-    using Eco.Shared.Utils;
-    using Eco.Core.Items;
-    using Eco.World;
-    using Eco.World.Blocks;
-    using Eco.Gameplay.Pipes;
-    using Eco.Core.Controller;
-    using Eco.Gameplay.Items.Recipes;
+    using System.Collections.Generic;
+    using System.ComponentModel;
 
     [RequiresSkill(typeof(BasicEngineeringSkill), 1)]
     public partial class StoneRoadRepairKitRecipe : RecipeFamily
@@ -65,9 +53,9 @@ namespace Eco.Mods.TechTree
     [Serialized]
     [LocDisplayName("Kit de réparation routier en pierre")]
     [Weight(1000)]  //Défini le poids.
-    [Category("Tool")]  //??? Category Tool ou RepairKit ???
+    [Category("Tool")]
     [Tag("RepairKit")]
-    [Ecopedia("Items", "Tools", createAsSubPage: true)]  //??? Tools ou RepairKit ???
+    [Ecopedia("Items", "Tools", createAsSubPage: true)]  //Page ECOpedia
     [LocDescription("Un kit de réparation en pierre pour l'outil de route. Tous les chemins mènent à Rome !")]  //Description détaillée.
     public partial class StoneRoadRepairKitItem : Item
     {

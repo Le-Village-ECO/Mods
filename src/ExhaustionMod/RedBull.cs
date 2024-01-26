@@ -10,6 +10,7 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [Serialized]
     [LocDisplayName("Red Bull")]
@@ -20,6 +21,19 @@ namespace Eco.Mods.TechTree
         {
             //Paramètre(s)
             int hours = 1;
+
+            //var task = player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc");
+
+            //Task.WaitAll( task );
+
+            //if (task.Result == true)
+            //{
+            //    player.MsgLoc($"TRUE !!");
+            //}
+            //else
+            //{
+            //    player.MsgLoc($"FALSE !!");
+            //}
 
             if (player.User.ExhaustionMonitor.IsExhausted == false)  //On bloque si le joueur n'est pas épuisé
             {
