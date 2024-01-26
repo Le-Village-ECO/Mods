@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleSpeedModifiers", "Ve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alcohol", "Alcohol\Alcohol.csproj", "{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OilField", "OilField\OilField.csproj", "{29F9AC7B-63D8-473A-A80E-761AEE95B937}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F9AC7B-63D8-473A-A80E-761AEE95B937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F9AC7B-63D8-473A-A80E-761AEE95B937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F9AC7B-63D8-473A-A80E-761AEE95B937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F9AC7B-63D8-473A-A80E-761AEE95B937}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
