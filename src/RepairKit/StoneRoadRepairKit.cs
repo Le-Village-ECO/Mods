@@ -42,7 +42,7 @@ namespace Eco.Mods.TechTree
             this.Initialize(displayText: Localizer.DoStr("Kit de réparation routier en pierre"), recipeType: typeof(StoneRoadRepairKitRecipe));
             this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(ToolBenchObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(WainwrightTableObject), recipe: this);
         }
 
         partial void ModsPreInitialize();
