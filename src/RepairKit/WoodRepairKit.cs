@@ -3,15 +3,14 @@
 
 namespace Eco.Mods.TechTree
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
+    using Eco.Core.Items;
     using Eco.Gameplay.Components;
     using Eco.Gameplay.Items;
-    using Eco.Gameplay.Skills;
+    using Eco.Gameplay.Items.Recipes;
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
-    using Eco.Core.Items;
-    using Eco.Gameplay.Items.Recipes;
+    using System.Collections.Generic;
+    using System.ComponentModel;
 
     public partial class WoodRepairKitRecipe : RecipeFamily
     {
@@ -38,7 +37,7 @@ namespace Eco.Mods.TechTree
             this.CraftMinutes = CreateCraftTimeValue(0.5f);
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Kit de réparation en bois"), recipeType: typeof(SteelRepairKitRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Kit de réparation en bois"), recipeType: typeof(WoodRepairKitRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(ToolBenchObject), recipe: this);
@@ -52,9 +51,9 @@ namespace Eco.Mods.TechTree
     [Serialized]
     [LocDisplayName("Kit de réparation en bois")]
     [Weight(1000)] //Défini le poids.
-    [Category("Tool")]  //??? Category Tool ou RepairKit ???
+    [Category("Tool")]
     [Tag("RepairKit")]
-    [Ecopedia("Items", "Tools", createAsSubPage: true)]  //??? Tools ou RepairKit ???
+    [Ecopedia("Items", "Tools", createAsSubPage: true)]  //Page ECOpedia
     [LocDescription("Un kit de réparation pour tous les outils en bois. Fais à partir de séquoia géant, et toc !")] //Description détaillée.
     public partial class WoodRepairKitItem : Item
     {
