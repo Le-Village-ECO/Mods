@@ -35,7 +35,7 @@ namespace Eco.Mods.TechTree
             this.Recipes = new List<Recipe> { recipe };
 
             this.ExperienceOnCraft = 1;
-            this.LaborInCalories = CreateLaborInCaloriesValue(240, typeof(MechanicsSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(MechanicsSkill));
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(TractorRepairKitRecipe), start: 2, skillType: typeof(MechanicsSkill), typeof(MechanicsFocusedSpeedTalent), typeof(MechanicsParallelSpeedTalent));
 
             this.ModsPreInitialize();
