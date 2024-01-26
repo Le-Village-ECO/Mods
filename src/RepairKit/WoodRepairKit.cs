@@ -37,7 +37,7 @@ namespace Eco.Mods.TechTree
             this.CraftMinutes = CreateCraftTimeValue(0.5f);
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Kit de réparation en bois"), recipeType: typeof(SteelRepairKitRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Kit de réparation en bois"), recipeType: typeof(WoodRepairKitRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(ToolBenchObject), recipe: this);
