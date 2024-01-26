@@ -5,14 +5,14 @@ namespace Eco.Mods.TechTree
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Eco.Core.Utils;
     using Eco.Gameplay.Items;
     using Eco.Gameplay.Players;
     using Eco.Gameplay.Skills;
-    using Eco.ModKit.Internal;
-    using Eco.Shared.Items;
+    using Eco.Gameplay.Systems.Messaging.Notifications;
+    using Eco.Gameplay.Systems.TextLinks;
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
+    using Eco.Shared.Services;
 
     [Serialized]
     [LocDisplayName("UnSkill Scroll")]
@@ -22,61 +22,48 @@ namespace Eco.Mods.TechTree
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            Task.Run(async () => await player.User.ConfirmBoxLoc($"Test ConfirmBoxLoc"))
-                .ContinueWith(t => { if (t.Result == true) OnConfirmBoxOk(player); });
+            var skill = player.User.Skillset.GetSkill(SkillType);
+            Task.Run(async () => await player.User.ConfirmBoxLoc($"Etes-vous sûr de vouloir abandonner {skill.UILink()} ?"))
+                .ContinueWith(t => { if (t.Result == true) OnConfirmBoxOk(player, itemStack, skill); });
 
             return base.OnUsed(player, itemStack);
         }
 
-        public void OnConfirmBoxOk(Player player)
+        public void OnConfirmBoxOk(Player player, ItemStack itemStack, Skill skill)
         {
-            var skill = player.User.Skillset[SkillType];  //Infos du SkillType du joueur
-            if (skill.Level == skill.MaxLevel)  //Si le niveau de la spécialisation est égale au niveau maximum
+            string message;
+            if (skill.Level != skill.MaxLevel)
             {
-                player.User.Skillset.Reset(SkillType, true);
-                player.User.UserXP.AddStars(skill.Tier);
-
-                string message;
-                message = Localizer.Do($"Vous avez oublié {skill.MarkedUpName}.");
-                message += "\r\n";
-                message += Localizer.Do($"Vous avez récupéré {skill.Tier} étoile(s).");
-                player.OkBoxLocStr(message);
-            }
-            else
-            {
-                string message;
-                message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.MarkedUpName}.");
+                message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.UILink()}.");
                 player.ErrorLocStr(message);
+
+                return;
             }
 
-            //pack.PreTests.Add(() => player.User.GetWatchedWorkOrders.Any(workOrder => workOrder.Recipe.SkillsNeeded().Contains(skill.Type)) ? Result.FailLoc($"Cannot unspecialize while haveing a work order in progress that is using that specialization") : Result.Succeeded);
+            var hasWorkOrders = player.User.GetWatchedWorkOrders.Any(workOrder => 
+                workOrder.Recipe!.RequiredSkills.Any(a => a.SkillType == SkillType));
+            if (hasWorkOrders)
+            {
+                message = Localizer.Do($"Impossible d'oublier {skill.UILink()} tant que des tâches l'utilisant sont en cours.");
+                player.ErrorLocStr(message);
 
-            //Voir WorkPartyManager.cs 
-            //var orders = player.User?.GetWatchedWorkOrders.Where(x => (x.ResourcePercentage < 1f || x.LaborPercentage < 1f) && (x.WorkParty == null || x.WorkParty.State > ProposableState.Active))
-            //        .OrderByDescending(x => x.CreationTime).Take(2)
-            //        .ToList();
-            //if (!orders.Any()) { player?.OkBoxLoc($"Trouve pas 1 !"); return null; }
+                return;
+            }
 
-            // var orders2 = player.User?.GetWatchedWorkOrders
-            //     .Where(x => x.WorkParty == null && x.Recipe!.SkillsNeeded().Contains(SkillType))
-            //     //.OrderByDescending(x=>x.CreationTime).Take(2)
-            //     .ToList();
-            // if (!orders2.Any())
-            // {
-            //     player?.OkBoxLoc($"Encore un WO sur {SkillType} / {skill.Type} / {player.User} !!!!!!");
-            //     //return null;
-            // }
-            // else
-            // {
-            //     player?.OkBoxLoc($"Aucun WO");
-            // }
+            player.User.Skillset.Reset(SkillType, false);
+            player.User.UserXP.AddStars(skill.Tier);
 
             //  Supprimer le parchemin apres utilisation avec succes
-            //            using (var changes = InventoryChangeSet.New(new Inventory[] { user.Inventory, itemStack.Parent }.Distinct(), user))
-            //            {
-            //                changes.ModifyStack(itemStack, -1);
-            //                var descriptionInventoryChanges = changes.DescribeWhatItAdds();
-            //            }
+            var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
+            using (var changes = InventoryChangeSet.New(inventory, player.User))
+            {
+                changes.ModifyStack(itemStack, -1);
+                changes.Apply();
+            }
+
+            player.User.MailLoc($"Vous avez abandonné {skill.UILink()}", NotificationCategory.Skills);
+            player.User.MailLoc($"Vous avez récupéré {skill.Tier} étoile(s)", NotificationCategory.Skills);
+            NotificationManager.ServerMessageToAll(Localizer.Do($"{player.User.UILink()} a abandonné {skill.UILink()}"), NotificationCategory.Skills);
         }
     }
 
