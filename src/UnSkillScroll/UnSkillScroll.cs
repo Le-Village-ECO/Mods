@@ -8,7 +8,6 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items;
     using Eco.Gameplay.Players;
     using Eco.Gameplay.Skills;
-    using Eco.Gameplay.Systems.Messaging.Notifications;
     using Eco.Gameplay.Systems.TextLinks;
     using Eco.Shared.Localization;
     using Eco.Shared.Serialization;
@@ -23,8 +22,16 @@ namespace Eco.Mods.TechTree
         public override string OnUsed(Player player, ItemStack itemStack)
         {
             var skill = player.User.Skillset.GetSkill(SkillType);
-            Task.Run(async () => await player.User.ConfirmBoxLoc($"Etes-vous sûr de vouloir abandonner {skill.UILink()} ?"))
-                .ContinueWith(t => { if (t.Result == true) OnConfirmBoxOk(player, itemStack, skill); });
+            if (skill == null)
+            {
+                string message = Localizer.Do($"Vous n'avez pas cette spécialité");
+                player.ErrorLocStr(message);
+            }
+            else
+            {
+                Task.Run(async () => await player.User.ConfirmBoxLoc($"Etes-vous sûr de vouloir abandonner {skill.UILink()} ?"))
+                    .ContinueWith(t => { if (t.Result == true) OnConfirmBoxOk(player, itemStack, skill); });
+            }
 
             return base.OnUsed(player, itemStack);
         }
@@ -40,7 +47,7 @@ namespace Eco.Mods.TechTree
                 return;
             }
 
-            var hasWorkOrders = player.User.GetWatchedWorkOrders.Any(workOrder => 
+            var hasWorkOrders = player.User.GetWatchedWorkOrders.Any(workOrder =>
                 workOrder.Recipe!.RequiredSkills.Any(a => a.SkillType == SkillType));
             if (hasWorkOrders)
             {
@@ -61,9 +68,7 @@ namespace Eco.Mods.TechTree
                 changes.Apply();
             }
 
-            player.User.MailLoc($"Vous avez abandonné {skill.UILink()}", NotificationCategory.Skills);
             player.User.MailLoc($"Vous avez récupéré {skill.Tier} étoile(s)", NotificationCategory.Skills);
-            NotificationManager.ServerMessageToAll(Localizer.Do($"{player.User.UILink()} a abandonné {skill.UILink()}"), NotificationCategory.Skills);
         }
     }
 
