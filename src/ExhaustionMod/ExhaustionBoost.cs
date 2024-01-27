@@ -3,7 +3,7 @@
 // Il va de pair avec l'activation de la fonctionnalité "Exhaution" de ECO.
 // Aucune recette associée, il doit se donner par commande admin ou, par exemple, dans le sac de départ.
 //TODO : Incorporer un contrôle pour ne permettre cette boisson que 1 fois par jour.
-//TODO : Eventuellement ajouter une pop-up de confirmation avant de consommer.
+//TODO : Eventuellement ajouter une pop-up de confirmation avant de consommer dans certains cas.
 
 namespace Eco.Mods.TechTree
 {
