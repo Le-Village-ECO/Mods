@@ -1,9 +1,10 @@
 ﻿// Le Village
 
+using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 
-namespace Eco.Mods.TechTree
+namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Chasse")]
