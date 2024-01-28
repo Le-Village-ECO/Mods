@@ -22,7 +22,7 @@ namespace Eco.Mods
     public static class LeVillageCommands
     {
 		
-        public static Type SkillTypeByName(User user, string skillName)
+        public static Type? SkillTypeByName(User user, string skillName)
         {
             var existingSkill = CommandsUtil.ClosestMatchingEntity(user, skillName.Trim(), SkillTree.AllSkillTrees, x => x.StaticSkill.Name, x => x.StaticSkill.DisplayName);
             return existingSkill != null ? existingSkill.StaticSkill.Type : null;
