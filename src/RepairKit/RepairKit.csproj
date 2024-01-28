@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="AutoGen\Tool\" />
+    <Folder Include="Unity\" />
   </ItemGroup>
 
 </Project>
