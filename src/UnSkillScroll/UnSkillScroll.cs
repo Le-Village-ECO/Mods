@@ -8,7 +8,6 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.TextLinks;
-using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Services;
@@ -24,7 +23,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            Task.Run(async () => await OnUsedAsync(player, itemStack));
+            Task.Run(() => OnUsedAsync(player, itemStack));
 
             return base.OnUsed(player, itemStack);
         }
