@@ -28,6 +28,7 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items.Recipes;
+    using Village.Eco.Mods.RepairKit;
 
 
     /// <summary>
@@ -113,7 +114,7 @@ namespace Eco.Mods.TechTree
         public override float DurabilityRate            => DurabilityMax / 150f;
         //public override Item RepairItem                 => Item.Get<Item>();
         //public override Tag RepairTag                   => TagManager.Tag("Wood");
-        public override Item RepairItem => Item.Get<WoodRepairKitItem>();
+        public override Item RepairItem                 => Item.Get<WoodRepairKitItem>();
         public override int FullRepairAmount            => 1; //5 to 1
     }
 }

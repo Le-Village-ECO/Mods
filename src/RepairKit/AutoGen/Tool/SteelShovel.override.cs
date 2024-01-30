@@ -28,6 +28,7 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items.Recipes;
+    using Village.Eco.Mods.RepairKit;
 
 
     /// <summary>
@@ -114,7 +115,7 @@ namespace Eco.Mods.TechTree
         public override int MaxTake                     => 5;
         public override float DurabilityRate            => DurabilityMax / 1000f;
         //public override Item RepairItem                 => Item.Get<SteelBarItem>();
-        public override Item RepairItem => Item.Get<SteelRepairKitItem>();
+        public override Item RepairItem                 => Item.Get<SteelRepairKitItem>();
         public override int FullRepairAmount            => 1; //8 to 1
     }
 }

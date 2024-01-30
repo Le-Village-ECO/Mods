@@ -28,6 +28,7 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items.Recipes;
+    using Village.Eco.Mods.RepairKit;
 
 
     /// <summary>
@@ -116,7 +117,7 @@ namespace Eco.Mods.TechTree
         public override IDynamicValue SkilledRepairCost => skilledRepairCost;
         public override float DurabilityRate            => DurabilityMax / 300f;
         //public override Item RepairItem                 => Item.Get<IronBarItem>();
-        public override Item RepairItem => Item.Get<IronRepairKitItem>();
+        public override Item RepairItem                 => Item.Get<IronRepairKitItem>();
         public override int FullRepairAmount            => 1; //4 to 1
     }
 }
