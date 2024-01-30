@@ -1,8 +1,6 @@
 ﻿//Mod le Village le kit de réparation remplace le système de réparation vanille du jeu pour le rendre plus polyvalent
 //Kit de réparation pour tracteur - Mécanicien - Pour les outils du tracteur
 
-namespace Eco.Mods.TechTree
-{
     using Eco.Core.Items;
     using Eco.Gameplay.Components;
     using Eco.Gameplay.Items;
@@ -12,7 +10,10 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Serialization;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using Eco.Mods.TechTree;
 
+namespace Village.Eco.Mods.RepairKit
+{
     [RequiresSkill(typeof(ElectronicsSkill), 1)]
     public partial class PlasticRepairKitRecipe : RecipeFamily
     {

@@ -1,18 +1,19 @@
 ﻿//Mod le Village le kit de réparation remplace le système de réparation vanille du jeu pour le rendre plus polyvalent
 //Kit de réparation en fer - Forgeron - Pour les outils en fer
 
-namespace Eco.Mods.TechTree
-{
-    using Eco.Core.Items;
-    using Eco.Gameplay.Components;
-    using Eco.Gameplay.Items;
-    using Eco.Gameplay.Items.Recipes;
-    using Eco.Gameplay.Skills;
-    using Eco.Shared.Localization;
-    using Eco.Shared.Serialization;
-    using System.Collections.Generic;
-    using System.ComponentModel;
+using Eco.Core.Items;
+using Eco.Gameplay.Components;
+using Eco.Gameplay.Items;
+using Eco.Gameplay.Items.Recipes;
+using Eco.Gameplay.Skills;
+using Eco.Shared.Localization;
+using Eco.Shared.Serialization;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Eco.Mods.TechTree;
 
+namespace Village.Eco.Mods.RepairKit
+{
     [RequiresSkill(typeof(SmeltingSkill), 1)]
     public partial class IronRepairKitRecipe : RecipeFamily
     {
