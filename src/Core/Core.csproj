@@ -10,12 +10,4 @@
     <PackageReference Include="Eco.ReferenceAssemblies" Version="0.10.1.2-beta-release-584" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Systems\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
 </Project>

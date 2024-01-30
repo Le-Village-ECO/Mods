@@ -7,9 +7,8 @@ using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
-using Eco.Shared.Serialization;
 
-namespace Village.Eco.Mods.UnSkillScroll
+namespace Village.Eco.Mods.Core
 {
     public class PlayersDataPlugin : IShutdownablePlugin, IModKitPlugin
     {
@@ -39,8 +38,5 @@ namespace Village.Eco.Mods.UnSkillScroll
         public Dictionary<string, PlayerData> PlayerDataPerId { get; set; } = new();
     }
 
-    public class PlayerData
-    {
-        [Serialized] public double LastUnspecializingDay { get; set; } = 0;
-    }
+    public partial class PlayerData { }
 }

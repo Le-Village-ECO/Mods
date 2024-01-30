@@ -12,6 +12,7 @@ using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Services;
 using Eco.Simulation.Time;
+using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.UnSkillScroll
 {
