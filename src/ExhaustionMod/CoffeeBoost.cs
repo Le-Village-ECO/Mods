@@ -1,4 +1,5 @@
 ﻿// Le Village
+// Boisson énergisante de 15min avec recette de fabrication
 //TODO : Revoir la recette de fabrication
 //TODO : Incorporer un contrôle pour ne permettre cette boisson que 1 fois par jour.
 
@@ -9,15 +10,22 @@ using Eco.Gameplay.Items.Recipes;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using System.Collections.Generic;
+using Eco.Mods.TechTree;
+using System.ComponentModel;
 
-namespace Eco.Mods.TechTree
+namespace Village.Eco.Mods.ExhaustionMod
 {
     [Serialized]
     [LocDisplayName("Coffee Boost")]
     [LocDescription("Un petit café pour 15 min. d'énergie : Meilleur rapport qualité/prix !")]  //Description détaillée.
+    //[Weight(10000)]  //Défini le poids.
+    [Category("Food")]
+    //[Tag("Boost")] - TODO ajouter icône tag
+    //[Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia - TODO ajouter icône tag
     public partial class LVBCoffeItem : ExhaustionBoost
     {
-        public override float BoostTime => 0.25f;
+        public override float BoostTime => 0.25f; //15min de boost
+        public override bool CheckDate => true; //Vérifie consommation 1 fois par jour
     }
 
     [Ecopedia("Food", "Coffee Boost", subPageName: "Coffee Boost Item")]

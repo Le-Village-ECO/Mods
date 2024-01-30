@@ -1,6 +1,8 @@
 ﻿// Le Village
 // L'objectif est de donner l'énergie accumulable depuis le lancement du cycle (jour 1) au joueur
 // lors de sa 1ère connexion au serveur
+// TODO - passer de "lors de la connexion" à "à la 1ère connexion"
+// TODO - Revoir le code par dev c#
 
 using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
@@ -12,18 +14,18 @@ using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using System.Text;
 
-namespace Eco.Mods
+namespace Village.Eco.Mods.ExhaustionMod
 {
     [ChatCommandHandler]
     public class InitialBoost : IModKitPlugin, IInitializablePlugin
     {
         //public double ExhaustionAfterSec => TimeUtil.HoursToSeconds(BalanceConfig.Obj?.ExhaustionAfterHours ?? 0); //Récupération de ExhaustionMonitor.cs
-        public static float ExhaustionAfterHour => BalanceConfig.Obj?.ExhaustionAfterHours ?? 0; //Hours before exhaustion per day
+        public static float ExhaustionAfterHour => BalanceConfig.Obj?.ExhaustionAfterHours ?? 0; //Fichier config : Nb heures par jour avant épuisement
 
-        //float currentWorldTime = (float)WorldTime.Seconds * EcoSim.Obj.EcoDef.TimeMult; //Récupération ExperienceController.cs
+        //float currentWorldTime = (float)WorldTime.Seconds * EcoSim.Obj.EcoDef.TimeMult; //Récupération de ExperienceController.cs
         int currentWorldDay = (int)WorldTime.Day; //On ne garde que la partie entière de la valeur du jour du monde
 
-        float Calcul => ExhaustionAfterHour * currentWorldDay;
+        public float Calcul => ExhaustionAfterHour * currentWorldDay;
 
         [ChatCommand("ExhaustionMod commands")]
         public static void ExhaustionMod() { }
@@ -33,7 +35,7 @@ namespace Eco.Mods
         {
             StringBuilder sb = new();
 
-            int Calcul = (int)(BalanceConfig.Obj.ExhaustionAfterHours * WorldTime.Day); //On ne garde que la partie entière de 
+            int Calcul = (int)(BalanceConfig.Obj.ExhaustionAfterHours * WorldTime.Day); //On ne garde que la partie entière du jour
 
             sb.AppendLine($"La configuration est : {BalanceConfig.Obj.ExhaustionAfterHours} ");
             sb.AppendLine($"Le jour du serveur est : {(float)WorldTime.Day} ");
@@ -45,9 +47,9 @@ namespace Eco.Mods
         public void Initialize(TimedTask timer)
         {
             //UserManager.OnUserLoggedIn.Add(user => { user.UserXP.AddStars(1); }); //Test OK
+            UserManager.OnUserLoggedIn.Add(user => { user.ExhaustionMonitor.Energize(Calcul); }); //Test OK
 
             //UserManager.NewUserJoinedEvent.Add(user => { user.ExhaustionMonitor.Energize(calcul); } );  //a tester
-            UserManager.OnUserLoggedIn.Add(user => { user.ExhaustionMonitor.Energize(Calcul); });
 
         }
         public string GetStatus() => string.Empty;
