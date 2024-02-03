@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alcohol", "Alcohol\Alcohol.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OilField", "OilField\OilField.csproj", "{29F9AC7B-63D8-473A-A80E-761AEE95B937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdditionalStars", "AdditionalStars\AdditionalStars.csproj", "{9FD378D1-22E6-4E19-BFA3-11A2060D5782}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdditionalStars", "AdditionalStars\AdditionalStars.csproj", "{9FD378D1-22E6-4E19-BFA3-11A2060D5782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{75E08884-4A3C-491E-A307-693EDA164D10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{75E08884-4A3C-491E-A307-693EDA164D10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
