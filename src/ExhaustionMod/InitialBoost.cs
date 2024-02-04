@@ -1,7 +1,6 @@
 ﻿// Le Village
 // L'objectif est de donner l'énergie accumulable depuis le lancement du cycle (jour 1) au joueur
 // lors de sa 1ère connexion au serveur
-// TODO - passer de "lors de la connexion" à "à la 1ère connexion"
 // TODO - Revoir le code par dev c#
 
 using Eco.Core.Plugins.Interfaces;
@@ -19,11 +18,9 @@ namespace Village.Eco.Mods.ExhaustionMod
     [ChatCommandHandler]
     public class InitialBoost : IModKitPlugin, IInitializablePlugin
     {
-        //public double ExhaustionAfterSec => TimeUtil.HoursToSeconds(BalanceConfig.Obj?.ExhaustionAfterHours ?? 0); //Récupération de ExhaustionMonitor.cs
-        public static float ExhaustionAfterHour => BalanceConfig.Obj?.ExhaustionAfterHours ?? 0; //Fichier config : Nb heures par jour avant épuisement
+        public static float ExhaustionAfterHour => BalanceConfig.Obj?.ExhaustionAfterHours ?? 0; //Nb heures par jour avant épuisement (Fichier config)
 
-        //float currentWorldTime = (float)WorldTime.Seconds * EcoSim.Obj.EcoDef.TimeMult; //Récupération de ExperienceController.cs
-        int currentWorldDay = (int)WorldTime.Day; //On ne garde que la partie entière de la valeur du jour du monde
+        public int currentWorldDay = (int)WorldTime.Day; //On ne garde que la partie entière de la valeur du jour du monde
 
         public float Calcul => ExhaustionAfterHour * currentWorldDay;
 
@@ -38,7 +35,7 @@ namespace Village.Eco.Mods.ExhaustionMod
             int Calcul = (int)(BalanceConfig.Obj.ExhaustionAfterHours * WorldTime.Day); //On ne garde que la partie entière du jour
 
             sb.AppendLine($"La configuration est : {BalanceConfig.Obj.ExhaustionAfterHours} ");
-            sb.AppendLine($"Le jour du serveur est : {(float)WorldTime.Day} ");
+            sb.AppendLine($"Le jour du serveur est : {(int)WorldTime.Day} ");
             sb.AppendLine($"Calcul : {Calcul} ");
 
             user.Player.InfoBoxLocStr($"{sb}");
@@ -46,10 +43,10 @@ namespace Village.Eco.Mods.ExhaustionMod
 
         public void Initialize(TimedTask timer)
         {
-            //UserManager.OnUserLoggedIn.Add(user => { user.UserXP.AddStars(1); }); //Test OK
-            UserManager.OnUserLoggedIn.Add(user => { user.ExhaustionMonitor.Energize(Calcul); }); //Test OK
+            //UserManager.OnUserLoggedIn.Add(user => { user.ExhaustionMonitor.Energize(Calcul); }); //Test OK
 
-            //UserManager.NewUserJoinedEvent.Add(user => { user.ExhaustionMonitor.Energize(calcul); } );  //a tester
+            // Sur l'event de 1ère connexion du joueur, on ajoute un nombre d'heure d'énergie basé sur la calcul
+            UserManager.NewUserJoinedEvent.Add(user => { user.ExhaustionMonitor.Energize(Calcul); } );  //a tester
 
         }
         public string GetStatus() => string.Empty;
