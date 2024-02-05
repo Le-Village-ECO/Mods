@@ -17,6 +17,7 @@ using Eco.Gameplay.Systems.TextLinks;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Services;
+using Eco.Shared.Utils;
 using Eco.Simulation.Time;
 using Village.Eco.Mods.Core;
 
@@ -65,7 +66,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             //Il ne faut aucun ordre en cours, quelque soit leur statut, demandant la specialite
             if (hasWorkOrders)
             {
-                message = Localizer.Do($"Impossible d'oublier {skill.UILink()} tant que des tâches l'utilisant sont en cours.");
+                message = Localizer.Do($"Impossible d'oublier {skill.UILink()} tant que des fabrications l'utilisant sont en cours.");
                 player.ErrorLocStr(message);
 
                 return;
@@ -80,7 +81,11 @@ namespace Village.Eco.Mods.UnSkillScroll
             if (playerData.LastUnspecializingDay > 0 && daysSinceLastUnspecializing < RefundSpecialtyDaysCooldown)
             {
                 var timeUntilUnspecializing = RefundSpecialtyDaysCooldown - daysSinceLastUnspecializing;
-                message = Localizer.Do($"Vous devez attendre {timeUntilUnspecializing} jours avant d'oublier {skill.UILink()}.");
+                var coolDownDuration = TimeSpan.FromDays(timeUntilUnspecializing);
+
+                //TODO : Revoir le format d'affichage du temps d'attente
+                //Voir UserCommands.cs : public static void Now
+                message = Localizer.Do($"Vous devez attendre {TimeFormatter.FormatSimple(coolDownDuration)} avant d'oublier {skill.UILink()}.");
                 player.ErrorLocStr(message);
 
                 return;

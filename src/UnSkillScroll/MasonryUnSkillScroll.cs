@@ -16,7 +16,7 @@ namespace Village.Eco.Mods.UnSkillScroll
     [LocDescription("Lire ce parchemin vous fera oublier la spécialité Maçonnerie sous certaines conditions")]
     public partial class MasonryUnSkillScroll : UnSkillScroll<MasonrySkill> { }
 
-    [RequiresSkill(typeofMasonrySkill), 7)]
+    [RequiresSkill(typeof(MasonrySkill), 7)]
     [Ecopedia("Professions", "Mason", subPageName: "Masonry UnSkill Scroll Item")]
     public partial class MasonryUnSkillScrollRecipe : RecipeFamily
     {
@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(PaperItem), 1, true),
+                    new (typeof(PaperItem), 1, true),
                 },
 
                 items: new List<CraftingElement>

@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(PaperItem), 1, true),
+                    new (typeof(PaperItem), 1, true),
                 },
 
                 items: new List<CraftingElement>

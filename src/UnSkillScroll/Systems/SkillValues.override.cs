@@ -28,7 +28,7 @@ namespace Eco.Mods.TechTree
                     new SkillReqs() { Tier = 1f, CanBeEducated = true, CaloriesToLearn = 2000, CaloriesToTeach = 2000, ClassroomTierRequired = 1, StarsToBecomeTeacher = 1, StarsToBeTaught = 1, StarsToSelfTeach = 1, TimeToLearnHours = 5 },
                     new SkillReqs() { Tier = 2f, CanBeEducated = true, CaloriesToLearn = 2000, CaloriesToTeach = 2000, ClassroomTierRequired = 1, StarsToBecomeTeacher = 1, StarsToBeTaught = 1, StarsToSelfTeach = 2, TimeToLearnHours = 5 },  //Le Village
                     new SkillReqs() { Tier = 3f, CanBeEducated = true, CaloriesToLearn = 2000, CaloriesToTeach = 2000, ClassroomTierRequired = 1, StarsToBecomeTeacher = 1, StarsToBeTaught = 1, StarsToSelfTeach = 3, TimeToLearnHours = 5 },  //Le Village
-				    new SkillReqs() { Tier = 10f, CanBeEducated = true, CaloriesToLearn = 2000, CaloriesToTeach = 2000, ClassroomTierRequired = 1, StarsToBecomeTeacher = 1, StarsToBeTaught = 1, StarsToSelfTeach = 0, TimeToLearnHours = 5 },  //Le Village (astuce pour la spécialité chercheur : Tier 10 à 0 étoile)
+				    new SkillReqs() { Tier = 4f, CanBeEducated = true, CaloriesToLearn = 2000, CaloriesToTeach = 2000, ClassroomTierRequired = 1, StarsToBecomeTeacher = 1, StarsToBeTaught = 1, StarsToSelfTeach = 4, TimeToLearnHours = 5 },  //Le Village
 				}
             });
             
