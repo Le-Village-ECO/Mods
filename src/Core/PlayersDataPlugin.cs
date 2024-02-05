@@ -7,6 +7,7 @@ using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
+using Eco.Shared.Serialization;
 
 namespace Village.Eco.Mods.Core
 {
@@ -19,17 +20,20 @@ namespace Village.Eco.Mods.Core
         public string GetCategory() => Localizer.DoStr("PlayersDataConfig");
         public string GetStatus() => Localizer.DoStr("PlayersDataConfig");
 
-        public static string GetPlayerId(Player player)
-            => player.User.SteamId?.IfEmpty(player.User.SlgId) ?? player.User.SlgId;
+        public static string GetUserId(User user)
+            => user.SteamId?.IfEmpty(user.SlgId) ?? user.SlgId;
+        public static string GetPlayerId(Player player) => GetUserId(player.User);
+        
+        public PlayerData GetUserDataOrDefault(User user)
+            => config.Config.PlayerDataPerId.GetValueOrDefault(GetUserId(user)) ?? new();
+        public PlayerData GetPlayerDataOrDefault(Player player) => GetUserDataOrDefault(player.User);
 
-        public PlayerData GetPlayerDataOrDefault(Player player)
-            => config.Config.PlayerDataPerId.GetValueOrDefault(GetPlayerId(player)) ?? new();
-
-        public void AddOrSetPlayerData(Player player, PlayerData data)
+        public void AddOrSetUserData(User user, PlayerData data)
         {
-            if (config.Config.PlayerDataPerId.TryAdd(GetPlayerId(player), data) is false)
-                config.Config.PlayerDataPerId[GetPlayerId(player)] = data;
+            if (config.Config.PlayerDataPerId.TryAdd(GetUserId(user), data) is false)
+                config.Config.PlayerDataPerId[GetUserId(user)] = data;
         }
+        public void AddOrSetPlayerData(Player player, PlayerData data) => AddOrSetUserData(player.User, data);
     }
 
     public class PlayersDataConfig
@@ -38,5 +42,9 @@ namespace Village.Eco.Mods.Core
         public Dictionary<string, PlayerData> PlayerDataPerId { get; set; } = new();
     }
 
-    public partial class PlayerData { }
+    public partial class PlayerData
+    {
+        [Serialized] public double LastUnspecializingDay { get; set; } = 0; //Unskill mod
+        [Serialized] public double LastDailyBoost { get; set; } = 0; //Exhaustion mod
+    }
 }
