@@ -10,7 +10,9 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
+using Eco.Shared.Utils;
 using Eco.Simulation.Time;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using Village.Eco.Mods.Core;
@@ -36,8 +38,11 @@ namespace Village.Eco.Mods.ExhaustionMod
             {
                 message = Localizer.Do($"Vous n'êtes pas encore épuisé... Alors n'abusez pas des boissons énergisantes !");
                 player.ErrorLocStr(message);
+
+                return base.OnUsed(player, itemStack);
             }
-            else if(CheckDate) //Boost avec un controle d'utilisation journalier
+
+            if(CheckDate) //Boost avec un controle d'utilisation journalier
             {
                 //Recuperation des donnees du joueur
                 var plugin = PluginManager.GetPlugin<PlayersDataPlugin>();
@@ -46,9 +51,15 @@ namespace Village.Eco.Mods.ExhaustionMod
                 var daysSinceLastBoost = WorldTime.Day - playerData.LastDailyBoost;
                 if (playerData.LastDailyBoost > 0 && daysSinceLastBoost < DailyBoostCooldown)
                 {
-                    var timeUntilUnspecializing = DailyBoostCooldown - daysSinceLastBoost;
-                    message = Localizer.Do($"Vous devez attendre {timeUntilUnspecializing} jour(s) avant de reprendre {itemStack}.");
+                    var timeUntilDailyBoost = DailyBoostCooldown - daysSinceLastBoost;
+                    var coolDownDuration = TimeSpan.FromDays(timeUntilDailyBoost);
+
+                    //TODO : Revoir le format d'affichage du temps d'attente
+                    //Voir UserCommands.cs : public static void Now
+                    message = Localizer.Do($"Vous devez attendre {TimeFormatter.FormatSimple(coolDownDuration)} avant de reprendre {itemStack}.");
                     player.ErrorLocStr(message);
+
+                    return base.OnUsed(player, itemStack);
                 }
                 else
                 {
@@ -57,18 +68,16 @@ namespace Village.Eco.Mods.ExhaustionMod
                     plugin.AddOrSetPlayerData(player, playerData);
                 }
             }
-            else
-            {
-                //Ajoute temps de jeu supplémentaire
-                player.User.ExhaustionMonitor.Energize(BoostTime);
 
-                // Supprime l'objet de l'inventaire après utilisation
-                var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
-                using (var changes = InventoryChangeSet.New(inventory, player.User))
-                {
-                    changes.ModifyStack(itemStack, -1);
-                    changes.Apply();
-                }
+            //Ajoute temps de jeu supplémentaire
+            player.User.ExhaustionMonitor.Energize(BoostTime);
+
+            // Supprime l'objet de l'inventaire après utilisation
+            var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
+            using (var changes = InventoryChangeSet.New(inventory, player.User))
+            {
+                changes.ModifyStack(itemStack, -1);
+                changes.Apply();
             }
 
             return base.OnUsed(player, itemStack);

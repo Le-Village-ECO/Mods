@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="AutoGen\Tool\" />
     <Folder Include="AutoGen\Vehicle\" />
+    <Folder Include="Player\" />
     <Folder Include="Unity\" />
   </ItemGroup>
 
