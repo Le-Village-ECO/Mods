@@ -18,7 +18,7 @@ namespace Eco.Mods.TechTree
     {
         public static IEnumerable<AchievementDefinition> MakeAchievements()
         {
-            yield return AchievementDefinition.MakeLocStr("Existence", "You used a mod that had a custom achievement (this one).", SetupExistenceAchievement);
+            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Existence"), Localizer.DoStr("You used a mod that had a custom achievement (this one)."), SetupExistenceAchievement, true);
         }
 
         static void SetupExistenceAchievement(AchievementDefinition def)
@@ -29,7 +29,7 @@ namespace Eco.Mods.TechTree
             //(if it doesn't already exist, that is).
             UserManager.OnUserLoggedIn.Add(user => 
             { 
-                def.Achieve(user, () => Localizer.Do($"You logged in at {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} after server start!"));
+                def.TriggerAchievementProgress(user, () => Localizer.Do($"You logged in at {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} after server start!"));
             });
         }
     }
