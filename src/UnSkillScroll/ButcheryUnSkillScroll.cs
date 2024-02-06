@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Boucherie")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Chasse sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Boucherie sous certaines conditions")]
     public partial class ButcheryUnSkillScroll : UnSkillScroll<ButcherySkill> { }
 
     [RequiresSkill(typeof(ButcherySkill), 7)]
