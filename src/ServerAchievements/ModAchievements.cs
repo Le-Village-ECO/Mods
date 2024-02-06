@@ -4,9 +4,12 @@
 namespace Eco.Mods.TechTree
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Eco.Core.Plugins.Interfaces;
     using Eco.Gameplay.Achievements;
+    using Eco.Gameplay.Items;
     using Eco.Gameplay.Players;
+    using Eco.Gameplay.Systems.TextLinks;
     using Eco.Shared.Localization;
     using Eco.Shared.Utils;
     using Eco.Simulation.Time;
@@ -18,7 +21,9 @@ namespace Eco.Mods.TechTree
     {
         public static IEnumerable<AchievementDefinition> MakeAchievements()
         {
-            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Existence"), Localizer.DoStr("You used a mod that had a custom achievement (this one)."), SetupExistenceAchievement, true);
+            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Existance"), Localizer.DoStr("Vous avez rejoint Le Village !"), SetupExistenceAchievement, false);
+            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Adepte de la carbonisation"), Localizer.DoStr("Manger 500 aliments carbonisés"), CrazyAchievement2, false,500);
+
         }
 
         static void SetupExistenceAchievement(AchievementDefinition def)
@@ -29,8 +34,15 @@ namespace Eco.Mods.TechTree
             //(if it doesn't already exist, that is).
             UserManager.OnUserLoggedIn.Add(user => 
             { 
-                def.TriggerAchievementProgress(user, () => Localizer.Do($"You logged in at {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} after server start!"));
+                def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous vous êtes connecté {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} après le lancement du serveur !"));
             });
         }
+
+        static void CrazyAchievement2(AchievementDefinition def)
+        {
+            Stomach.FoodContentUpdatedEvent.Add((user, foodtype) => { if (user.Stomach.Contents.Last().Food.DisplayName.ToString().Contains("Charred")) def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez mangé {def.RequiredProgress} aliments carbonisés !"), 1); });
+        }
+
     }
+    
 }
