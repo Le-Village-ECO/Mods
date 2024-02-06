@@ -1,9 +1,11 @@
 ﻿// Le Village
 // TODO : Pouvoir consulter toutes les valeurs d'un joueur
 // TODO : Pouvoir modifier la valeur d'un paramètre d'un joueur
+// TODO : Commande invisible, ajouter la minimap
 
 using Eco.Core;
 using Eco.Core.Utils;
+using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
@@ -16,6 +18,16 @@ namespace Village.Eco.Mods.Core
         //Commandes Admin Core	
         [ChatCommand("Commandes admin du Village.", ChatAuthorizationLevel.Admin)]
         public static void LVCore(User user) { }
+
+        [ChatSubCommand("LVCore", "Make your character invisible", ChatAuthorizationLevel.Admin)]
+        public static void Invisible(User user)
+        {
+            user.IsInvisible = !user.IsInvisible;
+            //Voir UserCommands.cs
+            //minimap todo: update visibility status
+            //if (user.IsInvisible) MinimapManager.RemoveMinimapObject(user.Player);
+            //else                  MinimapManager.AddOrUpdateMinimapObject(user.Player);
+        }
 
         //Sous-commande : Forcer la sauvegarde du fichier PlayersData sur le serveur
         [ChatSubCommand("LVCore", "Forcer sauvegarde de PlayersData", ChatAuthorizationLevel.Admin)]
