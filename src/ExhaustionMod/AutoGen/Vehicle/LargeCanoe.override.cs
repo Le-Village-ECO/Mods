@@ -34,49 +34,45 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items.Recipes;
 
     [Serialized]
-    [LocDisplayName("Steam Truck")]
-    [LocDescription("A truck that runs on steam.")]
+    [LocDisplayName("Large Canoe")]
+    [LocDescription("")]
     [IconGroup("World Object Minimap")]
-    [Weight(25000)]
-    [AirPollution(0.2f)]
+    [Weight(8000)]
+    [WaterPlaceable]
     [Ecopedia("Crafted Objects", "Vehicles", createAsSubPage: true)]
-    public partial class SteamTruckItem : WorldObjectItem<SteamTruckObject>, IPersistentData
+    public partial class LargeCanoeItem : WorldObjectItem<LargeCanoeObject>, IPersistentData
     {
+        public float InteractDistance => DefaultInteractDistance.WaterPlacement;
+        public bool ShouldHighlight(Type block) => false;
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
 
     /// <summary>
-    /// <para>Server side recipe definition for "SteamTruck".</para>
+    /// <para>Server side recipe definition for "LargeCanoe".</para>
     /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
     /// </summary>
     /// <remarks>
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(MechanicsSkill), 2)]
-    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "Steam Truck Item")]
-    public partial class SteamTruckRecipe : RecipeFamily
+    [RequiresSkill(typeof(ShipwrightSkill), 2)]
+    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "Large Canoe Item")]
+    public partial class LargeCanoeRecipe : RecipeFamily
     {
-        public SteamTruckRecipe()
+        public LargeCanoeRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "SteamTruck",  //noloc
-                displayName: Localizer.DoStr("Steam Truck"),
+                name: "LargeCanoe",  //noloc
+                displayName: Localizer.DoStr("Large Canoe"),
 
                 // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(IronPlateItem), 12, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(IronPipeItem), 8, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(ScrewsItem), 24, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(LeatherHideItem), 20, typeof(MechanicsSkill)),
-                    new IngredientElement("Lumber", 30, typeof(MechanicsSkill)), //noloc
-                    new IngredientElement(typeof(PortableSteamEngineItem), 1, true),
-                    new IngredientElement(typeof(IronWheelItem), 4, true),
-                    new IngredientElement(typeof(IronAxleItem), 2, true),
-                    new IngredientElement(typeof(LightBulbItem), 2, true),
+                    new IngredientElement(typeof(WoodenHullPlanksItem), 8, typeof(ShipwrightSkill)),
+                    new IngredientElement(typeof(WoodenOarItem), 1, true),
+                    new IngredientElement(typeof(SmallWoodenShipFrameItem), 1, true),
                 },
 
                 // Define our recipe output items.
@@ -84,24 +80,24 @@ namespace Eco.Mods.TechTree
                 // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<SteamTruckItem>()
+                    new CraftingElement<LargeCanoeItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 25; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 10; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(1000, typeof(MechanicsSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(360, typeof(ShipwrightSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SteamTruckRecipe), start: 10, skillType: typeof(MechanicsSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(LargeCanoeRecipe), start: 8, skillType: typeof(ShipwrightSkill));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Steam Truck"
+            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Large Canoe"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Steam Truck"), recipeType: typeof(SteamTruckRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Large Canoe"), recipeType: typeof(LargeCanoeRecipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AssemblyLineObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(SmallShipyardObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
@@ -113,46 +109,37 @@ namespace Eco.Mods.TechTree
 
     [Serialized]
     [RequireComponent(typeof(StandaloneAuthComponent))]
-    [RequireComponent(typeof(FuelSupplyComponent))]
-    [RequireComponent(typeof(FuelConsumptionComponent))]
     [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(TailingsReportComponent))]
     [RequireComponent(typeof(MovableLinkComponent))]
-    [RequireComponent(typeof(AirPollutionComponent))]
     [RequireComponent(typeof(VehicleComponent))]
-    [RequireComponent(typeof(CustomTextComponent))]
+    [RequireComponent(typeof(BoatComponent))]
     [RequireComponent(typeof(ModularStockpileComponent))]
     [RequireComponent(typeof(MinimapComponent))]           
-    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "SteamTruck Item")]
-    public partial class SteamTruckObject : PhysicsWorldObject, IRepresentsItem
+    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "LargeCanoe Item")]
+    public partial class LargeCanoeObject : PhysicsWorldObject, IRepresentsItem
     {
-        static SteamTruckObject()
+        static LargeCanoeObject()
         {
-            WorldObject.AddOccupancy<SteamTruckObject>(new List<BlockOccupancy>(0));
+            WorldObject.AddOccupancy<LargeCanoeObject>(new List<BlockOccupancy>(0));
         }
-        public override TableTextureMode TableTexture => TableTextureMode.Metal;
+        public override float InteractDistance => DefaultInteractDistance.WaterPlacement;
+        public override TableTextureMode TableTexture => TableTextureMode.Wood;
         public override bool PlacesBlocks            => false;
-        public override LocString DisplayName { get { return Localizer.DoStr("Steam Truck"); } }
-        public Type RepresentedItemType { get { return typeof(SteamTruckItem); } }
+        public override LocString DisplayName { get { return Localizer.DoStr("Large Canoe"); } }
+        public Type RepresentedItemType { get { return typeof(LargeCanoeItem); } }
 
-        private static string[] fuelTagList = new string[]
-        {
-            "Burnable Fuel",
-        };
-        private SteamTruckObject() { }
+        private LargeCanoeObject() { }
         protected override void Initialize()
         {
             base.Initialize();         
-            this.GetComponent<CustomTextComponent>().Initialize(200);
-            this.GetComponent<FuelSupplyComponent>().Initialize(2, fuelTagList);
-            this.GetComponent<FuelConsumptionComponent>().Initialize(75);
-            this.GetComponent<AirPollutionComponent>().Initialize(0.2f);
-            this.GetComponent<VehicleComponent>().HumanPowered(0);  //Le Village 1 à 0
-            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2,2,3));
-            this.GetComponent<PublicStorageComponent>().Initialize(24, 5000000);
+            this.GetComponent<VehicleComponent>().HumanPowered(0); //Le Village 1.5f à 0
+            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2,2,2));
+            this.GetComponent<PublicStorageComponent>().Initialize(12, 2100000);
             this.GetComponent<MinimapComponent>().InitAsMovable();
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Vehicles"));
-            this.GetComponent<VehicleComponent>().Initialize(18, 3,2);
+            this.GetComponent<VehicleComponent>().Initialize(10, 1,2, null, true);
+            this.GetComponent<BoatComponent>().Size = BoatComponent.BoatSize.Small;
             this.GetComponent<VehicleComponent>().FailDriveMsg = Localizer.Do($"You are too hungry to drive {this.DisplayName}!");
 
         }

@@ -34,49 +34,48 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items.Recipes;
 
     [Serialized]
-    [LocDisplayName("Steam Truck")]
-    [LocDescription("A truck that runs on steam.")]
+    [LocDisplayName("Truck")]
+    [LocDescription("Modern truck for hauling sizable loads.")]
     [IconGroup("World Object Minimap")]
     [Weight(25000)]
-    [AirPollution(0.2f)]
+    [AirPollution(0.5f)]
     [Ecopedia("Crafted Objects", "Vehicles", createAsSubPage: true)]
-    public partial class SteamTruckItem : WorldObjectItem<SteamTruckObject>, IPersistentData
+    public partial class TruckItem : WorldObjectItem<TruckObject>, IPersistentData
     {
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
 
     /// <summary>
-    /// <para>Server side recipe definition for "SteamTruck".</para>
+    /// <para>Server side recipe definition for "Truck".</para>
     /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
     /// </summary>
     /// <remarks>
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(MechanicsSkill), 2)]
-    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "Steam Truck Item")]
-    public partial class SteamTruckRecipe : RecipeFamily
+    [RequiresSkill(typeof(IndustrySkill), 2)]
+    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "Truck Item")]
+    public partial class TruckRecipe : RecipeFamily
     {
-        public SteamTruckRecipe()
+        public TruckRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "SteamTruck",  //noloc
-                displayName: Localizer.DoStr("Steam Truck"),
+                name: "Truck",  //noloc
+                displayName: Localizer.DoStr("Truck"),
 
                 // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(IronPlateItem), 12, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(IronPipeItem), 8, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(ScrewsItem), 24, typeof(MechanicsSkill)),
-                    new IngredientElement(typeof(LeatherHideItem), 20, typeof(MechanicsSkill)),
-                    new IngredientElement("Lumber", 30, typeof(MechanicsSkill)), //noloc
-                    new IngredientElement(typeof(PortableSteamEngineItem), 1, true),
-                    new IngredientElement(typeof(IronWheelItem), 4, true),
-                    new IngredientElement(typeof(IronAxleItem), 2, true),
-                    new IngredientElement(typeof(LightBulbItem), 2, true),
+                    new IngredientElement(typeof(GearboxItem), 4, typeof(IndustrySkill)),
+                    new IngredientElement(typeof(SteelPlateItem), 20, typeof(IndustrySkill)),
+                    new IngredientElement(typeof(NylonFabricItem), 20, typeof(IndustrySkill)),
+                    new IngredientElement(typeof(CombustionEngineItem), 1, true),
+                    new IngredientElement(typeof(RubberWheelItem), 6, true),
+                    new IngredientElement(typeof(RadiatorItem), 1, true),
+                    new IngredientElement(typeof(SteelAxleItem), 2, true),
+                    new IngredientElement(typeof(LightBulbItem), 4, true),
                 },
 
                 // Define our recipe output items.
@@ -84,24 +83,24 @@ namespace Eco.Mods.TechTree
                 // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<SteamTruckItem>()
+                    new CraftingElement<TruckItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 25; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 18; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(1000, typeof(MechanicsSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(2000, typeof(IndustrySkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SteamTruckRecipe), start: 10, skillType: typeof(MechanicsSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(TruckRecipe), start: 10, skillType: typeof(IndustrySkill));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Steam Truck"
+            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Truck"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Steam Truck"), recipeType: typeof(SteamTruckRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Truck"), recipeType: typeof(TruckRecipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AssemblyLineObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(RoboticAssemblyLineObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
@@ -123,36 +122,36 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(CustomTextComponent))]
     [RequireComponent(typeof(ModularStockpileComponent))]
     [RequireComponent(typeof(MinimapComponent))]           
-    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "SteamTruck Item")]
-    public partial class SteamTruckObject : PhysicsWorldObject, IRepresentsItem
+    [Ecopedia("Crafted Objects", "Vehicles", subPageName: "Truck Item")]
+    public partial class TruckObject : PhysicsWorldObject, IRepresentsItem
     {
-        static SteamTruckObject()
+        static TruckObject()
         {
-            WorldObject.AddOccupancy<SteamTruckObject>(new List<BlockOccupancy>(0));
+            WorldObject.AddOccupancy<TruckObject>(new List<BlockOccupancy>(0));
         }
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
         public override bool PlacesBlocks            => false;
-        public override LocString DisplayName { get { return Localizer.DoStr("Steam Truck"); } }
-        public Type RepresentedItemType { get { return typeof(SteamTruckItem); } }
+        public override LocString DisplayName { get { return Localizer.DoStr("Truck"); } }
+        public Type RepresentedItemType { get { return typeof(TruckItem); } }
 
         private static string[] fuelTagList = new string[]
         {
-            "Burnable Fuel",
+            "Liquid Fuel",
         };
-        private SteamTruckObject() { }
+        private TruckObject() { }
         protected override void Initialize()
         {
             base.Initialize();         
             this.GetComponent<CustomTextComponent>().Initialize(200);
             this.GetComponent<FuelSupplyComponent>().Initialize(2, fuelTagList);
-            this.GetComponent<FuelConsumptionComponent>().Initialize(75);
-            this.GetComponent<AirPollutionComponent>().Initialize(0.2f);
+            this.GetComponent<FuelConsumptionComponent>().Initialize(110);
+            this.GetComponent<AirPollutionComponent>().Initialize(0.5f);
             this.GetComponent<VehicleComponent>().HumanPowered(0);  //Le Village 1 à 0
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2,2,3));
-            this.GetComponent<PublicStorageComponent>().Initialize(24, 5000000);
+            this.GetComponent<PublicStorageComponent>().Initialize(36, 8000000);
             this.GetComponent<MinimapComponent>().InitAsMovable();
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Vehicles"));
-            this.GetComponent<VehicleComponent>().Initialize(18, 3,2);
+            this.GetComponent<VehicleComponent>().Initialize(20, 4,2);
             this.GetComponent<VehicleComponent>().FailDriveMsg = Localizer.Do($"You are too hungry to drive {this.DisplayName}!");
 
         }

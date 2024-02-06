@@ -42,7 +42,7 @@ namespace Village.Eco.Mods.ExhaustionMod
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(PaperItem), 1, true),
+                    new(typeof(PaperItem), 1, true),
                 },
 
                 // Define our recipe output items.
