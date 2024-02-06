@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+
 namespace Eco.Mods.TechTree
 {
     using System.Collections.Generic;
@@ -9,10 +10,12 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Achievements;
     using Eco.Gameplay.Items;
     using Eco.Gameplay.Players;
+    using Eco.Gameplay.Skills;
     using Eco.Gameplay.Systems.TextLinks;
     using Eco.Shared.Localization;
     using Eco.Shared.Utils;
     using Eco.Simulation.Time;
+    using Village.Eco.Mods.UnSkillScroll;
 
     //User defined achievements example. These are triggered by calling `AchievementManager.UnlockAchievement(name, displayname, description)
     //The client will attempt to find an icon that matches 'name' and use that for displaying it.
@@ -22,7 +25,8 @@ namespace Eco.Mods.TechTree
         public static IEnumerable<AchievementDefinition> MakeAchievements()
         {
             yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Existance"), Localizer.DoStr("Vous avez rejoint Le Village !"), SetupExistenceAchievement, false);
-            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Adepte de la carbonisation"), Localizer.DoStr("Manger 500 aliments carbonisés"), CrazyAchievement2, false,500);
+            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Adepte de la carbonisation"), Localizer.DoStr("Manger 500 aliments carbonisés"), CrazyAchievement, false, 500);
+            yield return AchievementDefinition.CreateAchievementDefinition(Localizer.DoStr("Mémoire légère"), Localizer.DoStr("Oublier une spécialité"), ForgetSpecialty, false);
 
         }
 
@@ -38,10 +42,9 @@ namespace Eco.Mods.TechTree
             });
         }
 
-        static void CrazyAchievement2(AchievementDefinition def)
-        {
-            Stomach.FoodContentUpdatedEvent.Add((user, foodtype) => { if (user.Stomach.Contents.Last().Food.DisplayName.ToString().Contains("Charred")) def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez mangé {def.RequiredProgress} aliments carbonisés !"), 1); });
-        }
+        static void CrazyAchievement(AchievementDefinition def) => Stomach.FoodContentUpdatedEvent.Add((user, foodtype) => { if (user.Stomach.Contents.Last().Food.DisplayName.ToString().Contains("Charred")) def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez mangé {def.RequiredProgress} aliments carbonisés !"), 1); });
+        static void ForgetSpecialty(AchievementDefinition def) => UnSkillScroll.UnlearnSkillEvent.Add((user, skill) => def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez oublié la spécialité {skill.UILink()} !")) );
+
 
     }
     

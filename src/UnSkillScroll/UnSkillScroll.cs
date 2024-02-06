@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eco.Core;
 using Eco.Core.Items;
+using Eco.Core.Utils;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
@@ -29,6 +30,8 @@ namespace Village.Eco.Mods.UnSkillScroll
     [Tag("Skill Scrolls")]
     public abstract class UnSkillScroll : Item  //Item generique avec lien vers Unity3D
     {
+        public static ThreadSafeAction<User, Skill> UnlearnSkillEvent = new();
+
         public const double RefundSpecialtyDaysCooldown = 2; //Delai entre 2 utilisation de parchemin d'oubli
         public abstract Type SkillType { get; }  //Recuperation de la specialite definie dans le parchemin (1 pour chaque spe.)
 
@@ -99,6 +102,9 @@ namespace Village.Eco.Mods.UnSkillScroll
             player.User.UserXP.AddStars(skill.Tier);
             player.User.MailLoc($"Vous avez récupéré {skill.Tier} étoile(s)", NotificationCategory.Skills);
 
+            // Event lié à l'oubli de la spécialité
+            UnlearnSkillEvent?.Invoke(player.User, skill);
+
             //Mise a jour des donnees du joueur
             playerData.LastUnspecializingDay = WorldTime.Day;
             plugin.AddOrSetPlayerData(player, playerData);
@@ -106,6 +112,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             //  Supprimer le parchemin apres utilisation avec succes
             var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
             using (var changes = InventoryChangeSet.New(inventory, player.User))
+
             {
                 changes.ModifyStack(itemStack, -1);
                 changes.Apply();
