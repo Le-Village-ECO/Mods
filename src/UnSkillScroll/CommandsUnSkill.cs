@@ -38,7 +38,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             playerData.LastUnspecializingDay = timer;
             plugin.AddOrSetUserData(targetUser, playerData);
 
-            //Message d"info de confirmation à l'admin
+            //Message d'info de confirmation à l'admin
             message = Localizer.Do($"Le joueur {targetUser.Name} - Nouveau timer {playerData.LastUnspecializingDay}.");
             user.InfoBoxLocStr(message);
             //Message mail de confirmation au joueur
@@ -95,8 +95,6 @@ namespace Village.Eco.Mods.UnSkillScroll
         [ChatSubCommand("UnSkill", "Afficher les prérequis pour oublier une spécialité", ChatAuthorizationLevel.User)]
         public static void Conditions(User user)
         {
-            user.Player.Msg(Localizer.Format("C'est un test4"));
-
             LocString header;
             LocString message;
             LocString button;
