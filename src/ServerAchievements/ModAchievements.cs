@@ -34,7 +34,7 @@ namespace Eco.Mods.TechTree
             //(if it doesn't already exist, that is).
             UserManager.OnUserLoggedIn.Add(user => 
             { 
-                def.Achieve(user, () => Localizer.Do($"You logged in at {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} after server start!"));
+                def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous vous êtes connecté {TimeFormatter.FormatSpanColor(WorldTime.Seconds)} après le lancement du serveur !"));
             });
         }
 
