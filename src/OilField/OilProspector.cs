@@ -27,6 +27,7 @@ using Eco.Mods.TechTree;
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Items.Recipes;
 using System.Runtime.CompilerServices;
+using Eco.Gameplay.Skills;
 
 namespace Village.Eco.Mods.OilField
 {
@@ -51,36 +52,39 @@ namespace Village.Eco.Mods.OilField
         {
             if (target.IsBlock && base.Durability > 0f)
             {
-                var samplePosition = Vector3i.Zero;
-                samplePosition = target.BlockPosition.Value + Vector3i.Up;
-                samplePosition = World.GetWrappedWorldPosition(samplePosition); //Convert position into wrapped world coords.
-
-                samplePosition = World.GetWrappedWorldPosition(target.BlockPosition.Value);
-
                 var title = new LocStringBuilder();
                 var text = new LocStringBuilder();
                 var button = new LocStringBuilder();
 
-                string format = "1x {0} peut être extrait en {1}";
-                object[] array = new object[2];
-                Item item = Item.Get(typeof(PetroleumItem));
-                array[0] = item.MarkedUpName;
-                array[1] = Text.Num(OilProspectorItem.GetCraftMinutes(player.User, target.BlockPosition.Value));
-
+                //Affichage du titre de la popup
                 title.Append($"{this.DisplayName} {target.BlockPosition}");
-                text.AppendLine(TextLoc.HeaderLocStr("Pétrole en sous-sol")).AppendLine(1);
-                text.Append($"Dans un rayon de {PumpJackObject.Radius} cases, ");
-                text.Append($"il y a une quantite de : {Text.Num(OilProspectorItem.GetOilAmount(target.BlockPosition.Value.XZ))}.").AppendLine(1);
-                text.AppendLine();
-                text.AppendLine(TextLoc.HeaderLocStr("Production potentielle")).AppendLine(1);
-                text.Append(FormattableStringFactory.Create(format, array));
 
+                //Affichage du contenu de la popup - quantité de pétrole
+                string text1 = "Dans un rayon de {0} cases, il y a une quantite de {1}";
+                object[] array1 = new object[2];
+                array1[0] = PumpJackObject.Radius;
+                array1[1] = Text.Num(OilProspectorItem.GetOilAmount(target.BlockPosition.Value.XZ));
+                text.AppendLine(TextLoc.HeaderLocStr("Pétrole en sous-sol")).AppendLine(1);
+                text.Append(FormattableStringFactory.Create(text1, array1)).AppendLine(2);
+
+                //Affichage du contenu de la popup - vitesse de production
+                string text2 = "1x {0} peut être extrait en {1} minutes";
+                object[] array2 = new object[2];
+                Item item = Item.Get(typeof(PetroleumItem));
+                array2[0] = item.MarkedUpName;
+                array2[1] = Text.Num(OilProspectorItem.GetCraftMinutes(player.User, target.BlockPosition.Value));
+                text.AppendLine(TextLoc.HeaderLocStr("Production potentielle")).AppendLine(1);
+                text.Append(FormattableStringFactory.Create(text2, array2)).AppendLine(2);
+
+                //Affichage du bouton de la popup
                 button.Append($"Intéressant !");
 
-                //player.OpenInfoPanel(title.ToString(), text.ToString(), "soilsampler");
+                //Affichage de la popup
                 player.LargeInfoBox(title.ToLocString(), text.ToLocString(), button.ToLocString());
 
+                //Potentiellement ajouter un coût calorique
                 this.BurnCaloriesNow(player);
+
                 return true;
             }
             return false;
@@ -89,14 +93,7 @@ namespace Village.Eco.Mods.OilField
         private static float GetCraftMinutes(User user, Vector3i pos)
         {
             RecipeFamily recipeFamily = CraftingComponent.RecipesOnWorldObject(typeof(PumpJackObject)).FirstOrDefault((RecipeFamily rf) => rf.RecipeItems.Any((Type ri) => ri == typeof(PetroleumItem)));
-            if (recipeFamily == null)
-            {
-                return 0f;
-            }
-            if (!(recipeFamily.CraftMinutes is MultiDynamicValue))
-            {
-                return 0f;
-            }
+            if ((recipeFamily == null) || (!(recipeFamily.CraftMinutes is MultiDynamicValue))) return 0f;
             return recipeFamily.CraftMinutes.GetCurrentValue(new ModuleContext(user, pos, null));
         }
 
@@ -110,7 +107,7 @@ namespace Village.Eco.Mods.OilField
                 layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, delegate (Vector2i x, float val)
                 {
                     value += val;
-                    //float total = total;
+                    //float total = total;  //???
                     total += 1f;
                     return total;
                 });
@@ -121,6 +118,33 @@ namespace Village.Eco.Mods.OilField
                 total = 1f;
             }
             return value / total;
+        }
+    }
+
+    [RequiresSkill(typeof(GatheringSkill), 7)]
+    public partial class OilProspectorRecipe : RecipeFamily 
+    {
+        public OilProspectorRecipe()
+        {
+            var recipe = new Recipe();
+            recipe.Init(
+                name: "OilProspector",
+                displayName: Localizer.DoStr("Oil Prospector"),
+                ingredients: new List<IngredientElement>
+                {
+                    new(typeof(IronBarItem), 2, true),
+                    new("WoodBoard", 2, true)
+                },
+                new List<CraftingElement>
+                {
+                    new CraftingElement<OilProspectorItem>()
+                });
+            this.Recipes = new List<Recipe> { recipe };
+            this.ExperienceOnCraft = 10f;
+            this.LaborInCalories = CreateLaborInCaloriesValue(50f, typeof(GatheringSkill));
+            this.CraftMinutes = CreateCraftTimeValue(3f);
+            this.Initialize(displayText: Localizer.DoStr("Oil Prospector"), recipeType: typeof(OilProspectorRecipe));
+            CraftingComponent.AddRecipe(tableType: typeof(ToolBenchObject), recipe: this);
         }
     }
 }
