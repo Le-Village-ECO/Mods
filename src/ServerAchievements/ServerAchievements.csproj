@@ -14,4 +14,8 @@
     <ProjectReference Include="..\UnSkillScroll\UnSkillScroll.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Unity\Images\" />
+  </ItemGroup>
+
 </Project>
