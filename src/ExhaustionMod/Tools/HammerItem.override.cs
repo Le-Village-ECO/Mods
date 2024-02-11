@@ -3,6 +3,7 @@
 namespace Eco.Mods.TechTree
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq;
@@ -144,7 +145,11 @@ namespace Eco.Mods.TechTree
             if (!actionPack.EarlyResult) { actionPack.Dispose(); return actionPack; }        // world object pick failed, so end action
             else if (!pickupResult.PartialMove)                                                         // can only pickup world object when also picked up all component
             {
-                (actionPack.ChangeSets.First().Value as InventoryChangeSet).AddItem(worldObjectItem, 1, targetInventory);
+                var GameActionPackProperties = typeof(GameActionPack).GetProperties(System.Reflection.BindingFlags.NonPublic);
+                var ChangeSetsPropertyInfo = GameActionPackProperties.First(p => p.Name == "ChangeSets");
+                var ChangeSetsProperty = (Dictionary<Type, IGameActionPackChangeSet>)ChangeSetsPropertyInfo.GetValue(actionPack);
+
+                (ChangeSetsProperty.First().Value as InventoryChangeSet).AddItem(worldObjectItem, 1, targetInventory);
 
                 //Clean up the WorldObject if the actions succeeds.
                 actionPack.AddPostEffect(() =>
