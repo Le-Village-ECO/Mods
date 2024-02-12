@@ -72,9 +72,9 @@
     30
   ],
   "MinCitizensToMaintainSettlement": [
-    2,
-    6,
-    15
+    3,
+    12,
+    30
   ],
   "MinCultureToFoundSettlement": [
     0.0,
