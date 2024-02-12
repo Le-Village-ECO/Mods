@@ -8,7 +8,7 @@
   "HoursPlayedToBeAbandonedDemographic": 0.0,
   "CitizenAgeForAbandonedDemographic": 24.0,
   "MinutesBetweenCivicsUpdates": 5.0,
-  "AllowInvalidCivicContainerTimeInMinutes": 20.0,
+  "AllowInvalidCivicContainerTimeInMinutes": 60.0,
   "RecurringTransferFrequencyInMinutes": 30.0,
   "AllowLawsToPreventLoginOrPlay": false,
   "EnableAdminUI": false,
