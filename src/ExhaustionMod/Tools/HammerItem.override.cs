@@ -126,7 +126,9 @@ namespace Eco.Mods.TechTree
             }
         }
 
-        public static GameActionPack TryPickUp(WorldObject obj, GameActionPack actionPack, Player player, Inventory targetInventory, float caloriesNeeded, bool force, AccessType accessType = AccessType.FullAccess)
+		//Le Village - Copié/collé depuis WorldObjectUtil.cs
+		//Le village - Suppression de la partie calorie pour ne pas déclencher le contrôle sur l'Exhaustion
+		public static GameActionPack TryPickUp(WorldObject obj, GameActionPack actionPack, Player player, Inventory targetInventory, float caloriesNeeded, bool force, AccessType accessType = AccessType.FullAccess)
         {
             var worldObjectItem = obj.CreationItem ?? WorldObjectItem.MakeItemFromWorldObjectType(obj.GetType());
             DebugUtils.Assert(worldObjectItem != null, $"Failed to get the appropriate item for {obj.Name} ({obj.DisplayName}).");
@@ -154,12 +156,8 @@ namespace Eco.Mods.TechTree
             if (!actionPack.EarlyResult) { actionPack.Dispose(); return actionPack; }        // world object pick failed, so end action
             else if (!pickupResult.PartialMove)                                                         // can only pickup world object when also picked up all component
             {
-                var gameActionPackProperties = typeof(GameActionPack).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
-                
-                //var log= NLogManager.GetLogWriter("levillage");
-                //log.Write("Test");
-                //log.Write(string.Join(' ', gameActionPackProperties.Select(p => p.Name).ToList()));
-
+				//Le village - ajout pour gérer le fait que ChangeSets soit internal (GameActionPack.cs)
+				var gameActionPackProperties = typeof(GameActionPack).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
                 var changeSetsPropertiesInfo = gameActionPackProperties.First(p => p.Name == "ChangeSets");
                 var changeSetsValue = (Dictionary<Type, IGameActionPackChangeSet>)changeSetsPropertiesInfo.GetValue(actionPack)!;
 
@@ -179,6 +177,8 @@ namespace Eco.Mods.TechTree
             return actionPack;
         }
 
+        //Le Village - Copié/collé depuis MultiblockActionContext.cs
+        //Le village - Suppression de la partie calorie pour ne pas déclencher le contrôle sur l'Exhaustion
         public static MultiblockActionContext CreateMultiblockContext(ToolItem tool, Player player, bool applyXPSkill, IEnumerable<Vector3i>? area = null, IEnumerable<Type>? blockTypesInArea = null, Func<GameAction>? gameActionConstructor = null) =>
             new MultiblockActionContext()
             {
