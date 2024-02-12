@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
+// Le Village - Suppression des contrôles de calorie/exhaustion
+
 namespace Eco.Mods.TechTree
 {
     using System;
@@ -7,11 +9,13 @@ namespace Eco.Mods.TechTree
     using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq;
+    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
     using Eco.Core.Controller;
     using Eco.Core.Items;
     using Eco.Core.Utils;
+    using Eco.Core.Utils.Logging;
     using Eco.Gameplay.Blocks;
     using Eco.Gameplay.DynamicValues;
     using Eco.Gameplay.GameActions;
@@ -30,6 +34,7 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Utils;
     using Eco.World;
     using Eco.World.Blocks;
+    using static Eco.Gameplay.Civics.IfThenBlock;
     using static Eco.Gameplay.Objects.WorldObjectUtil;
 
     [Serialized]
@@ -70,8 +75,10 @@ namespace Eco.Mods.TechTree
             //If the block is a ramp don't create a new ConstructOrDeconstruct GameAction, because that GameAction will be created inside RampItem.RampPickupOverride (special case because the item have multiple blocks) and we don't want a duplicate.
             //TO DO : After refactoring ramps, the ramp-specific check will need to be removed so that when removing ramps using a hammer item, it will just use the same logic as other blocks.
             Result result;
-            if (block.Is<Constructed>()) result = AtomicActions.DeleteBlockNow(this.CreateMultiblockContext(player, true, blockPos, null, DeconstructGameAction), addTo: player?.User.Inventory);
-            else if (block.Is<Ramp>())   result = AtomicActions.DeleteBlockNow(this.CreateMultiblockContext(player, true, blockPos),                              addTo: player?.User.Inventory);
+            //if (block.Is<Constructed>()) result = AtomicActions.DeleteBlockNow(this.CreateMultiblockContext(player, true, blockPos, null, DeconstructGameAction), addTo: player?.User.Inventory); //Le Village
+            //else if (block.Is<Ramp>()) result = AtomicActions.DeleteBlockNow(this.CreateMultiblockContext(player, true, blockPos), addTo: player?.User.Inventory); //Le Village
+            if (block.Is<Constructed>()) result = AtomicActions.DeleteBlockNow(CreateMultiblockContext(this, player, true, blockPos.SingleItemAsEnumerable(), null, DeconstructGameAction), addTo: player?.User.Inventory);
+            else if (block.Is<Ramp>())   result = AtomicActions.DeleteBlockNow(CreateMultiblockContext(this, player, true, blockPos.SingleItemAsEnumerable()),                              addTo: player?.User.Inventory);
             else                         result = Result.FailLocStr($"Block type {block.GetType()} can not be picked up with this tool").Notify(player.User);
             
             return result;
@@ -88,7 +95,8 @@ namespace Eco.Mods.TechTree
 
             //var actionPack = worldObj.TryPickUp(new GameActionPack(), player, player.User.Inventory, this.NeededCalories(player), false);  //Le Village
             var actionPack = TryPickUp(worldObj, new GameActionPack(), player, player.User.Inventory, this.NeededCalories(player), false);  //Le village
-            actionPack.UseTool(this.CreateMultiblockContext(player, false));
+            //actionPack.UseTool(this.CreateMultiblockContext(player, false));  //Le village
+            actionPack.UseTool(CreateMultiblockContext(this, player, false));
 
             //.. and if all go well, then try to perform. Notify the user if any errors occur (e.g.: low calories, no Auth, etc).
             var result = actionPack.TryPerform(player.User);
@@ -107,7 +115,8 @@ namespace Eco.Mods.TechTree
             using (var pack = new GameActionPack()) 
             {
                 pack.PlaceBlock(
-                    context: this.CreateMultiblockContext(player, true, layout.Blocks.Select(x => x.Key), layout.Blocks.Select(x => BlockManager.FromId(x.Value))),
+                    //context: this.CreateMultiblockContext(player, true, layout.Blocks.Select(x => x.Key), layout.Blocks.Select(x => BlockManager.FromId(x.Value))),  //Le Village
+                    context: CreateMultiblockContext(this, player, true, layout.Blocks.Select(x => x.Key), layout.Blocks.Select(x => BlockManager.FromId(x.Value))),
                     blockType: blockType,
                     createBlockAction: true,
                     removeFromInv: player.User.Inventory,
@@ -145,11 +154,16 @@ namespace Eco.Mods.TechTree
             if (!actionPack.EarlyResult) { actionPack.Dispose(); return actionPack; }        // world object pick failed, so end action
             else if (!pickupResult.PartialMove)                                                         // can only pickup world object when also picked up all component
             {
-                var GameActionPackProperties = typeof(GameActionPack).GetProperties(System.Reflection.BindingFlags.NonPublic);
-                var ChangeSetsPropertyInfo = GameActionPackProperties.First(p => p.Name == "ChangeSets");
-                var ChangeSetsProperty = (Dictionary<Type, IGameActionPackChangeSet>)ChangeSetsPropertyInfo.GetValue(actionPack);
+                var gameActionPackProperties = typeof(GameActionPack).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+                
+                //var log= NLogManager.GetLogWriter("levillage");
+                //log.Write("Test");
+                //log.Write(string.Join(' ', gameActionPackProperties.Select(p => p.Name).ToList()));
 
-                (ChangeSetsProperty.First().Value as InventoryChangeSet).AddItem(worldObjectItem, 1, targetInventory);
+                var changeSetsPropertiesInfo = gameActionPackProperties.First(p => p.Name == "ChangeSets");
+                var changeSetsValue = (Dictionary<Type, IGameActionPackChangeSet>)changeSetsPropertiesInfo.GetValue(actionPack)!;
+
+                (changeSetsValue.First().Value as InventoryChangeSet)!.AddItem(worldObjectItem, 1, targetInventory);
 
                 //Clean up the WorldObject if the actions succeeds.
                 actionPack.AddPostEffect(() =>
@@ -164,5 +178,21 @@ namespace Eco.Mods.TechTree
 
             return actionPack;
         }
+
+        public static MultiblockActionContext CreateMultiblockContext(ToolItem tool, Player player, bool applyXPSkill, IEnumerable<Vector3i>? area = null, IEnumerable<Type>? blockTypesInArea = null, Func<GameAction>? gameActionConstructor = null) =>
+            new MultiblockActionContext()
+            {
+                Player = player,
+                ActionDescription = tool.DescribeBlockAction,
+                Area = area,
+                BlockTypesInArea = blockTypesInArea,
+                ExperienceSkill = applyXPSkill ? tool.ExperienceSkill : null, //When set to NULL, no AddExperience post effect will be added to the action
+                ExperiencePerAction = tool.ExperienceRate.GetCurrentValue(player?.User),
+                //CaloriesPerAction = tool.NeededCalories(player),  //Le Village
+                ToolUsed = tool,
+                RepairableItem = tool,
+                GameActionConstructor = gameActionConstructor
+            };
+
     }
 }
