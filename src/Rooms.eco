@@ -1,0 +1,8 @@
+{
+  "EmptyBlocksCountAsWindows": false,
+  "RoomCategoryDiminishingReturnRate": 0.5,
+  "WallBlocksPerWindow": 10,
+  "HousePointsMultiplierPerResidentsCount": [
+   1.0, 1.0, 1.2, 1.15, 1.0, .9, .8, .7, .6, .5, .4, .3 
+  ]
+}

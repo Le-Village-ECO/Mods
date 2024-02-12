@@ -1,0 +1,13 @@
+{
+  "RentEnabled": true,
+  "VoiceChatEnabled": true,
+  "FoodVarietyMultiplierEnabled": true,
+  "FoodTastinessMultiplierEnabled": true,
+  "EducationEnabled": false,
+  "SettlementSystemEnabled": true,
+  "CultureEnabled": true,
+  "AllowFaceTrackingOnServer": true,
+  "AchievementsEnabled": true,
+  "CameraModeEnabled": true,
+  "InitialSpawnSelection": true
+}

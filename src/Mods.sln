@@ -23,9 +23,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdditionalStars", "Addition
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{75E08884-4A3C-491E-A307-693EDA164D10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Researcher", "Researcher\Researcher.csproj", "{EC2BCD14-7B1B-43E0-929E-F62A09A485D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Researcher", "Researcher\Researcher.csproj", "{EC2BCD14-7B1B-43E0-929E-F62A09A485D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Industrial Generator", "Industrial Generator\Industrial Generator.csproj", "{8F6A6581-BB00-45E7-8E26-8E4F4E3E29AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Industrial Generator", "Industrial Generator\Industrial Generator.csproj", "{8F6A6581-BB00-45E7-8E26-8E4F4E3E29AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{8BBA4972-0A53-444B-A76E-EB97EBB718B2}"
+	ProjectSection(SolutionItems) = preProject
+		Balance.eco = Balance.eco
+		Civics.eco = Civics.eco
+		Difficulty.eco = Difficulty.eco
+		Disasters.eco = Disasters.eco
+		Features.eco = Features.eco
+		Localization.eco = Localization.eco
+		Network.eco = Network.eco
+		Rooms.eco = Rooms.eco
+		Settlements.eco = Settlements.eco
+		Users.eco = Users.eco
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
