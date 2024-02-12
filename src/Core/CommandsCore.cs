@@ -5,6 +5,7 @@
 
 using Eco.Core;
 using Eco.Core.Utils;
+using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
@@ -36,10 +37,15 @@ namespace Village.Eco.Mods.Core
             var plugin = PluginManager.GetPlugin<PlayersDataPlugin>();
             plugin.ShutdownAsync();
             user.Player.Msg(Localizer.Format("Le fichier PlayersData.eco est normalement sauvé sur le serveur"));
-        }
+            
+			//Log
+			var log= NLogManager.GetLogWriter("LeVillageMods");
+			log.Write($"Admin {user.Name} force sauvegarde de PlayerData.eco");
 
-        //Sous-commande : Consulter les valeurs d'un joueur dans PlayersData
-        [ChatSubCommand("LVCore", "Consulter PlayersData", ChatAuthorizationLevel.Admin)]
+		}
+
+		//Sous-commande : Consulter les valeurs d'un joueur dans PlayersData
+		[ChatSubCommand("LVCore", "Consulter PlayersData", ChatAuthorizationLevel.Admin)]
         public static void Consult(User user)
         {
             user.Player.Msg(Localizer.Format("Pas encore actif, en cours de dev..."));
