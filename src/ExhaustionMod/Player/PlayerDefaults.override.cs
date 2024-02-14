@@ -30,7 +30,7 @@ public static class PlayerDefaults
             { typeof(LVBRedItem), 2 },  //RedBullBoost
             { typeof(LVBPurpleItem), 2 },  //BzhColaBoost
             { typeof(LVBGreenItem), 1 },  //LeVillageBoost
-            { typeof(LVBCoffeItem), 2 },  //CoffeeBoost
+            { typeof(LVBCoffeeItem), 2 },  //CoffeeBoost
         };
     }
     
