@@ -23,7 +23,7 @@ namespace Village.Eco.Mods.ExhaustionMod
 
         public static double CurrentWorldDay => Math.Floor(WorldTime.Day); //On ne garde que la partie entière de la valeur du jour du monde
 
-        public static TimeSpan Calcul => ExhaustionAfterHour * CurrentWorldDay;
+        public static TimeSpan Calcul => ExhaustionAfterHour * (CurrentWorldDay);
 
         [ChatCommand("ExhaustionMod commands")]
         public static void ExhaustionMod() { }
@@ -36,6 +36,7 @@ namespace Village.Eco.Mods.ExhaustionMod
             sb.AppendLine($"La configuration est : {BalanceConfig.Obj.ExhaustionAfterHours} ");
             sb.AppendLine($"Le jour du serveur est : {CurrentWorldDay} ");
             sb.AppendLine($"Calcul : {Calcul.TotalHours} heures");
+            sb.AppendLine($"Un nouveau joueur aura donc {BalanceConfig.Obj.ExhaustionAfterHours} + {Calcul.TotalHours}");
 
             user.Player.InfoBoxLocStr($"{sb}");
         }
