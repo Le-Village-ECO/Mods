@@ -11,4 +11,8 @@
     <Folder Include="Unity\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Eco.ReferenceAssemblies" Version="0.10.1.4-beta-release-603" />
+  </ItemGroup>
+
 </Project>
