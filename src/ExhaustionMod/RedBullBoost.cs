@@ -1,5 +1,5 @@
 ﻿// Le Village
-// Boisson énergisante de 1h
+// Boisson énergisante de 30min
 
 using Eco.Gameplay.Items;
 using Eco.Shared.Localization;
@@ -12,13 +12,13 @@ namespace Village.Eco.Mods.ExhaustionMod
 {
     [Serialized]
     [LocDisplayName("RedBull Boost")]
-    [LocDescription("Redonne 1h d'énergie en cas d'épuisement. Vous donne des ailes !")]  //Description détaillée.
+    [LocDescription("Redonne 30 min d'énergie en cas d'épuisement. Vous donne des ailes !")]  //Description détaillée.
     //[Weight(10000)]  //Défini le poids.
     [Category("Food")]
     //[Tag("Boost")] - TODO ajouter icône tag
     //[Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia - TODO ajouter icône tag
     public partial class LVBRedItem : ExhaustionBoost
     {
-        public override float BoostTime => 1.0f; //1h de boost
+        public override float BoostTime => 0.5f; //30min de boost
     }
 }

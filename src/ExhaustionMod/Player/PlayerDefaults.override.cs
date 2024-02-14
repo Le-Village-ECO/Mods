@@ -27,8 +27,10 @@ public static class PlayerDefaults
         return new Dictionary<Type, int>
         {
             { typeof(StarterCampItem), 1 },
-            { typeof(LVBRedItem), 1 },  //RedBullBoost
+            { typeof(LVBRedItem), 2 },  //RedBullBoost
             { typeof(LVBPurpleItem), 2 },  //BzhColaBoost
+            { typeof(LVBGreenItem), 1 },  //LeVillageBoost
+            { typeof(LVBCoffeItem), 2 },  //CoffeeBoost
         };
     }
     
