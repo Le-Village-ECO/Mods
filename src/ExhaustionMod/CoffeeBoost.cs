@@ -22,7 +22,7 @@ namespace Village.Eco.Mods.ExhaustionMod
     [Category("Food")]
     [Tag("Boost")]
     [Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia
-    public partial class LVBCoffeItem : ExhaustionBoost
+    public partial class LVBCoffeeItem : ExhaustionBoost
     {
         public override float BoostTime => 0.25f; //15min de boost
         public override bool CheckDate => true; //Vérifie consommation 1 fois par jour
