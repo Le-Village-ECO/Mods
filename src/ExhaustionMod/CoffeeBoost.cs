@@ -51,7 +51,7 @@ namespace Village.Eco.Mods.ExhaustionMod
                 // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<LVBCoffeItem>(1)
+                    new CraftingElement<LVBCoffeeItem>(1)
                 });
             this.Recipes = new List<Recipe> { recipe };
 
