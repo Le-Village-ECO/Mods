@@ -20,15 +20,16 @@ namespace Village.Eco.Mods.ExhaustionMod
     [LocDescription("Un petit café pour 15 min. d'énergie : Meilleur rapport qualité/prix !")]  //Description détaillée.
     //[Weight(10000)]  //Défini le poids.
     [Category("Food")]
-    //[Tag("Boost")] - TODO ajouter icône tag
-    //[Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia - TODO ajouter icône tag
+    [Tag("Boost")]
+    [Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia
     public partial class LVBCoffeItem : ExhaustionBoost
     {
         public override float BoostTime => 0.25f; //15min de boost
         public override bool CheckDate => true; //Vérifie consommation 1 fois par jour
     }
 
-    [Ecopedia("Food", "Coffee Boost", subPageName: "Coffee Boost Item")]
+    //[Ecopedia("Food", "Coffee Boost", subPageName: "Coffee Boost Item")]
+    [Ecopedia("Food", "Boost", createAsSubPage: true)]
     public partial class CoffeeBoostRecipe : RecipeFamily
     {
         public CoffeeBoostRecipe() 
