@@ -106,8 +106,8 @@ namespace Eco.Mods.TechTree
         private static IDynamicValue exp                    = new MultiDynamicValue(MultiDynamicOps.Multiply, new ConstantValue(0.1f), damage);
         private static IDynamicValue tier                   = new ConstantValue(2);
         private static IDynamicValue perkDamage             = new MultiDynamicValue(MultiDynamicOps.Sum, new ConstantValue(0), new TalentModifiedValue(typeof(IronAxeItem), typeof(LoggingToolStrengthTalent), 0));
-        private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(4, SmeltingSkill.MultiplicativeStrategy, typeof(SmeltingSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
-
+        //private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(4, SmeltingSkill.MultiplicativeStrategy, typeof(SmeltingSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
+        private static IDynamicValue skilledRepairCost = new ConstantValue(1);
 
         // Tool overrides
 
@@ -118,7 +118,8 @@ namespace Eco.Mods.TechTree
         public override IDynamicValue Tier              => tier;
         public override IDynamicValue SkilledRepairCost => skilledRepairCost;
         public override float DurabilityRate            => DurabilityMax / 750f;
-        public override Item RepairItem                 => Item.Get<IronBarItem>();
+        //public override Item RepairItem                 => Item.Get<IronBarItem>();
+        public override Item RepairItem => Item.Get<IronRepairKitItem>();
         public override int FullRepairAmount            => 1; //4 to 1
     }
 }

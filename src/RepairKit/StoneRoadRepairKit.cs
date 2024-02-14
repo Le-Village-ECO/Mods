@@ -10,9 +10,8 @@ using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Eco.Mods.TechTree;
 
-namespace Village.Eco.Mods.RepairKit
+namespace Eco.Mods.TechTree
 {
     [RequiresSkill(typeof(BasicEngineeringSkill), 1)]
     public partial class StoneRoadRepairKitRecipe : RecipeFamily

@@ -28,7 +28,6 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items.Recipes;
-    using Village.Eco.Mods.RepairKit;
 
 
     /// <summary>
@@ -94,7 +93,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Hammer")]
     [LocDescription("A modern hammer with a non-slip handle made using fiberglass.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(AdvancedSmeltingSkill), 0)]
+    [RepairRequiresSkill(typeof(AdvancedSmeltingSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
@@ -106,6 +105,7 @@ namespace Eco.Mods.TechTree
         private static IDynamicValue tier                   = new ConstantValue(4);
         //private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(15, AdvancedSmeltingSkill.MultiplicativeStrategy, typeof(AdvancedSmeltingSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
         private static IDynamicValue skilledRepairCost = new ConstantValue(2);
+
 
         // Tool overrides
 

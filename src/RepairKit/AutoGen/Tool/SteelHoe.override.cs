@@ -28,7 +28,6 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items.Recipes;
-    using Village.Eco.Mods.RepairKit;
 
 
     /// <summary>

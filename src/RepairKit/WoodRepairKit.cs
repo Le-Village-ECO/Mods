@@ -5,14 +5,12 @@ using Eco.Core.Items;
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
-using Eco.Gameplay.Skills;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Eco.Mods.TechTree;
 
-namespace Village.Eco.Mods.RepairKit
+namespace Eco.Mods.TechTree
 {
     public partial class WoodRepairKitRecipe : RecipeFamily
     {
