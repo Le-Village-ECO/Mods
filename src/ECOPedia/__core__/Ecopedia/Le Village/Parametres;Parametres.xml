@@ -1,0 +1,22 @@
+<ecopedia>
+  <section type="header">PARAMÈTRES GÉNÉRAUX</section>
+  <section>
+- Météorite à 30 jours
+- Haute Collaboration standard
+- Taille du monde 1km2
+- Portes et fenêtres sont obligatoires pour fermer une pièce
+- Fonctionnalités "Goût" et "Variété" de la nourriture sont activées (Release 9.4)
+- Construction sur les océans profonds interdite
+  </section>
+  
+  <section type="header">L'ÉPUISEMENT (EXHAUSTION)</section>
+  <section>
+- Fonction épuisement (exhaustion) activée : 3h/jour avec report jusqu'à 9h
+- Bonus de 5h lors de la 1ère connexion
+- Bonus de 3h par jour manqué lors d'une connexion tardive au serveur
+
+Actions ajoutées même si épuisé :
+- Conduire/déplacer un véhicule de transport
+- Utiliser un marteau
+  </section>
+</ecopedia>
