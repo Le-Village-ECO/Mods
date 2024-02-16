@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eco.ReferenceAssemblies" Version="0.10.1.4-beta-release-603" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoGen\WorldObject\" />
+  </ItemGroup>
+
+</Project>
