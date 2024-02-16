@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.ExhaustionMod
     }
 
     //[Ecopedia("Food", "Coffee Boost", subPageName: "Coffee Boost Item")]
-    [Ecopedia("Food", "Boost", createAsSubPage: true)]
+    [Ecopedia("Food", "Boost", subPageName: "Coffee Boost")]
     public partial class CoffeeBoostRecipe : RecipeFamily
     {
         public CoffeeBoostRecipe() 
