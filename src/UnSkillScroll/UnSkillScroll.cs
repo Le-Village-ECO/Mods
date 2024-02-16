@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 using Eco.Core;
 using Eco.Core.Items;
 using Eco.Core.Utils;
+using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.TextLinks;
+using Eco.ModKit.Internal;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Services;
@@ -30,7 +32,8 @@ namespace Village.Eco.Mods.UnSkillScroll
     [Tag("Skill Scrolls")]
     public abstract class UnSkillScroll : Item  //Item generique avec lien vers Unity3D
     {
-        public static ThreadSafeAction<User, Skill> UnlearnSkillEvent = new();
+        //TODO en cours de Warang sur les events
+        //public static ThreadSafeAction<User, Skill> UnlearnSkillEvent = new();
 
         public const double RefundSpecialtyDaysCooldown = 2; //Delai entre 2 utilisation de parchemin d'oubli
         public abstract Type SkillType { get; }  //Recuperation de la specialite definie dans le parchemin (1 pour chaque spe.)
@@ -102,8 +105,9 @@ namespace Village.Eco.Mods.UnSkillScroll
             player.User.UserXP.AddStars(skill.Tier);
             player.User.MailLoc($"Vous avez récupéré {skill.Tier} étoile(s)", NotificationCategory.Skills);
 
+            //TODO en cours de Warang sur les events
             // Event lié à l'oubli de la spécialité
-            UnlearnSkillEvent?.Invoke(player.User, skill);
+            //UnlearnSkillEvent?.Invoke(player.User, skill);
 
             //Mise a jour des donnees du joueur
             playerData.LastUnspecializingDay = WorldTime.Day;
@@ -112,11 +116,14 @@ namespace Village.Eco.Mods.UnSkillScroll
             //  Supprimer le parchemin apres utilisation avec succes
             var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
             using (var changes = InventoryChangeSet.New(inventory, player.User))
-
             {
                 changes.ModifyStack(itemStack, -1);
                 changes.Apply();
             }
+
+            //Log
+            var log = NLogManager.GetLogWriter("LeVillageMods");
+            log.Write($"Le joueur **{player.DisplayName}** a oublié **{skill.DisplayName}**.");
         }
     }
 
