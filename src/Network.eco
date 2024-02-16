@@ -3,26 +3,18 @@
  "Playtime": "222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
  "Password": "chocolatine",
  "DiscordAddress": "xk2RDsM8ru",
- "Description": "[FR] <color=#0AC215>Le Village</color> - Cycle 10 - <color=#F4A73F>Débutants bienvenus</color>",
+ "Description": "[FR] <color=#0AC215>Le Village</color> - Cycle 10 - <color=#F4A73F>Debutants bienvenus</color>",
  "DetailedDescription": "
- Concernant le serveur :
- - Organisé et activement administré
- - Principe de jeu proche du concept vanille du jeu
- - Style orienté 'casual' et débutant
+ Serveur activement administre et oriente 'casual'/debutant avec un certain nombre de modifications qui respectent les concepts 'vanille' du jeu voulu par les developpeurs. 
  
- Épuisement (Exhaustion) : 3h/jour cumulable 9h + bonus 1ère connexion et connexion tardive
+ Epuisement (Exhaustion) : 3h/jour cumulable 9h + bonus 1ere connexion et connexion tardive (voir Mods)
  
  Modifications principales :
  - DiscordLink
- - ExhaustionMod
- - Parchemins d'oublie de spécialité
- - Prospection pétrole
- - Kits de réparation
- - Bonus d'expérience
  - ECO Price calculator
+ - Mods exclusifs Le Village
  
- Tous les détails sur le Discord
- 
+ Tous les details sur le Discord
  ",
  "ServerCategory": "Beginner",
  "IPAddress": "51.178.1.67",
