@@ -74,7 +74,7 @@ namespace Village.Eco.Mods.ExhaustionMod
         }
 
         [ChatSubCommand("Fatigue", "Consulter le délai d'un joueur", ChatAuthorizationLevel.Admin)]
-        public static void CheckPlayer(User user, User? targetUser = null)
+        public static void CheckPlayer(User user, User targetUser)
         {
             var currentUser = targetUser ?? user;
 
