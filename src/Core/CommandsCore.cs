@@ -14,24 +14,24 @@ using Eco.Shared.Localization;
 namespace Village.Eco.Mods.Core
 {
     [ChatCommandHandler]
-    public static class CommandsCore
+    public static partial class CommandsCore
     {
         //Commandes Admin Core	
         [ChatCommand("Commandes admin du Village.", ChatAuthorizationLevel.Admin)]
-        public static void LVCore(User user) { }
+        public static void LVCore() { }
 
-        [ChatSubCommand("LVCore", "Make your character invisible", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVCore", "Make your character invisible", "Ghost", ChatAuthorizationLevel.Admin)]
         public static void Invisible(User user)
         {
             user.IsInvisible = !user.IsInvisible;
-            //Voir UserCommands.cs
-            //minimap todo: update visibility status
-            //if (user.IsInvisible) MinimapManager.RemoveMinimapObject(user.Player);
-            //else                  MinimapManager.AddOrUpdateMinimapObject(user.Player);
+            //Portion de code inspirée de UserCommands.cs avec aussi MinimapManager.cs
+            //Cela semble fonctionner !!
+            if (user.IsInvisible) MinimapManager.Obj.Objects.Remove(user.Player.MinimapObject);
+            else MinimapManager.Obj.Objects.Add(user.Player.MinimapObject);
         }
 
         //Sous-commande : Forcer la sauvegarde du fichier PlayersData sur le serveur
-        [ChatSubCommand("LVCore", "Forcer sauvegarde de PlayersData", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVCore", "Forcer sauvegarde de PlayersData.eco", ChatAuthorizationLevel.Admin)]
         public static void Force(User user) 
         {
             var plugin = PluginManager.GetPlugin<PlayersDataPlugin>();
@@ -41,18 +41,17 @@ namespace Village.Eco.Mods.Core
 			//Log
 			var log= NLogManager.GetLogWriter("LeVillageMods");
 			log.Write($"Admin {user.Name} force sauvegarde de PlayerData.eco");
-
 		}
 
 		//Sous-commande : Consulter les valeurs d'un joueur dans PlayersData
-		[ChatSubCommand("LVCore", "Consulter PlayersData", ChatAuthorizationLevel.Admin)]
+		[ChatSubCommand("LVCore", "Consulter PlayersData - TODO", ChatAuthorizationLevel.Admin)]
         public static void Consult(User user)
         {
             user.Player.Msg(Localizer.Format("Pas encore actif, en cours de dev..."));
         }
         
         //Sous-commande : Modifier une valeur d'un joueur dans PlayersData
-        [ChatSubCommand("LVCore", "Modifier PlayersData", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVCore", "Modifier PlayersData - TODO", ChatAuthorizationLevel.Admin)]
         public static void Change(User user)
         {
             user.Player.Msg(Localizer.Format("Pas encore actif, en cours de dev..."));
