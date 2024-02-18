@@ -1,19 +1,22 @@
 ﻿/* Le Village
 Commandes de chat pour le mod Exhaustion :
-Exhaustion              - liste de commandes
-Exhaustion reset        - Met à 0 le timer d'un joueur (admin)
-Exhaustion checktimer   - Info sur le dernier abandon
-Exhaustion checkplayer  - Info sur le dernier abandon d'un joueur (admin)
-Exhaustion informations   - Info générale sur UnSkill
+Fatigue                 - liste de commandes
+Fatigue reset           - Met à 0 le timer d'un joueur (admin)
+Fatigue checktimer      - Info sur le dernier abandon
+Fatigue checkplayer     - Info sur le dernier abandon d'un joueur (admin)
+Fatigue informations    - Info générale sur UnSkill
+Fatigue worldday        - Date du jour et calcul bonus connexion
 */
 
 using Eco.Core;
 using Eco.Gameplay.Aliases;
 using Eco.Gameplay.Players;
+using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using Eco.Shared.Services;
 using Eco.Simulation.Time;
+using System.Text;
 using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.ExhaustionMod
@@ -22,7 +25,7 @@ namespace Village.Eco.Mods.ExhaustionMod
     public static class CommandsExhaustion
     {
         [ChatCommand("Commandes liées à l'épuisement", ChatAuthorizationLevel.User)]
-        public static void Fatigue(User user) { }
+        public static void Fatigue() { }
 
         [ChatSubCommand("Fatigue", "Remettre à 0 le délai", ChatAuthorizationLevel.Admin)]
         public static void Reset(User user, User targetUser)
@@ -47,7 +50,7 @@ namespace Village.Eco.Mods.ExhaustionMod
 
         }
 
-        [ChatSubCommand("Fatigue", "Consulter le délai", ChatAuthorizationLevel.User)]
+        [ChatSubCommand("Fatigue", "Consulter son délai", ChatAuthorizationLevel.User)]
         public static void CheckTimer(User user)
         {
             //Recuperation des donnees du joueur
@@ -70,10 +73,10 @@ namespace Village.Eco.Mods.ExhaustionMod
             user.Player.InfoBoxLocStr(message);
         }
 
-        [ChatSubCommand("Fatigue", "Consulter le délai", ChatAuthorizationLevel.Admin)]
-        public static void CheckPlayer(User user, User targetUser = null)
+        [ChatSubCommand("Fatigue", "Consulter le délai d'un joueur", ChatAuthorizationLevel.Admin)]
+        public static void CheckPlayer(User user, User? targetUser = null)
         {
-            var currentUser = targetUser != null ? targetUser : user;
+            var currentUser = targetUser ?? user;
 
             //Recuperation des donnees du joueur cible
             var plugin = PluginManager.GetPlugin<PlayersDataPlugin>();
@@ -105,7 +108,7 @@ namespace Village.Eco.Mods.ExhaustionMod
             message += "\r\n";
             message += Localizer.Do($"Une fois épuisé, toutes actions consommant des calories est impossible sauf :");
             message += "\r\n";
-            message += Localizer.Do($"(1) Les véhicules de transport (camions et bateaux)");
+            message += Localizer.Do($"(1) Les véhicules de transport (terrestres et maritimes)");
             message += "\r\n";
             message += Localizer.Do($"(2) Les marteaux quelques soient leur utilisation");
             message += "\r\n";
@@ -121,6 +124,19 @@ namespace Village.Eco.Mods.ExhaustionMod
             button = Localizer.Do($"J'ai compris !");
 
             user.Player.LargeInfoBox(header, message, button);
+        }
+
+        [ChatSubCommand("Fatigue", "Affichage du jour du serveur", ChatAuthorizationLevel.User)]
+        public static void WorldDay(User user)
+        {
+            StringBuilder sb = new();
+
+            sb.AppendLine($"Configuration serveur : {BalanceConfig.Obj.ExhaustionAfterHours} heures/jour ");
+            sb.AppendLine($"Jour technique serveur : {InitialBoost.CurrentWorldDay} ");
+            sb.AppendLine($"Calcul du bonus : {InitialBoost.Calcul.TotalHours} heures");
+            sb.AppendLine($"Un nouveau joueur aura donc {BalanceConfig.Obj.ExhaustionAfterHours} + {InitialBoost.Calcul.TotalHours} heures avant épuisement");
+
+            user.Player.InfoBoxLocStr($"{sb}");
         }
     }
 }
