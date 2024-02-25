@@ -100,7 +100,7 @@ namespace Eco.Mods.TechTree
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Steam Tractor Sower")] // Defines the localized name of the item.
     [Weight(10000)] // Defines how heavy SteamTractorSower is.
-    [RepairRequiresSkill(typeof(MechanicsSkill), 0)]
+    //[RepairRequiresSkill(typeof(MechanicsSkill), 0)]
     [Category("Tool")] // Overrides internal inherited hidden categorization from abstract parents.
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     [Tag("Tool")]

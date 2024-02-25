@@ -31,7 +31,7 @@ namespace Eco.Mods.TechTree
 
 
     /// <summary>
-    /// <para>Server side recipe definition for "IronAxe".</para>
+    /// <para>Server side recipe definition for "IronHammer".</para>
     /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
     /// </summary>
     /// <remarks>
@@ -39,15 +39,15 @@ namespace Eco.Mods.TechTree
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
     [RequiresSkill(typeof(SmeltingSkill), 1)]
-    [Ecopedia("Items", "Tools", subPageName: "Iron Axe Item")]
-    public partial class IronAxeRecipe : RecipeFamily
+    [Ecopedia("Items", "Tools", subPageName: "Iron Hammer Item")]
+    public partial class IronHammerRecipe : RecipeFamily
     {
-        public IronAxeRecipe()
+        public IronHammerRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "IronAxe",  //noloc
-                displayName: Localizer.DoStr("Iron Axe"),
+                name: "IronHammer",  //noloc
+                displayName: Localizer.DoStr("Iron Hammer"),
 
                 // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
                 // type of the item, the amount of the item, the skill required, and the talent used.
@@ -62,7 +62,7 @@ namespace Eco.Mods.TechTree
                 // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<IronAxeItem>()
+                    new CraftingElement<IronHammerItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
             this.ExperienceOnCraft = 0.1f; // Defines how much experience is gained when crafted.
@@ -71,11 +71,11 @@ namespace Eco.Mods.TechTree
             this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(SmeltingSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronAxeRecipe), start: 0.5f, skillType: typeof(SmeltingSkill), typeof(SmeltingFocusedSpeedTalent), typeof(SmeltingParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronHammerRecipe), start: 0.5f, skillType: typeof(SmeltingSkill), typeof(SmeltingFocusedSpeedTalent), typeof(SmeltingParallelSpeedTalent));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Iron Axe"
+            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Iron Hammer"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Iron Axe"), recipeType: typeof(IronAxeRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Iron Hammer"), recipeType: typeof(IronHammerRecipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
@@ -90,31 +90,25 @@ namespace Eco.Mods.TechTree
     }
 
     [Serialized]
-    [LocDisplayName("Iron Axe")]
-    [LocDescription("A sturdy iron axe made for cutting down trees.")]
+    [LocDisplayName("Iron Hammer")]
+    [LocDescription("An iron hammer allows for more sophisticated building.")]
     [Tier(2)]
     //[RepairRequiresSkill(typeof(SmeltingSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
-    public partial class IronAxeItem : AxeItem
+    public partial class IronHammerItem : HammerItem
     {
                                                                                                                                                                                                                                            // Static values
-        private static IDynamicValue caloriesBurn           = new MultiDynamicValue(MultiDynamicOps.Multiply, new TalentModifiedValue(typeof(IronAxeItem), typeof(LoggingToolEfficiencyTalent)), CreateCalorieValue(20, typeof(LoggingSkill), typeof(IronAxeItem)));
-        private static IDynamicValue damage                 = new MultiDynamicValue(MultiDynamicOps.Sum, new TalentModifiedValue(typeof(IronAxeItem), typeof(LoggingToolStrengthTalent), 0), CreateDamageValue(1.5f, typeof(LoggingSkill), typeof(IronAxeItem)));
-        private static IDynamicValue exp                    = new MultiDynamicValue(MultiDynamicOps.Multiply, new ConstantValue(0.1f), damage);
+        private static IDynamicValue caloriesBurn           = new MultiDynamicValue(MultiDynamicOps.Multiply, new TalentModifiedValue(typeof(IronHammerItem), typeof(ToolEfficiencyTalent)), CreateCalorieValue(8, typeof(SelfImprovementSkill), typeof(IronHammerItem)));
         private static IDynamicValue tier                   = new ConstantValue(2);
-        private static IDynamicValue perkDamage             = new MultiDynamicValue(MultiDynamicOps.Sum, new ConstantValue(0), new TalentModifiedValue(typeof(IronAxeItem), typeof(LoggingToolStrengthTalent), 0));
         //private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(4, SmeltingSkill.MultiplicativeStrategy, typeof(SmeltingSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
         private static IDynamicValue skilledRepairCost = new ConstantValue(1);
 
         // Tool overrides
 
         public override IDynamicValue CaloriesBurn      => caloriesBurn;
-        public override IDynamicValue Damage            => damage;
-        public override Type ExperienceSkill            => typeof(LoggingSkill);
-        public override IDynamicValue ExperienceRate    => exp;
         public override IDynamicValue Tier              => tier;
         public override IDynamicValue SkilledRepairCost => skilledRepairCost;
         public override float DurabilityRate            => DurabilityMax / 750f;
