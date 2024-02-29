@@ -6,7 +6,7 @@ Le Village met en place un certain nombre de modifications (dit Mods) mais on s'
 Certains Mods sont développés spécifiquement par Le Village et peuvent être/seront dans certains cas disponibles pour la communauté.
 Notez cependant que ces Mods sont en constante évolution/correction et peuvent donc être dans un statut "beta". Vos retours constructifs dans le forum 'idées-et-avis' du Discord sont les bienvenus, n'hésitez donc pas à y ouvrir un post.
 
-Membres de l'équipe :
+<u>membres de l'équipe :</u>
 - Spouke
 - Dark_NoTv
 - Apocalis
@@ -18,18 +18,23 @@ Membres de l'équipe :
   <section>
 <b>DiscordLink :</b> Lien entre le serveur de jeu et le Discord
 <b>ECO Price Calculator :</b> Outil web d'aide au calcul des prix à partir des données du serveur
+<b>Ucat's Price Calculator :</b> Permet le calcul des prix depuis une page web en utilisant les données du serveur.
+<b>Chronicler :</b> Permet un suivi exhaustif des actions des joueurs
 <b>Mods du Village :</b> Modifications exclusives, voir les détails dans le Discord
+<b>Pierres cimentées uniquement du mod Polychrome</b>
+<b>Erc Garden</b>
+<b>More Shapes</b>
   </section>
 
   <section type="header">COÛT DES SPÉCIALITÉS</section>
   <section>
-Concept : Plus une spécialité est avancée, plus elle est difficile à apprendre. Il devient donc plus difficile d'accumuler plusieurs métiers d'une chaîne de production.
+<u>Concept :</u> Plus une spécialité est avancée, plus elle est difficile à apprendre. Il devient donc plus difficile d'accumuler plusieurs métiers d'une chaîne de production.
 
-Modification :
+<u>Modification :</u>
 - Chaque spécialité à un niveau Tier (de 1 à 4) et il faut utiliser autant d'étoile que le niveau d'une spécialité pour la choisir.
 - Il est possible d'oublier une spécialité pour récupérer les étoiles grâce à un parchemin qui se fabrique au niveau 7 de la spécialité considérée.
 
-Conditions d'utilisation des parchemins d'oubli :
+<u>Conditions d'utilisation des parchemins d'oubli :</u>
 1- Avoir le niveau maximum de la spécialité
 2- Ne pas avoir lancé de fabrication avec cette spécialité
 3- Ne pas avoir déjà oublié une spécialité dans les 2 derniers jours

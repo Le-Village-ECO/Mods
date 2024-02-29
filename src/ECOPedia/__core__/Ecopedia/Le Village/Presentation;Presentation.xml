@@ -1,7 +1,6 @@
 <ecopedia>
   <section>
 Bienvenu sur <b>le serveur du Village</b> !
-Voici qui nous sommes et ce que vous trouverez ici.
   </section>
   
   <section type="header">LES RÈGLES</section>
@@ -10,7 +9,7 @@ Voici qui nous sommes et ce que vous trouverez ici.
 <b>(2)</b> L’utilisation de plusieurs comptes de jeu est interdite.
 <b>(3)</b> Il est demandé à tous les joueurs d’avoir le même pseudo sur Discord et dans ECO. Cela peut se faire en changeant son pseudo spécifiquement sur le Discord du Village.
 
-Lien du discord : https://discord.gg/xk2RDsM8ru
+Lien du discord : <u>https://discord.gg/xk2RDsM8ru</u>
   </section>
   
   <section type="header">L'ÉQUIPE D'ADMINISTRATION</section>
@@ -20,11 +19,12 @@ Lien du discord : https://discord.gg/xk2RDsM8ru
 <b>(3)</b> Dans le jeu ECO, les administrateurs sont là pour aider les joueurs et débloquer des situations ou des problèmes liés à des anomalies du jeu. Ils n’ont donc aucune influence sur le déroulement normal du jeu (comprendre le "gameplay") mais s’assurent que tous les joueurs ont la meilleure expérience de jeu possible dans le respect des règles du serveur.
 <b>(4)</b> Il est fortement recommandé de passer par la création d'un ticket dans le Discord afin d'entrer en contact avec un membre de l'équipe d'administration.
 
-Membres de l'équipe :
+<u>Membres de l'équipe :</u>
 Spouke
 CrazyA
 Apocalis
 Dark_NoTv
-  </section>
+  
+</section>
   
 </ecopedia>
