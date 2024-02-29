@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.Core
 {
     public class PlayersDataPlugin : IShutdownablePlugin, IModKitPlugin
     {
-        private PluginConfig<PlayersDataConfig> config;
+        private readonly PluginConfig<PlayersDataConfig> config;
         public PlayersDataPlugin() => config = new PluginConfig<PlayersDataConfig>("PlayersData");
 
         public Task ShutdownAsync() => config.SaveAsync();
@@ -32,6 +32,8 @@ namespace Village.Eco.Mods.Core
         {
             if (config.Config.PlayerDataPerId.TryAdd(GetUserId(user), data) is false)
                 config.Config.PlayerDataPerId[GetUserId(user)] = data;
+
+            Task.Run(() => config.SaveAsync());
         }
         public void AddOrSetPlayerData(Player player, PlayerData data) => AddOrSetUserData(player.User, data);
     }
