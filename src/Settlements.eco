@@ -132,9 +132,9 @@
     0.0
   ],
   "MaxNumberOfCulturalProperties": [
-    3,
-    10,
-    25
+    2,
+    5,
+    12
   ],
   "MayAnnexSameLevel": false,
   "MayAnnexSubSettlements": true,
