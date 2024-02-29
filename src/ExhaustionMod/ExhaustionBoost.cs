@@ -1,13 +1,11 @@
 ﻿// Le Village
-// Ce mod ajoute un objet "redbull" qui est un consommable pour récupérer 1h de jeu une fois épuisé.
-// Il va de pair avec l'activation de la fonctionnalité "Exhaution" de ECO.
-// Aucune recette associée, il doit se donner par commande admin ou, par exemple, dans le sac de départ.
-//TODO : Eventuellement ajouter une pop-up de confirmation avant de consommer dans le cas du contrôle journalier
-//TODO : Ajouter l'icône Boost (tag) dans Unity
+// Abstract class pour gérer tous les consommable de type boost qui ajoute de l'énergie
 
 using Eco.Core;
+using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
+using Eco.Gameplay.Skills;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Utils;
@@ -79,6 +77,10 @@ namespace Village.Eco.Mods.ExhaustionMod
                 changes.ModifyStack(itemStack, -1);
                 changes.Apply();
             }
+
+            //Log
+            var log = NLogManager.GetLogWriter("LeVillageMods");
+            log.Write($"Le joueur **{player.DisplayName}** a utilisé **{itemStack}**.");
 
             return base.OnUsed(player, itemStack);
         }
