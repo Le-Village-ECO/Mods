@@ -91,7 +91,7 @@
       "InputMin": 0.0,
       "InputHalflife": 10.0,
       "OutputAtMin": 0.0,
-      "OutputLimit": 90.0
+      "OutputLimit": 60.0
     },
     {
       "InputMin": 0.0,
