@@ -16,7 +16,7 @@ namespace Village.Eco.Mods.UnSkillScroll
     [LocDescription("Lire ce parchemin vous fera oublier la spécialité Couture sous certaines conditions")]
     public partial class TailoringUnSkillScroll : UnSkillScroll<TailoringSkill> { }
 
-    [RequiresSkill(typeof(HuntingSkill), 7)]
+    [RequiresSkill(typeof(TailoringSkill), 7)]
     [Ecopedia("Professions", "Tailleur", subPageName: "Tailoring UnSkill Scroll Item")]
     public partial class TailoringUnSkillScrollRecipe : RecipeFamily
     {
