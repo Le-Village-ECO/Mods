@@ -31,6 +31,7 @@ namespace Village.Eco.Mods.ExhaustionMod
         public override string OnUsed(Player player, ItemStack itemStack)
         {
             string message;
+            var boostName = itemStack.Item;
 
             if (player.User.ExhaustionMonitor.IsExhausted == false)  //On bloque si le joueur n'est pas épuisé
             {
@@ -80,7 +81,7 @@ namespace Village.Eco.Mods.ExhaustionMod
 
             //Log
             var log = NLogManager.GetLogWriter("LeVillageMods");
-            log.Write($"Le joueur **{player.DisplayName}** a utilisé **{itemStack}**.");
+            log.Write($"Le joueur **{player.DisplayName}** a utilisé **{boostName}**.");
 
             return base.OnUsed(player, itemStack);
         }
