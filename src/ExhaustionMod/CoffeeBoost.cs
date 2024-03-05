@@ -1,7 +1,6 @@
 ﻿// Le Village
 // Boisson énergisante de 15min avec recette de fabrication
-//TODO : Revoir la recette de fabrication
-//TODO : Incorporer un contrôle pour ne permettre cette boisson que 1 fois par jour.
+//TODO : Revoir la recette de fabrication ?
 
 using Eco.Core.Items;
 using Eco.Gameplay.Components;
@@ -43,7 +42,8 @@ namespace Village.Eco.Mods.ExhaustionMod
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new(typeof(PaperItem), 1, true),
+                    //new(typeof(PaperItem), 1, true),
+                    new("NaturalFiber", 5, true),
                 },
 
                 // Define our recipe output items.
