@@ -1,5 +1,6 @@
 ﻿// Le village
 // Ajoute un stockage dans l'établi d'outillage (5 emplacements de 5 kits de réparation)
+// Erreurs normales car manque le fichier ToolBenchObject.cs dans le projet.
 
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Components.Storage;
