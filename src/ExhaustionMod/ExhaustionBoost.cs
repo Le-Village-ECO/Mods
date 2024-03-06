@@ -47,15 +47,18 @@ namespace Village.Eco.Mods.ExhaustionMod
                 var plugin = PluginManager.GetPlugin<PlayersDataPlugin>();
                 var playerData = plugin.GetPlayerDataOrDefault(player);
 
-                var daysSinceLastBoost = WorldTime.Day - playerData.LastDailyBoost;
-                if (playerData.LastDailyBoost > 0 && daysSinceLastBoost < DailyBoostCooldown)
+                //var daysSinceLastBoost = WorldTime.Day - playerData.LastDailyBoost;
+                int playerDayInteger = (int) playerData.LastDailyBoost;
+                int worldDayInteger = (int) WorldTime.Day;
+                //if (playerData.LastDailyBoost > 0 && daysSinceLastBoost < DailyBoostCooldown)
+                if (playerData.LastDailyBoost > 0 && playerDayInteger == worldDayInteger)
                 {
-                    var timeUntilDailyBoost = DailyBoostCooldown - daysSinceLastBoost;
-                    var coolDownDuration = TimeSpan.FromDays(timeUntilDailyBoost);
+                    //var timeUntilDailyBoost = DailyBoostCooldown - daysSinceLastBoost;
+                    //var coolDownDuration = TimeSpan.FromDays(timeUntilDailyBoost);
 
-                    //TODO : Revoir le format d'affichage du temps d'attente
                     //Voir UserCommands.cs : public static void Now
-                    message = Localizer.Do($"Vous devez attendre {TimeFormatter.FormatSimple(coolDownDuration)} avant de reprendre {itemStack}.");
+                    //message = Localizer.Do($"Vous devez attendre {TimeFormatter.FormatSimple(coolDownDuration)} avant de reprendre {itemStack}.");
+                    message = Localizer.Do($"Vous devez attendre 1 jour avant de reprendre {boostName}.");
                     player.ErrorLocStr(message);
 
                     return base.OnUsed(player, itemStack);
