@@ -11,7 +11,7 @@ namespace ExhaustionMod
         public static void AddEnergy(this ExhaustionMonitor monitor, float hours)
         {
             var exhaustionMonitorFields = typeof(ExhaustionMonitor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-            var extraEnergySecondsFieldInfo = exhaustionMonitorFields.First(p => p.Name == "ChangeSets");
+            var extraEnergySecondsFieldInfo = exhaustionMonitorFields.First(p => p.Name == "extraEnergySeconds");
             var extraEnergySecondsFieldValue = (double)extraEnergySecondsFieldInfo.GetValue(monitor)!;
 
             monitor.Energize(hours);
