@@ -102,8 +102,8 @@ namespace Village.Eco.Mods.UnSkillScroll
 
             //Oubli de la specialite + recuperation de(s) etoile(s)
             await player.User.Skillset.Reset(SkillType, false);
-            player.User.UserXP.AddStars(skill.Tier);
-            player.User.MailLoc($"Vous avez récupéré {skill.Tier} étoile(s)", NotificationCategory.Skills);
+            player.User.UserXP.AddStars(1);
+            player.User.MailLoc($"Vous avez récupéré 1 étoile", NotificationCategory.Skills);
 
             //TODO en cours de Warang sur les events
             // Event lié à l'oubli de la spécialité
