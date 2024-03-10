@@ -48,5 +48,6 @@ namespace Village.Eco.Mods.Core
     {
         [Serialized] public double LastUnspecializingDay { get; set; } = 0; //Unskill mod
         [Serialized] public double LastDailyBoost { get; set; } = 0; //Exhaustion mod
+        [Serialized] public bool BoostWE { get; set; } = false; //Boost Week-end
     }
 }
