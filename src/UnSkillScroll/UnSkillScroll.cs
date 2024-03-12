@@ -100,10 +100,14 @@ namespace Village.Eco.Mods.UnSkillScroll
             //Une confirmation finale du joueur est indispensable et obligatoire
             if (await player.User.ConfirmBoxLoc($"Etes-vous sûr de vouloir abandonner {skill.UILink()} ?") is false) return;
 
-            //Oubli de la specialite + recuperation de(s) etoile(s)
+            //Oubli de la specialite
             await player.User.Skillset.Reset(SkillType, false);
-            player.User.UserXP.AddStars(1);
-            player.User.MailLoc($"Vous avez récupéré 1 étoile", NotificationCategory.Skills);
+
+            //Récupération des étoiles
+            int stars = LVConfigurePlugin.Config.SkillTierCost ? skill.Tier : 1;
+
+            player.User.UserXP.AddStars(stars);
+            player.User.MailLoc($"Vous avez récupéré {stars} étoile(s)", NotificationCategory.Skills);
 
             //TODO en cours de Warang sur les events
             // Event lié à l'oubli de la spécialité
