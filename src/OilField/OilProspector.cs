@@ -1,4 +1,7 @@
-﻿using Eco.Core.Plugins.Interfaces;
+﻿//Le Village - Détecteur de pétrole
+//TODO - Revoir et comprendre GetOilAmount
+
+using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Shared.Utils;
 using Eco.Simulation.WorldLayers.Layers;
