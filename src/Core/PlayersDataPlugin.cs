@@ -17,8 +17,8 @@ namespace Village.Eco.Mods.Core
         public PlayersDataPlugin() => config = new PluginConfig<PlayersDataConfig>("PlayersData");
 
         public Task ShutdownAsync() => config.SaveAsync();
-        public string GetCategory() => Localizer.DoStr("PlayersDataConfig");
-        public string GetStatus() => Localizer.DoStr("PlayersDataConfig");
+        public string GetCategory() => Localizer.DoStr("LeVillageMods");
+        public string GetStatus() => Localizer.DoStr("Active");
 
         public static string GetUserId(User user)
             => user.SteamId?.IfEmpty(user.SlgId) ?? user.SlgId;

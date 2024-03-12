@@ -57,13 +57,20 @@ namespace Village.Eco.Mods.Core
             user.Player.Msg(Localizer.Format("Pas encore actif, en cours de dev..."));
         }
 
-        //Sous-commande : Modifier une valeur d'un joueur dans PlayersData
+        //Sous-commande : Récupérer l'ID d'un joueur
         [ChatSubCommand("LVCore", "Récupérer l'ID d'un joueur", ChatAuthorizationLevel.Admin)]
         public static void PlayerID(User user, User targetUser)
         {
             string playerID = targetUser.SteamId?.IfEmpty(targetUser.SlgId) ?? targetUser.SlgId;
             user.Player.Msg(Localizer.Format($"Joueur {targetUser}  = ID {playerID}"));
 
+        }
+
+        //Sous-commande : Afficher les configurations
+        [ChatSubCommand("LVCore", "Afficher les configurations", ChatAuthorizationLevel.Admin)]
+        public static void Config(User user)
+        {
+            user.Player.MsgLoc($"Configuration **SkillTierCost** : {LVConfigurePlugin.Config.SkillTierCost}");
         }
     }
 
