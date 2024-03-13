@@ -18,6 +18,7 @@ namespace Village.Eco.Mods.Core
 
         public Task ShutdownAsync() => config.SaveAsync();
         public string GetCategory() => Localizer.DoStr("LeVillageMods");
+        public override string ToString() => Localizer.DoStr("Players Data");
         public string GetStatus() => Localizer.DoStr("Active");
 
         public static string GetUserId(User user)

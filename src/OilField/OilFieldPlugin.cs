@@ -12,6 +12,7 @@ using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
+using Eco.Shared.Localization;
 using Eco.Simulation.WorldLayers;
 using Eco.Simulation.WorldLayers.Layers;
 using System;
@@ -21,8 +22,6 @@ namespace Village.Eco.Mods.OilField
 {
     public class OilFieldPlugin : IInitializablePlugin, IModKitPlugin
     {
-        public string GetCategory() => "LeVillageMods";
-        public string GetStatus() => "Active";
         public void Initialize(TimedTask timer)
         {
             var log = NLogManager.GetLogWriter("LeVillageMods");
@@ -69,5 +68,8 @@ namespace Village.Eco.Mods.OilField
                 }
             });
         }
+        public string GetCategory() => "LeVillageMods";
+        public override string ToString() => Localizer.DoStr("Oil Field");
+        public string GetStatus() => "Active";
     }
 }

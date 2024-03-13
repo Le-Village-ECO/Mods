@@ -8,7 +8,7 @@ namespace Village.Eco.Mods.Core
     [LocDisplayName("LV Configure Plugin")]
     public class LVConfigurePlugin : IModKitPlugin, IConfigurablePlugin
     {
-        private static readonly PluginConfig<LVConfigureConfig> config;
+        private static readonly PluginConfig<LVConfigureConfig> config; 
         public IPluginConfig PluginConfig => config;
         public static LVConfigureConfig Config => config.Config;
         static LVConfigurePlugin() => config = new PluginConfig<LVConfigureConfig>("LVConfigure");
@@ -17,6 +17,7 @@ namespace Village.Eco.Mods.Core
         public void OnEditObjectChanged(object o, string param) => this.SaveConfig();
 
         public string GetCategory() => Localizer.DoStr("LeVillageMods");
+        public override string ToString() => Localizer.DoStr("Configuration");
         public string GetStatus() => Localizer.DoStr("Active");
 
     }
