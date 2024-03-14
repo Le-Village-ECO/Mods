@@ -43,8 +43,7 @@ namespace Eco.Mods.TechTree
         }
 
         static void CrazyAchievement(AchievementDefinition def) => Stomach.FoodContentUpdatedEvent.Add((user, foodtype) => { if (user.Stomach.Contents.Last().Food.DisplayName.ToString().Contains("Charred")) def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez mangé {def.RequiredProgress} aliments carbonisés !"), 1); });
-        static void ForgetSpecialty(AchievementDefinition def) => UnSkillScroll.UnlearnSkillEvent.Add((user, skill) => def.TriggerAchievementProgress(user, () => Localizer.Do($"Vous avez oublié la spécialité {skill.UILink()} !")) );
-
+        static void ForgetSpecialty(AchievementDefinition def) => UnSkillScroll.UnlearnSkillEvent.Add((playerUser, skill) => def.TriggerAchievementProgress(playerUser.User, () => Localizer.Do($"Vous avez oublié la spécialité {skill.UILink()} !")) );
 
     }
     

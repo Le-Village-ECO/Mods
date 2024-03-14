@@ -2,6 +2,7 @@
 // Abstract class pour gérer tous les consommable de type boost qui ajoute de l'énergie
 
 using Eco.Core;
+using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
@@ -21,8 +22,10 @@ namespace Village.Eco.Mods.ExhaustionMod
     [LocDisplayName("Exhaustion Boost")]
     [LocDescription("Permet de redonner de l'énergie si épuisé")]
     [Category("Hidden")]
+
     public abstract class ExhaustionBoost : Item
     {
+        public static ThreadSafeAction<User> ConsumeEnergyBoost = new();
         //Paramètre(s)
         public virtual float BoostTime => 1.0f; //Valeur par défaut pour la durée du boost
         public virtual bool CheckDate => false; //True si on doit vérifier l'utilisation 1 fois par jour
@@ -85,6 +88,9 @@ namespace Village.Eco.Mods.ExhaustionMod
             //Log
             var log = NLogManager.GetLogWriter("LeVillageMods");
             log.Write($"Le joueur **{player.DisplayName}** a utilisé **{boostName}**.");
+
+            //Event
+            ConsumeEnergyBoost?.Invoke(player.User);
 
             return base.OnUsed(player, itemStack);
         }

@@ -32,8 +32,8 @@ namespace Village.Eco.Mods.UnSkillScroll
     [Tag("Skill Scrolls")]
     public abstract class UnSkillScroll : Item  //Item generique avec lien vers Unity3D
     {
-        //TODO en cours de Warang sur les events
-        //public static ThreadSafeAction<User, Skill> UnlearnSkillEvent = new();
+        //Event d'oubli de la spécialité
+        public static ThreadSafeAction<Player, Skill> UnlearnSkillEvent = new();
 
         public const double RefundSpecialtyDaysCooldown = 2; //Delai entre 2 utilisation de parchemin d'oubli
         public abstract Type SkillType { get; }  //Recuperation de la specialite definie dans le parchemin (1 pour chaque spe.)
@@ -111,7 +111,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 
             //TODO en cours de Warang sur les events
             // Event lié à l'oubli de la spécialité
-            //UnlearnSkillEvent?.Invoke(player.User, skill);
+            UnlearnSkillEvent?.Invoke(player, skill);
 
             //Mise a jour des donnees du joueur
             playerData.LastUnspecializingDay = WorldTime.Day;
