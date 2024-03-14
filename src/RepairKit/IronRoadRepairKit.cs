@@ -25,7 +25,7 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(IronBarItem), 4),
+                    new(typeof(IronBarItem), 4),
                 },
 
                 items: new List<CraftingElement>

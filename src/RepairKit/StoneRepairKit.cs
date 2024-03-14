@@ -23,7 +23,7 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("Rock", 5),
+                    new("Rock", 5),
                 },
 
                 items: new List<CraftingElement>

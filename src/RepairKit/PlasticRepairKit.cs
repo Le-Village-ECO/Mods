@@ -25,7 +25,7 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(PlasticItem), 4, typeof(ElectronicsSkill), typeof(ElectronicsLavishResourcesTalent)),
+                    new(typeof(PlasticItem), 4, typeof(ElectronicsSkill), typeof(ElectronicsLavishResourcesTalent)),
                 },
 
                 items: new List<CraftingElement>
