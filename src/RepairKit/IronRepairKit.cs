@@ -52,7 +52,7 @@ namespace Eco.Mods.TechTree
 
     [Serialized]
     [LocDisplayName("Kit de réparation en fer")]
-    [Weight(10000)]  //Défini le poids.
+    [Weight(1000)]  //Défini le poids.
     [Category("Tool")]  
     [Tag("RepairKit")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]  //Page ECOpedia
