@@ -16,7 +16,6 @@ using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using Eco.Shared.Services;
 using Eco.Simulation.Time;
-using ExhaustionMod;
 using System.Text;
 using Village.Eco.Mods.Core;
 
