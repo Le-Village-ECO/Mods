@@ -16,6 +16,7 @@ using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using Eco.Shared.Services;
 using Eco.Simulation.Time;
+using ExhaustionMod;
 using System.Text;
 using Village.Eco.Mods.Core;
 
@@ -137,6 +138,12 @@ namespace Village.Eco.Mods.ExhaustionMod
             sb.AppendLine($"Un nouveau joueur aura donc {BalanceConfig.Obj.ExhaustionAfterHours} + {InitialBoost.Calcul.TotalHours} heures avant épuisement");
 
             user.Player.InfoBoxLocStr($"{sb}");
+        }
+
+        [ChatSubCommand("Boost", "Ajoute X heure(s) à un joueur", ChatAuthorizationLevel.Admin)]
+        public static void Boost(User user, User target, int hours)
+        {
+            target.ExhaustionMonitor.AddEnergy(hours);
         }
     }
 }

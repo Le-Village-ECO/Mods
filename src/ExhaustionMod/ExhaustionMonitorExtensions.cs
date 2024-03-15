@@ -3,7 +3,7 @@ using System.Reflection;
 using Eco.Gameplay.Players;
 using Eco.Shared.Utils;
 
-namespace ExhaustionMod
+namespace Village.Eco.Mods.ExhaustionMod
 {
     //Le village
     public static class ExhaustionMonitorExtensions
