@@ -6,10 +6,12 @@
 using Eco.Core;
 using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
+using Eco.Gameplay.Aliases;
 using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
+using Eco.Shared.Services;
 
 namespace Village.Eco.Mods.Core
 {
@@ -72,6 +74,29 @@ namespace Village.Eco.Mods.Core
         {
             user.Player.MsgLoc($"Configuration **SkillTierCost** : {LVConfigurePlugin.Config.SkillTierCost}");
         }
-    }
 
+        //Sous-commande : Annoncer un reboot serveur
+        [ChatSubCommand("LVCore", "Reboot", ChatAuthorizationLevel.Admin)]
+        public static void Reboot(User user, int timer = 5)
+        {
+            MessageManager.RebootWarning($"Relance du serveur dans {timer} min(s) !");
+            user.Player.MsgLocStr("L'annonce du reboot serveur a été envoyé.");
+        }
+
+        //Sous-commande : Envoi d'un message mail type notification à tous les joueurs
+        [ChatSubCommand("LVCore", "Mail", ChatAuthorizationLevel.Admin)]
+        public static void Mail(User user, string content)
+        {
+            MessageManager.SendMail(content);
+            user.Player.MsgLocStr($"Le mail suivant été envoyé aux joueurs : {content}");
+        }
+
+        //Sous-commande : Tests sur les types d'affichage de messages
+        [ChatSubCommand("LVCore", "Test Info Panel", ChatAuthorizationLevel.Admin)]
+        public static void WelcomeMsg(User user, string title, string content)
+        {
+            //user.Player.OpenInfoPanel("titre", "contenu", "Test");
+            MessageManager.SendWelcomeMsg(user, title, content);
+        }
+    }
 }
