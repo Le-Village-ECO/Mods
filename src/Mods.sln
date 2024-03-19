@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traps", "Traps\Traps.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOPedia", "ECOPedia\ECOPedia.csproj", "{0D790B47-7233-42B3-B224-09713D397E0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutrition", "Nutrition\Nutrition.csproj", "{183A9486-1AEB-4923-92AF-BEC38DA4DE49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{0D790B47-7233-42B3-B224-09713D397E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D790B47-7233-42B3-B224-09713D397E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D790B47-7233-42B3-B224-09713D397E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{183A9486-1AEB-4923-92AF-BEC38DA4DE49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{183A9486-1AEB-4923-92AF-BEC38DA4DE49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{183A9486-1AEB-4923-92AF-BEC38DA4DE49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{183A9486-1AEB-4923-92AF-BEC38DA4DE49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
