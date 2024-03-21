@@ -20,11 +20,11 @@ namespace Village.Eco.Mods.Traps
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [Tag("Usable")]
-    [Ecopedia("Crafted Objects", "Specialty", subPageName: "Small Animal Trap Item")]
-    public partial class SmallAnimalTrapObject : WorldObject, IRepresentsItem
+    [Ecopedia("Crafted Objects", "Specialty", subPageName: "Turkey Trap Item")]
+    public partial class TurkeyTrapObject : WorldObject, IRepresentsItem
     {
-        public virtual Type RepresentedItemType => typeof(SmallAnimalTrapItem);
-        public override LocString DisplayName => Localizer.DoStr("Small Animal Trap");
+        public virtual Type RepresentedItemType => typeof(TurkeyTrapItem);
+        public override LocString DisplayName => Localizer.DoStr("Turkey Trap");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
@@ -41,12 +41,12 @@ namespace Village.Eco.Mods.Traps
     }
 
     [Serialized]
-    [LocDisplayName("Small Animal Trap")]
+    [LocDisplayName("Turkey Trap")]
     [LocDescription("Un piege a renard")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Crafted Objects", "Specialty", createAsSubPage: true)]
     [Weight(500)]
-    public partial class SmallAnimalTrapItem : WorldObjectItem<SmallAnimalTrapObject>
+    public partial class TurkeyTrapItem : WorldObjectItem<TurkeyTrapObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
 

@@ -30,10 +30,7 @@ namespace Village.Eco.Mods.Traps
             this.GetComponent<AnimalTrapComponent>().UpdateEnabled();
 
             SpeciesLayeredCatchPlugin.Obj.AddLayeredCatcher(this, new FoxCatcher(null, this));
-
-
         }
-
         /*public bool OutOfWaterTest(Vector3i pos)
         {
             var blockAbove = World.GetBlock(pos + Vector3i.Up); // Get the block above the trap
@@ -41,5 +38,37 @@ namespace Village.Eco.Mods.Traps
             if (blockAbove is IWaterBlock waterBlock && !waterBlock.PipeSupplied) return false; // Above block IS water and NOT from a pipe
             else return true;
         }*/
+    }
+
+    [RequireComponent(typeof(AnimalTrapComponent))]
+    public partial class SmallAnimalTrapObject : WorldObject
+    {
+        protected override void PostInitialize()
+        {
+            base.PostInitialize();
+            this.GetComponent<PublicStorageComponent>().Initialize(1, 2000);
+            this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(HareCarcassItem), typeof(AgoutiCarcassItem) }));
+            this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
+            this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Hare", "Agouti" });
+            this.GetComponent<AnimalTrapComponent>().UpdateEnabled();
+
+            SpeciesLayeredCatchPlugin.Obj.AddLayeredCatcher(this, new SmallAnimalCatcher(null, this));
+        }
+    }
+
+    [RequireComponent(typeof(AnimalTrapComponent))]
+    public partial class TurkeyTrapObject : WorldObject
+    {
+        protected override void PostInitialize()
+        {
+            base.PostInitialize();
+            this.GetComponent<PublicStorageComponent>().Initialize(1, 2000);
+            this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(TurkeyCarcassItem) }));
+            this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
+            this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Turkey" });
+            this.GetComponent<AnimalTrapComponent>().UpdateEnabled();
+
+            SpeciesLayeredCatchPlugin.Obj.AddLayeredCatcher(this, new TurkeyCatcher(null, this));
+        }
     }
 }

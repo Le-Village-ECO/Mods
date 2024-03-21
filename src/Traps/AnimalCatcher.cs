@@ -28,6 +28,14 @@ namespace Village.Eco.Mods.Traps
         public FoxCatcher(User user, WorldObject obj) : base(user, obj) { }
         public FoxCatcher() { }
     }
+    public class TurkeyCatcher : TrapCatcher
+    {
+        public override ThreadSafeList<string> DefaultTargetSpecies => new(AnimalCatchTarget.TurkeyTarget);
+        public override TimeSpan NextCatchDelay => TimeSpan.FromMinutes(RandomUtil.Range(5, 10));
+
+        public TurkeyCatcher(User user, WorldObject obj) : base(user, obj) { }
+        public TurkeyCatcher() { }
+    }
 
     public static class AnimalCatchTarget
     {
@@ -40,5 +48,8 @@ namespace Village.Eco.Mods.Traps
 
         // Seulement le renard
         public static readonly List<string> FoxTarget = new() { nameof(Fox) };
+
+        // Seulement le dindon
+        public static readonly List<string> TurkeyTarget = new() { nameof(Turkey) };
     }
 }
