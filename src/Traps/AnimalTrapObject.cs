@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Le Village - Ajout des WorldObjects pour la définition des pièges pour animaux
+
+using System;
 using System.Collections.Generic;
 using Eco.Gameplay.Animals.Catchers;
 using Eco.Gameplay.Components;
@@ -20,24 +22,14 @@ namespace Village.Eco.Mods.Traps
         protected override void PostInitialize()
         {
             base.PostInitialize();
-            //Paramètres de stockage (slots, poids)
             this.GetComponent<PublicStorageComponent>().Initialize(1, 2000); //1 FoxCarcass vaut 2kg
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(FoxCarcassItem) }));
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
             this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Fox" });
-            //this.GetComponent<AnimalTrapComponent>().FailStatusMessage = Localizer.DoStr("Wooden fish traps must be placed underwater in fresh water to function.");
-            //this.GetComponent<AnimalTrapComponent>().EnabledTest = this.OutOfWaterTest;
             this.GetComponent<AnimalTrapComponent>().UpdateEnabled();
 
             SpeciesLayeredCatchPlugin.Obj.AddLayeredCatcher(this, new FoxCatcher(null, this));
         }
-        /*public bool OutOfWaterTest(Vector3i pos)
-        {
-            var blockAbove = World.GetBlock(pos + Vector3i.Up); // Get the block above the trap
-
-            if (blockAbove is IWaterBlock waterBlock && !waterBlock.PipeSupplied) return false; // Above block IS water and NOT from a pipe
-            else return true;
-        }*/
     }
 
     [RequireComponent(typeof(AnimalTrapComponent))]
@@ -46,7 +38,7 @@ namespace Village.Eco.Mods.Traps
         protected override void PostInitialize()
         {
             base.PostInitialize();
-            this.GetComponent<PublicStorageComponent>().Initialize(1, 2000);
+            this.GetComponent<PublicStorageComponent>().Initialize(1, 2000); //1 HareCarcass vaut 1kg et 1 AgoutiCarcass vaut 2kg
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(HareCarcassItem), typeof(AgoutiCarcassItem) }));
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
             this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Hare", "Agouti" });
@@ -62,7 +54,7 @@ namespace Village.Eco.Mods.Traps
         protected override void PostInitialize()
         {
             base.PostInitialize();
-            this.GetComponent<PublicStorageComponent>().Initialize(1, 2000);
+            this.GetComponent<PublicStorageComponent>().Initialize(4, 4000); //1 TurkeyCarcass vaut 1kg
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(TurkeyCarcassItem) }));
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
             this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Turkey" });

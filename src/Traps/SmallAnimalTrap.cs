@@ -1,10 +1,15 @@
-﻿using System;
+﻿// Le Village - Piège à petits mamifères (agoutis et lièvres)
+
+using System;
+using System.Collections.Generic;
 using Eco.Core.Items;
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Components.Auth;
 using Eco.Gameplay.Items;
+using Eco.Gameplay.Items.Recipes;
 using Eco.Gameplay.Objects;
 using Eco.Gameplay.Occupancy;
+using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
 using Eco.Shared.Items;
 using Eco.Shared.Localization;
@@ -52,4 +57,39 @@ namespace Village.Eco.Mods.Traps
 
     }
 
+    [RequiresSkill(typeof(HuntingSkill), 3)]
+    [Ecopedia("Crafted Objects", "Specialty", subPageName: "Small Animal Trap Item")]
+    public partial class SmallAnimalTrapRecipe : RecipeFamily
+    {
+        public SmallAnimalTrapRecipe()
+        {
+            var recipe = new Recipe();
+            recipe.Init(
+                name: "SmallAnimalTrap",  //noloc
+                displayName: Localizer.DoStr("Small Animal Trap"),
+
+                ingredients: new List<IngredientElement>
+                {
+                    new IngredientElement("HewnLog", 30, typeof(HuntingSkill)), //noloc
+                },
+
+                items: new List<CraftingElement>
+                {
+                    new CraftingElement<SmallAnimalTrapItem>()
+                });
+            this.Recipes = new List<Recipe> { recipe };
+
+            this.ExperienceOnCraft = 3;
+            this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(HuntingSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SmallAnimalTrapRecipe), start: 4, skillType: typeof(HuntingSkill));
+
+            this.ModsPreInitialize();
+            this.Initialize(displayText: Localizer.DoStr("Small Animal Trap"), recipeType: typeof(SmallAnimalTrapRecipe));
+            this.ModsPostInitialize();
+
+            CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);
+        }
+        partial void ModsPreInitialize();
+        partial void ModsPostInitialize();
+    }
 }
