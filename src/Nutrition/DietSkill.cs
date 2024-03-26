@@ -16,7 +16,7 @@ namespace Village.Eco.Mods.Nutrition
     [RequiresSkill(typeof(SurvivalistSkill), 0), Tag("Survivalist Specialty"), Tier(1)]
     [Tag("Specialty")]
     [Tag("Teachable")]
-    public partial class Diet : Skill
+    public partial class DietSkill : Skill
     {
         public override void OnReset(User user) { this.OnLevelChanged(user); }
         public override void OnLevelUp(User user) { this.OnLevelChanged(user); }
@@ -51,7 +51,7 @@ namespace Village.Eco.Mods.Nutrition
                 2500,
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
-        public override int MaxLevel { get { return 7; } }
+        public override int MaxLevel { get { return 4; } }
         public override int Tier { get { return 1; } }
     }
 }
