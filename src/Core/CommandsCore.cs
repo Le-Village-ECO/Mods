@@ -7,9 +7,12 @@ using Eco.Core;
 using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Aliases;
+using Eco.Gameplay.EcopediaRoot;
 using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
+using Eco.Gameplay.Systems.Chat;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
+using Eco.ModKit;
 using Eco.Shared.Localization;
 using Eco.Shared.Services;
 
@@ -97,6 +100,23 @@ namespace Village.Eco.Mods.Core
         {
             //user.Player.OpenInfoPanel("titre", "contenu", "Test");
             MessageManager.SendWelcomeMsg(user, title, content);
+        }
+
+        //Pour faciliter les tests Unity - TODO - A tester
+        [ChatSubCommand("Reloads the Unity Data Files without needing to reboot the server", "rl-unity", ChatAuthorizationLevel.Admin)]
+        public static void ReloadUnityData(IChatClient chatClient)
+        {
+            ModKitPlugin.ContentSync.RefreshContent();
+
+            chatClient.MsgLocStr("Unity Files Refreshed, Please Re-log to get the new changes.");
+        }
+
+        //Pour faciliter les tests ECOPEDIA - TODO - A tester
+        [ChatSubCommand("Rebuilds the ecopedia", "rl-ecopedia", ChatAuthorizationLevel.Admin)]
+        public static void RebuildEcopedia(IChatClient chatClient)
+        {
+            EcopediaManager.Build(ModKitPlugin.ModDirectory);
+            chatClient.MsgLocStr("The Ecopedia Has been Rebuilt and should be automatically update. Please check the console for any logged issues with rebuilding the ecopedia");
         }
     }
 }
