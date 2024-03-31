@@ -47,11 +47,13 @@ namespace Village.Eco.Mods.Nutrition
                 }
             });
 
-            SkillModifiedValue smv_time = new SkillModifiedValue(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Craft Time"), DynamicValueType.Speed);
+            SkillModifiedValue smv_time = new SkillModifiedValue(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
             foreach (RecipeFamily recipe in RecipeManager.AllRecipeFamilies)
             {
                 recipe.SetPropertyByName("CraftMinutes", new MultiDynamicValue(MultiDynamicOps.Multiply, smv_time, recipe.CraftMinutes));
             }
+            // Alimente ToolTip de la spécialité
+            SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_time);
 
         }
         public string GetCategory() => "LeVillageMods";

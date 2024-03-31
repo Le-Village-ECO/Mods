@@ -10,7 +10,6 @@ using Eco.Gameplay.Players;
 using Eco.Gameplay.Settlements;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
-using Village.Eco.Mods.ExhaustionMod;
 using Village.Eco.Mods.Nutrition;
 
 // default starting player items / skills
@@ -28,10 +27,6 @@ public static class PlayerDefaults
         return new Dictionary<Type, int>
         {
             { typeof(StarterCampItem), 1 },
-            { typeof(LVBRedItem), 2 },  //RedBullBoost
-            { typeof(LVBPurpleItem), 2 },  //BzhColaBoost
-            { typeof(LVBGreenItem), 1 },  //LeVillageBoost
-            { typeof(LVBCoffeeItem), 2 },  //CoffeeBoost
         };
     }
     

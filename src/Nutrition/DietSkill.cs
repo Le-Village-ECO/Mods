@@ -18,24 +18,22 @@ namespace Village.Eco.Mods.Nutrition
     [Tag("Teachable")]
     public partial class DietSkill : Skill
     {
-        public override void OnReset(User user) { this.OnLevelChanged(user); }
+        /*public override void OnReset(User user) { this.OnLevelChanged(user); }
         public override void OnLevelUp(User user) { this.OnLevelChanged(user); }
         private void OnLevelChanged(User user)
         {
             user.Stomach.ChangedMaxCalories();
             user.ChangedCarryWeight();
-        }
+        }*/
 
         public static MultiplicativeStrategy MultiplicativeStrategy =
             new MultiplicativeStrategy(new float[] {
-                1,
-                1 - 0.05f,
-                1 - 0.1f,
-                1 - 0.15f,
-                1 - 0.2f,
-                1 - 0.25f,
-                1 - 0.25f,
-                1 - 0.25f,
+                1 + 1f,         //niveau 0
+                1 + 1f,         //niveau 1 - 200%
+                1 + 0.75f,
+                1 + 0.5f,
+                1 + 0.25f,
+                1,              //niveau max - 100%
             });
         public override MultiplicativeStrategy MultiStrategy => MultiplicativeStrategy;
 
@@ -47,11 +45,9 @@ namespace Village.Eco.Mods.Nutrition
                 500,
                 1000,
                 1500,
-                2000,
-                2500,
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
-        public override int MaxLevel { get { return 4; } }
+        public override int MaxLevel { get { return 5; } }
         public override int Tier { get { return 1; } }
     }
 }
