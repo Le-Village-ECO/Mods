@@ -6,12 +6,10 @@
 using Eco.Core;
 using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
-using Eco.Gameplay.Aliases;
 using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
-using Eco.Shared.Services;
 
 namespace Village.Eco.Mods.Core
 {
