@@ -1,7 +1,8 @@
 ﻿// Le Village
 // TODO : Pouvoir consulter toutes les valeurs d'un joueur
 // TODO : Pouvoir modifier la valeur d'un paramètre d'un joueur
-// TODO : Commande invisible, ajouter la minimap
+// TODO : Afficher toutes les config
+// TODO : Afficher un message complet à partir d'un fichier déposé sur le serveur
 
 using Eco.Core;
 using Eco.Core.Utils;
@@ -90,7 +91,7 @@ namespace Village.Eco.Mods.Core
         }
 
         //Sous-commande : Tests sur les types d'affichage de messages
-        [ChatSubCommand("LVCore", "Test Info Panel", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVCore", "Test Info Panel, en cours de dev...", ChatAuthorizationLevel.Admin)]
         public static void WelcomeMsg(User user, string title, string content)
         {
             //user.Player.OpenInfoPanel("titre", "contenu", "Test");

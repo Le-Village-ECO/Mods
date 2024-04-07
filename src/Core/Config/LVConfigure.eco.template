@@ -2,5 +2,13 @@
   "SkillTierCost": false,
   "ExhaustInitialBoost": true,
   "HiddenOilField": true,
-  "RevealOilField": true
+  "RevealOilField": true,
+  "DietTiers": [
+    0,
+    20,
+    32,
+    44
+  ],
+  "DietTiersGap": 10.0,
+  "DietDebug": false
 }

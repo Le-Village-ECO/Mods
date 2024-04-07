@@ -1,4 +1,4 @@
-﻿// Le village - Ensemble de commande Admin pour faire des tests.
+﻿// Le village - Ensemble de commandes Admin pour faire des tests.
 // Les commandes pour les joueurs sont dans DietPlugin.cs
 
 using Eco.Gameplay.DynamicValues;

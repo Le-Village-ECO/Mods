@@ -1,6 +1,6 @@
 ﻿// Le Village - Nouvelle spécialité pour contrôler la qualité diététique du joueur
 // TODO - Rendre paramétrable via fichier de config les bonus/malus des niveaux de spécialité
-// TODO - Rendre paramétrable le nombre d'étoiles dans la spécialité
+// TODO - Rendre paramétrable via fichier de config le nombre d'étoiles dans la spécialité
 
 using Eco.Core.Items;
 using Eco.Gameplay.DynamicValues;
@@ -23,20 +23,12 @@ namespace Village.Eco.Mods.Nutrition
     [Tag("Teachable")]
     public partial class DietSkill : Skill
     {
-        /*public override void OnReset(User user) { this.OnLevelChanged(user); }
-        public override void OnLevelUp(User user) { this.OnLevelChanged(user); }
-        private void OnLevelChanged(User user)
-        {
-            user.Stomach.ChangedMaxCalories();
-            user.ChangedCarryWeight();
-        }*/
-
         public static MultiplicativeStrategy MultiplicativeStrategy =
             new(new float[] {
-                1 + 9f,         //niveau 0
-                1 + 9f,         //niveau 1 - 1000%
-                1 + 7.5f,       //niveau 2 - 750%
-                1 + 5f,         //niveau 3 - 500%
+                1 + 19f,        //niveau 0 - 2000%
+                1 + 19f,        //niveau 1 - 2000%
+                1 + 9f,         //niveau 2 - 1000%
+                1 + 7.5f,       //niveau 3 - 750%
                 1 + 2.5f,       //niveau 4 - 250%
                 1,              //niveau 5 - 100% (max)
             });
