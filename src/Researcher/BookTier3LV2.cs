@@ -22,6 +22,7 @@ namespace Eco.Mods.TechTree
     using Eco.World.Blocks;
     using Eco.Gameplay.Pipes;
     using Eco.Core.Controller;
+    using Eco.Gameplay.Items.Recipes;
 
     [RequiresSkill(typeof(ResearcherSkill), 1)]
     public partial class BookTier3LV2Recipe : RecipeFamily
@@ -37,7 +38,7 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(BookTier3Item), 1),  //	Duplication d'un Boook de tier 3 en 10 Book de tier 1				
+                    new(typeof(BookTier3Item), 1),  //	Duplication d'un Boook de tier 3 en 10 Book de tier 1				
                 },
 
                 // Define our recipe output items.

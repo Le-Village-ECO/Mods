@@ -1,4 +1,6 @@
-﻿using Eco.Core.Plugins;
+﻿// Le Village - Plugin de configuration des mods
+
+using Eco.Core.Plugins;
 using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Shared.Localization;
