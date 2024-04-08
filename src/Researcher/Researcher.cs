@@ -23,12 +23,13 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Serialization;
     using Eco.Shared.Services;
     using Eco.Shared.Utils;
-    using Gameplay.Systems.Tooltip;
     using Eco.Core.Controller;
+    using Eco.Gameplay.Items.Recipes;
 
     /// <summary>Auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization.</summary>
     [Serialized]
     [LocDisplayName("Researcher")]
+    [LocDescription("Description")]
     [Ecopedia("Professions", "Survivalist", createAsSubPage: true)]
     [RequiresSkill(typeof(SurvivalistSkill), 0), Tag("Survivalist Specialty"), Tier(0)]
     [Tag("Specialty")]
@@ -36,8 +37,6 @@ namespace Eco.Mods.TechTree
     
     public partial class ResearcherSkill : Skill
     {
-        public override LocString DisplayDescription { get { return Localizer.DoStr("Desciption"); } }
-
         public override void OnLevelUp(User user)
         {
             user.Skillset.AddExperience(typeof(SelfImprovementSkill), 20, Localizer.DoStr("for leveling up another specialization."));
