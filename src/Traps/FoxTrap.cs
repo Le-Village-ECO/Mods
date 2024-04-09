@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.Traps
     public partial class FoxTrapObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(FoxTrapItem);
-        public override LocString DisplayName => Localizer.DoStr("Fox Trap");
+        public override LocString DisplayName => Localizer.DoStr("Piège à renard");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
@@ -46,8 +46,8 @@ namespace Village.Eco.Mods.Traps
     }
 
     [Serialized]
-    [LocDisplayName("Fox Trap")]
-    [LocDescription("Un piege a renard")]
+    [LocDisplayName("Piège à renard")]
+    [LocDescription("Un piege à renard")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Crafted Objects", "Specialty", createAsSubPage: true)]
     [Weight(500)]
@@ -66,7 +66,7 @@ namespace Village.Eco.Mods.Traps
             var recipe = new Recipe();
             recipe.Init(
                 name: "FoxTrap",  //noloc
-                displayName: Localizer.DoStr("Fox Trap"),
+                displayName: Localizer.DoStr("Piège à renard"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -84,7 +84,7 @@ namespace Village.Eco.Mods.Traps
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(FoxTrapRecipe), start: 4, skillType: typeof(HuntingSkill));
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Fox Trap"), recipeType: typeof(FoxTrapRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Piège à renard"), recipeType: typeof(FoxTrapRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);

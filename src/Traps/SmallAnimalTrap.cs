@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.Traps
     public partial class SmallAnimalTrapObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(SmallAnimalTrapItem);
-        public override LocString DisplayName => Localizer.DoStr("Small Animal Trap");
+        public override LocString DisplayName => Localizer.DoStr("Piège pour petit animal");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
@@ -46,8 +46,8 @@ namespace Village.Eco.Mods.Traps
     }
 
     [Serialized]
-    [LocDisplayName("Small Animal Trap")]
-    [LocDescription("Un piege a renard")]
+    [LocDisplayName("Piège pour petit animal")]
+    [LocDescription("Un piege à renard")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Crafted Objects", "Specialty", createAsSubPage: true)]
     [Weight(500)]
@@ -66,7 +66,7 @@ namespace Village.Eco.Mods.Traps
             var recipe = new Recipe();
             recipe.Init(
                 name: "SmallAnimalTrap",  //noloc
-                displayName: Localizer.DoStr("Small Animal Trap"),
+                displayName: Localizer.DoStr("Piège pour petit animal"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -84,7 +84,7 @@ namespace Village.Eco.Mods.Traps
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SmallAnimalTrapRecipe), start: 4, skillType: typeof(HuntingSkill));
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Small Animal Trap"), recipeType: typeof(SmallAnimalTrapRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Piège pour petit animal"), recipeType: typeof(SmallAnimalTrapRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);

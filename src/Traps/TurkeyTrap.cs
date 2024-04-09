@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.Traps
     public partial class TurkeyTrapObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(TurkeyTrapItem);
-        public override LocString DisplayName => Localizer.DoStr("Turkey Trap");
+        public override LocString DisplayName => Localizer.DoStr("Piège à dindon");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
@@ -46,8 +46,8 @@ namespace Village.Eco.Mods.Traps
     }
 
     [Serialized]
-    [LocDisplayName("Turkey Trap")]
-    [LocDescription("Un piege a renard")]
+    [LocDisplayName("Piège à dindon")]
+    [LocDescription("Un piege à dindon")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Crafted Objects", "Specialty", createAsSubPage: true)]
     [Weight(500)]
@@ -66,7 +66,7 @@ namespace Village.Eco.Mods.Traps
             var recipe = new Recipe();
             recipe.Init(
                 name: "TurkeyTrap",  //noloc
-                displayName: Localizer.DoStr("Turkey Trap"),
+                displayName: Localizer.DoStr("Piège à dindon"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -84,7 +84,7 @@ namespace Village.Eco.Mods.Traps
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(TurkeyTrapRecipe), start: 4, skillType: typeof(HuntingSkill));
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Turkey Trap"), recipeType: typeof(TurkeyTrapRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Piège à dindon"), recipeType: typeof(TurkeyTrapRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);
