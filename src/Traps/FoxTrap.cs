@@ -57,7 +57,7 @@ namespace Village.Eco.Mods.Traps
 
     }
 
-    [RequiresSkill(typeof(HuntingSkill), 3)]
+    [RequiresSkill(typeof(HuntingSkill), 5)]
     [Ecopedia("Crafted Objects", "Specialty", subPageName: "Fox Trap Item")]
     public partial class FoxTrapRecipe : RecipeFamily
     {
@@ -70,7 +70,8 @@ namespace Village.Eco.Mods.Traps
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("HewnLog", 30, typeof(HuntingSkill)), //noloc
+                    new("Wood", 10, true),
+                    new(typeof(IronBarItem), 2, true),
                 },
 
                 items: new List<CraftingElement>
