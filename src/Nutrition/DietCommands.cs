@@ -97,12 +97,26 @@ namespace Village.Eco.Mods.Nutrition
                 user.Player.MsgLocStr($"Delta = {delta} / multiple = {multiple} / arrondi = {arrondi} / resultat = {resultat}");
             }
         }
-        [ChatSubCommand("LVDiet", "test4", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "test6 - Skill count et Stars earned", ChatAuthorizationLevel.Admin)]
         public static void Test6(User user)
         {
             int totStars = user.Skillset.Skills.Count();
             int stars = user.UserXP.TotalStarsEarned;
             user.Player.MsgLocStr($"Skill count **{totStars}** / Stars earned **{stars}**");
+        }
+
+        [ChatSubCommand("LVDiet", "test7 - popup bouffe", ChatAuthorizationLevel.Admin)]
+        public static void Test7(User user)
+        {
+            foreach (var groupFoodTaste in user.Stomach.TasteBuds.FoodToTaste.Where(x => x.Value.Discovered).GroupBy(x => x.Value.Preference))
+            {
+                user.Player.Msg(Localizer.Format($"Preference : {groupFoodTaste.Key.GetEnumLocDisplayName()}"));
+                foreach (var foodTaste in groupFoodTaste)
+                {
+                    user.Player.Msg(Localizer.Format($"{foodTaste.Key.GetLocDisplayNameColored()}"));
+                }
+            }
+
         }
     }
 }
