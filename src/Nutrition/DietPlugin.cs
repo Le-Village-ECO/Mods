@@ -6,6 +6,7 @@ using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
 using Eco.Gameplay.DynamicValues;
+using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
@@ -50,7 +51,7 @@ namespace Village.Eco.Mods.Nutrition
             {
                 recipe.SetPropertyByName("CraftMinutes", new MultiDynamicValue(MultiDynamicOps.Multiply, smv_time, recipe.CraftMinutes));
             }
-            // Alimente ToolTip de la spécialité - TODO cela ne fonctionne pas toujours...
+            // Alimente ToolTip de la spécialité - TODO cela ne fonctionne pas toujours... cela semble être lié au PlayerDefaults.cs
             SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_time);
         }
 
@@ -114,13 +115,19 @@ namespace Village.Eco.Mods.Nutrition
             var palier = stars < tiers.Length ? tiers[stars] : tiers.Last();
             var roundSkillRate = Math.Round(user.Stomach.NutrientSkillRate());
 
-            string message;
-            message = $"Tu as gagné {stars} étoiles depuis le début de la partie.\n";
-            message += $"Ton bonus de nourriture est actuellement de {roundSkillRate} (arrondi à l'entier le plus proche).\n";
-            message += $"Pour avoir le niveau maximum de diététique, il te faut un bonus de nourriture d'au moins {palier}.\n\n";
-            message += $"Tu peux forcer la mise à jour de la spécialité diététique avec la commande de chat suivante : /ForceDiet\n";
+            string title;
+            title = "Informations concernant ta diététique";
 
-            MessageManager.SendWelcomeMsg(user, "Voici les informations concernant ta diététique", message);
+            string message;
+            message = $"Tu as gagné <b>{stars} étoiles</b> depuis le début de la partie.\n";
+            message += $"Ton bonus de nourriture est actuellement de <b>{roundSkillRate}</b> (arrondi à l'entier le plus proche).\n";
+            message += $"Pour avoir le niveau <b>maximum de diététique</b>, il te faut un bonus de nourriture d'<b>au moins {palier}</b>.\n\n";
+            message += $"Tu peux forcer la mise à jour de la spécialité diététique avec la commande de chat suivante :\n";
+            message += $"<b>/ForceDiet</b>\n\n";
+            message += $"Pour avoir tes goûts culinaires ou d'un autre joueur, tu peux faire la commande de chat suivante :\n";
+            message += $"<b>/Nourriture</b> <i>(optionel : nom du joueur)</i>\n";
+
+            MessageManager.SendWelcomeMsg(user, title, message);
         }
 
         [ChatCommand("Force Diet", ChatAuthorizationLevel.User)]
@@ -139,8 +146,62 @@ namespace Village.Eco.Mods.Nutrition
             message = $"Niveau de diététique mis à jour : {oldLevel} -> {newLevel}\n";
             user.OkBoxLocStr(message);
 
-            log.Write($"DIET MOD - Le joueur **{user}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
+            log.Write($"DIET MOD - Le joueur **{user.Player.DisplayName}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
         }
+
+        [ChatCommand("Nourriture", ChatAuthorizationLevel.User)]
+        public static void Nourriture(User user, User target = null)
+        {
+            target ??= user; //Si pas de cible alors soi-même
+
+            var buds = target.Stomach.TasteBuds;
+
+            // Liste des préférences culinaires - Favorite & Worst sont traités séparemment
+            var preferences = new[]
+            {
+                ItemTaste.TastePreference.Delicious,
+                ItemTaste.TastePreference.Good,
+                ItemTaste.TastePreference.Ok,
+                ItemTaste.TastePreference.Bad,
+                ItemTaste.TastePreference.Horrible
+            };
+
+            string title;
+            title = $"Les gouts culinaires de {target}";
+
+            string message;
+
+            // Affichage particulier pour Favorite et Worst
+            message = TextLoc.BoldLoc($"Son plat {LocTaste(ItemTaste.TastePreference.Favorite)} : ") + $"{(buds.FavoriteDiscovered ? buds.Favorite.MarkedUpName : "inconnu")}\n\n";
+            message += TextLoc.BoldLoc($"Son plat {LocTaste(ItemTaste.TastePreference.Worst)} : ") + $"{(buds.WorstDiscovered ? buds.Worst.MarkedUpName : "inconnu")}\n\n";
+
+            // Boucle sur l'ensemble des préférences culinaires hors Favorite & Worst
+            foreach (var preference in preferences)
+            {
+                message += TextLoc.BoldLoc($"La nourriture qu'il trouve {LocTaste(preference)} :\n");
+                foreach (var food in buds.FoodToTaste.Where(x => x.Value.Discovered && x.Value.Preference == preference))
+                {
+                    message += $"{Item.Get(food.Key).MarkedUpName}\n";
+                }
+                message += "\n";
+            }
+
+            // Affichage de la pop-up de type fenêtre de taille modifiable avec contour bois
+            MessageManager.SendWelcomeMsg(user, title, message);
+        }
+
+        // Gestion de la localisation (comprendre la traduction) des préférences culinaires avec une couleur associée
+        public static LocString LocTaste(ItemTaste.TastePreference pref) => pref switch
+        {
+            ItemTaste.TastePreference.Delicious => TextLoc.ColorLocStr(Color.LightGreen, "Delicious"),
+            ItemTaste.TastePreference.Good => TextLoc.ColorLocStr(Color.GreenGrey, "Good"),
+            ItemTaste.TastePreference.Ok => TextLoc.ColorLocStr(Color.White, "Ok"),
+            ItemTaste.TastePreference.Bad => TextLoc.ColorLocStr(Color.BlueGrey, "Bad"),
+            ItemTaste.TastePreference.Horrible => TextLoc.ColorLocStr(Color.Grey, "Horrible"),
+            ItemTaste.TastePreference.Worst => TextLoc.ColorLocStr(Color.Red, "Least favorite"),
+            ItemTaste.TastePreference.Favorite => TextLoc.ColorLocStr(Color.Green, "Favorite"),
+        };
+
         public string GetCategory() => "LeVillageMods";
         public override string ToString() => Localizer.DoStr("Diet Plugin");
         public string GetStatus() => "Active";

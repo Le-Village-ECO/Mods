@@ -46,7 +46,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOPedia", "ECOPedia\ECOPed
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nutrition", "Nutrition\Nutrition.csproj", "{183A9486-1AEB-4923-92AF-BEC38DA4DE49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HunterMod", "HunterMod\HunterMod.csproj", "{1AA0959A-EDE3-453A-A7A8-D3A81ADA2546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HunterMod", "HunterMod\HunterMod.csproj", "{1AA0959A-EDE3-453A-A7A8-D3A81ADA2546}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

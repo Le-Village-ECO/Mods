@@ -14,9 +14,9 @@ namespace Village.Eco.Mods.Nutrition
 {
     [Serialized]
     [LocDisplayName("Diététique")]
-    [LocDescription("Votre niveau de diététique impacte votre vitesse de fabrication et il dépend de votre nombre d'étoiles et de votre bonus de nourriture.\n" +
+    [LocDescription("Votre niveau de diététique impacte votre <b>vitesse de fabrication</b> et il dépend de votre <b>nombre d'étoiles</b> et de votre <b>bonus de nourriture</b>.\n" +
         "Chaque gain d'étoile demandera un bonus de nourriture supérieur pour maintenir le niveau maximum de la spécialité.\n\n" +
-        "Commande de chat pour plus d'information : /DietInfo")]
+        "Commande de chat pour plus d'information : <b>/DietInfo</b>")]
     [Ecopedia("Professions", "Survivalist", createAsSubPage: true)]
     [RequiresSkill(typeof(SurvivalistSkill), 0), Tag("Survivalist Specialty"), Tier(1)]
     [Tag("Specialty")]
