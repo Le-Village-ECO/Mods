@@ -1,10 +1,9 @@
 ﻿// Le village - Plugin pour gérer la spécialité Diététique
 // TODO - Ajouter une logique, paramétrable, pour choisir de prendre en compte soit toutes les étoiles gagnées soit uniquement celles utilisées
-// TODO - Limite actuelle du déclencheur : Ne considère pas le changement d'étoile et utilise la valeur SkillRate avant la redétermination après avoir mangé un aliment
+// TODO - Limite actuelle du déclencheur : Ne considère pas le changement d'étoile
 
 using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
-using Eco.Core.Utils.Logging;
 using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
@@ -24,31 +23,10 @@ namespace Village.Eco.Mods.Nutrition
     {
         public void Initialize(TimedTask timer)
         {
-            //Récupération de la configuration
-            bool logActive = LVConfigurePlugin.Config.DietDebug;
-
-            //Initialisation de la log
-            var log = NLogManager.GetLogWriter("LeVillageMods");
-
             //En cas de changement de SkillRate d'un joueur, mettre à jour son niveau de diététique
             //Note : Ce n'est pas un "event" .NET mais une construction SLG
             //Cet événement est global mais passe le User en paramètre
             UserXP.UserSkillRateChangedEvent.Add(SkillLevel);
-
-            /*Stomach.FoodContentUpdatedEvent.Add((user, foodtype) =>
-            {
-                //Log de contrôle
-                if (logActive)
-                {
-                    log.Write($"******* DIET LOG DEBUT *******");
-                    log.Write($"**{foodtype.Name}**");
-                }
-
-                SkillLevel(user);
-
-                //Log de contrôle
-                if (logActive) log.Write($"******* DIET LOG FIN *******");
-            });*/
 
             // Technique de "Reflexion" pour modifier toutes les recettes
             SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
@@ -62,9 +40,6 @@ namespace Village.Eco.Mods.Nutrition
 
         public static int CalcLevel(User user) 
         {
-            //Initialisation de la log
-            var log = NLogManager.GetLogWriter("LeVillageMods");
-
             //Récupération de la configuration
             var tiers = LVConfigurePlugin.Config.DietTiers;
             float gap = LVConfigurePlugin.Config.DietTiersGap;
@@ -76,7 +51,7 @@ namespace Village.Eco.Mods.Nutrition
             var palier = stars < tiers.Length ? tiers[stars] : tiers.Last(); //Récupère la valeur palier de SkillRate en fonction du nombre d'étoile
 
             //Log de contrôle
-            if (logActive) log.Write($"Niveau de {skill.Name} = {skill.Level} / Skill Rate = {skillRate} / Total stars = {stars} / Palier = {palier}");
+            if (logActive) Logger.SendLog(Core.Level.Debug,"Diet" ,$"Niveau de {skill.Name} = {skill.Level} / Skill Rate = {skillRate} / Total stars = {stars} / Palier = {palier}");
 
             if (skillRate >= palier)
             {
@@ -90,15 +65,14 @@ namespace Village.Eco.Mods.Nutrition
                 int resultat = (skill.MaxLevel - arrondi < 1) ? 1 : (skill.MaxLevel - arrondi); //On ne peut pas descendre en dessous du niveau 1 de la spécialité
 
                 //Log de contrôle
-                if (logActive) log.Write($"Delta = {delta} / multiple = {multiple} / arrondi = {arrondi} / resultat = {resultat}");
+                if (logActive) Logger.SendLog(Core.Level.Debug, "Diet", $"Delta = {delta} / multiple = {multiple} / arrondi = {arrondi} / resultat = {resultat}");
 
                 return resultat;
             }
         }
         public static void SkillLevel(User user) 
         {
-            //Initialisation de la log
-            var log = NLogManager.GetLogWriter("LeVillageMods");
+            //Récupération de la configuration
             bool logActive = LVConfigurePlugin.Config.DietDebug;
 
             var skill = user.Skillset.GetSkill(typeof(DietSkill));
@@ -109,7 +83,7 @@ namespace Village.Eco.Mods.Nutrition
             //user.Skillset.LevelUp(typeof(DietSkill)); // Affichage du message de gain d'un niveau
 
             //Log de contrôle
-            if (logActive) log.Write($"Changement de **{skill.Name}** : **{skill.Level}**");
+            if (logActive) Logger.SendLog(Core.Level.Debug, "Diet", $"Changement de **{skill.Name}** : **{skill.Level}**");
         }
 
         [ChatCommand("Diet Info", ChatAuthorizationLevel.User)]
@@ -138,9 +112,6 @@ namespace Village.Eco.Mods.Nutrition
         [ChatCommand("Force Diet", ChatAuthorizationLevel.User)]
         public static void ForceDiet(User user)
         {
-            //Initialisation de la log
-            var log = NLogManager.GetLogWriter("LeVillageMods");
-
             var skill = user.Skillset.GetSkill(typeof(DietSkill));
             int oldLevel = skill.Level;
             int newLevel = CalcLevel(user);
@@ -151,7 +122,7 @@ namespace Village.Eco.Mods.Nutrition
             message = $"Niveau de diététique mis à jour : {oldLevel} -> {newLevel}\n";
             user.OkBoxLocStr(message);
 
-            log.Write($"DIET MOD - Le joueur **{user.Player.DisplayName}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
+            Logger.SendLog(Core.Level.Info, "Diet", $"DIET MOD - Le joueur **{user.Player.DisplayName}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
         }
 
         [ChatCommand("Nourriture", ChatAuthorizationLevel.User)]

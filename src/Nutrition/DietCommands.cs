@@ -23,7 +23,7 @@ namespace Village.Eco.Mods.Nutrition
         [ChatCommand("LVDiet", ChatAuthorizationLevel.Admin)]
         public static void LVDiet() { }
 
-        [ChatSubCommand("LVDiet", "test1", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "Taste Stomach", ChatAuthorizationLevel.Admin)]
         public static void Test1(User user)
         {
             foreach (var groupFoodTaste in user.Stomach.TasteBuds.FoodToTaste.Where(x => x.Value.Discovered).GroupBy(x => x.Value.Preference))
@@ -36,7 +36,7 @@ namespace Village.Eco.Mods.Nutrition
             }
         }
 
-        [ChatSubCommand("LVDiet", "test2", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "Force Skill Level", ChatAuthorizationLevel.Admin)]
         public static void Test2(User user, string skillName, int level)
         {
             var skillType = SkillCommands.SkillTypeByName(user, skillName);
@@ -48,18 +48,18 @@ namespace Village.Eco.Mods.Nutrition
             user.Player.Msg(Localizer.Format($"coucou"));
         }
 
-        [ChatSubCommand("LVDiet", "test3", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "Benefits Diet", ChatAuthorizationLevel.Admin)]
         public static void Test3(User user)
         {
-            var toto = SkillModifiedValueManager.GetBenefitsFor(new DietSkill());
-            foreach (var skillBenefits in toto)
+            var smvm = SkillModifiedValueManager.GetBenefitsFor(new DietSkill());
+            foreach (var skillBenefits in smvm)
             {
                 user.Player.Msg(Localizer.Format($"Skill benefits : {skillBenefits.Key.Name}"));
                 user.Player.Msg(Localizer.Format($"Nb skill benefits : {skillBenefits.Value.Count}"));
             }
         }
 
-        [ChatSubCommand("LVDiet", "test4", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "Taste bouffe", ChatAuthorizationLevel.Admin)]
         public static void Test4(User user, string foodName)
         {
             var foodItem = CommandsUtil.ClosestMatchingItem<FoodItem>(user, foodName);
@@ -67,7 +67,7 @@ namespace Village.Eco.Mods.Nutrition
             user.Player.Msg(Localizer.Format($"{foodName} = {foodItem} = {test}"));
         }
 
-        [ChatSubCommand("LVDiet", "test5", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("LVDiet", "Valeurs DietInfo", ChatAuthorizationLevel.Admin)]
         public static void Test5(User user)
         {
             //Récupération de la configuration
@@ -107,26 +107,20 @@ namespace Village.Eco.Mods.Nutrition
             user.Player.MsgLocStr($"Skill count **{totStars}** / Stars earned **{stars}**");
         }
 
-        [ChatSubCommand("LVDiet", "test7 - popup bouffe", ChatAuthorizationLevel.Admin)]
-        public static void Test7(User user, User target = null)
+        [ChatSubCommand("LVDiet", "test7 - Ajout Skill Modifier", ChatAuthorizationLevel.Admin)]
+        public static void Test7(User user, int num)
         {
-            target ??= user;
-
-            string message;
-            message = "Debut :\n";
-
-            foreach (var groupFoodTaste in target.Stomach.TasteBuds.FoodToTaste.Where(x => x.Value.Discovered).GroupBy(x => x.Value.Preference))
+            switch (num)
             {
-                //user.Player.Msg(Localizer.Format($"Preference : {groupFoodTaste.Key.GetEnumLocDisplayName()}"));
-                message += $"La nourriture qu'il trouve {groupFoodTaste.Key.GetEnumLocDisplayName()} :\n";
-                foreach (var foodTaste in groupFoodTaste)
-                {
-                    //user.Player.Msg(Localizer.Format($"{foodTaste.Key.GetLocDisplayNameColored()}"));
-                    message += $"{foodTaste.Key.GetLocDisplayNameColored()}\n";
-                }
+                case 1:
+                    SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
+                    SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_time);
+                    break;
+                case 2:
+                    SkillModifiedValue smv_test = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Test"), DynamicValueType.Misc);
+                    SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_test);
+                    break;
             }
-
-            MessageManager.SendWelcomeMsg(user, $"Les gouts culinaires de {target}", message);
         }
         [ChatSubCommand("LVDiet", "test8 - popup bouffe sans extreme", ChatAuthorizationLevel.Admin)]
         public static void Test8(User user, User target = null)
