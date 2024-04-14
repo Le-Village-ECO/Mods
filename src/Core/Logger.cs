@@ -17,7 +17,7 @@ namespace Village.Eco.Mods.Core
     }
     public class Logger
     {
-        public static void Log(Level level,string mod, string msg) 
+        public static void SendLog(Level level,string mod, string msg) 
         {
             var log = NLogManager.GetLogWriter("LeVillageMods");
 
