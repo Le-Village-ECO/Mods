@@ -29,8 +29,13 @@ namespace Village.Eco.Mods.Nutrition
 
             //Initialisation de la log
             var log = NLogManager.GetLogWriter("LeVillageMods");
-            
-            Stomach.FoodContentUpdatedEvent.Add((user, foodtype) =>
+
+            //En cas de changement de SkillRate d'un joueur, mettre à jour son niveau de diététique
+            //Note : Ce n'est pas un "event" .NET mais une construction SLG
+            //Cet événement est global mais passe le User en paramètre
+            UserXP.UserSkillRateChangedEvent.Add(SkillLevel);
+
+            /*Stomach.FoodContentUpdatedEvent.Add((user, foodtype) =>
             {
                 //Log de contrôle
                 if (logActive)
@@ -43,7 +48,7 @@ namespace Village.Eco.Mods.Nutrition
 
                 //Log de contrôle
                 if (logActive) log.Write($"******* DIET LOG FIN *******");
-            });
+            });*/
 
             // Technique de "Reflexion" pour modifier toutes les recettes
             SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
