@@ -92,10 +92,19 @@ namespace Eco.Mods.TechTree
     [Ecopedia("Housing Objects", "Kitchen", createAsSubPage: true)]
     [Tag("Housing")]
     [Weight(2000)] // Défini le poids de la Table de boucherie Industrielle.
-    [AllowPluginModules(Tags = new[] { "BasicUpgrade" }, ItemTypes = new[] { typeof(ButcheryUpgradeItem) })] //noloc
+    [AllowPluginModules(Tags = new[] { "AdvancedUpgrade" }, ItemTypes = new[] { typeof(AdvancedButcheryUpgradeItem) })] //noloc
     public partial class IndustrialButcheryTableItem : WorldObjectItem<IndustrialButcheryTableObject>, IPersistentData
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
+
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(AdvancedMasonryTableObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Industrial"),
+            TypeForRoomLimit = Localizer.DoStr(""),
+
+        };
         [NewTooltip(CacheAs.SubType, 7)] public static LocString PowerConsumptionTooltip() => Localizer.Do($"Consumes: {Text.Info(100)}w of {new ElectricPower().Name} power.");
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }

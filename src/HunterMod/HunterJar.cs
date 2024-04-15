@@ -65,7 +65,7 @@ namespace Eco.Mods.TechTree
             this.ModsPreInitialize();
             var storage = this.GetComponent<PublicStorageComponent>();
             storage.Initialize(4);
-            storage.Storage.AddInvRestriction(new TagRestriction("MediumCarcass","SmallCarcass","TinyCarcass"));// Carcass only A MODIFIER 
+            storage.Storage.AddInvRestriction(new TagRestriction("Carcass"));// Tag Carcass
             this.ModsPostInitialize();
         }
 

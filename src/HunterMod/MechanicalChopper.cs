@@ -60,7 +60,7 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [RequireRoomContainment]
-    [RequireRoomVolume(18)]
+    [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(1.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
     [Tag("Usable")]
     [Ecopedia("Housing Objects", "Kitchen", subPageName: "Hachoir Mécanique Item")]
@@ -73,7 +73,7 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
-            this.GetComponent<PowerConsumptionComponent>().Initialize(40);
+            this.GetComponent<PowerConsumptionComponent>().Initialize(20);
             this.GetComponent<PowerGridComponent>().Initialize(5, new MechanicalPower());
             this.ModsPostInitialize();
         }
@@ -89,14 +89,22 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Hachoir Mécanique")]
     [LocDescription("Comme une table de boucherie mais en plus rapide")]
     [IconGroup("World Object Minimap")]
-    [Ecopedia("Housing Objects", "Kitchen", createAsSubPage: true)]
+    [Ecopedia("Work Stations", "Craft Tables", createAsSubPage: true)]
     [Tag("Housing")]
     [Weight(2000)] // Défini le poids de la Hachoir Mécanique.
-    [AllowPluginModules(Tags = new[] { "BasicUpgrade" }, ItemTypes = new[] { typeof(ButcheryUpgradeItem) })] //noloc
+    [AllowPluginModules(Tags = new[] { "AdvancedUpgrade" }, ItemTypes = new[] { typeof(AdvancedButcheryUpgradeItem) })] //noloc
     public partial class MechanicalChopperItem : WorldObjectItem<MechanicalChopperObject>, IPersistentData
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-        [NewTooltip(CacheAs.SubType, 7)] public static LocString PowerConsumptionTooltip() => Localizer.Do($"Consumes: {Text.Info(40)}w of {new MechanicalPower().Name} power.");
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(AdvancedMasonryTableObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Industrial"),
+            TypeForRoomLimit = Localizer.DoStr(""),
+
+        };
+        [NewTooltip(CacheAs.SubType, 7)] public static LocString PowerConsumptionTooltip() => Localizer.Do($"Consumes: {Text.Info(20)}w of {new MechanicalPower().Name} power.");
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
@@ -110,7 +118,7 @@ namespace Eco.Mods.TechTree
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
     [RequiresSkill(typeof(BlacksmithSkill), 1)]
-    [Ecopedia("Housing Objects", "Kitchen", subPageName: "Hachoir Mécanique Item")]
+    [Ecopedia("Work Stations", "Craft Tables", subPageName: "Hachoir Mécanique Item")]
     public partial class MechanicalChopperRecipe : RecipeFamily
     {
         public MechanicalChopperRecipe()
