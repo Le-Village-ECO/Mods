@@ -1,6 +1,7 @@
 ﻿// Le village - Ensemble de commandes Admin pour faire des tests.
 // Les commandes pour les joueurs sont dans DietPlugin.cs
 
+using Eco.Core.Utils;
 using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
@@ -10,6 +11,7 @@ using Eco.Gameplay.Utils;
 using Eco.Shared.Localization;
 using Eco.Shared.Utils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Village.Eco.Mods.Core;
 
@@ -106,17 +108,72 @@ namespace Village.Eco.Mods.Nutrition
         }
 
         [ChatSubCommand("LVDiet", "test7 - popup bouffe", ChatAuthorizationLevel.Admin)]
-        public static void Test7(User user)
+        public static void Test7(User user, User target = null)
         {
-            foreach (var groupFoodTaste in user.Stomach.TasteBuds.FoodToTaste.Where(x => x.Value.Discovered).GroupBy(x => x.Value.Preference))
+            target ??= user;
+
+            string message;
+            message = "Debut :\n";
+
+            foreach (var groupFoodTaste in target.Stomach.TasteBuds.FoodToTaste.Where(x => x.Value.Discovered).GroupBy(x => x.Value.Preference))
             {
-                user.Player.Msg(Localizer.Format($"Preference : {groupFoodTaste.Key.GetEnumLocDisplayName()}"));
+                //user.Player.Msg(Localizer.Format($"Preference : {groupFoodTaste.Key.GetEnumLocDisplayName()}"));
+                message += $"La nourriture qu'il trouve {groupFoodTaste.Key.GetEnumLocDisplayName()} :\n";
                 foreach (var foodTaste in groupFoodTaste)
                 {
-                    user.Player.Msg(Localizer.Format($"{foodTaste.Key.GetLocDisplayNameColored()}"));
+                    //user.Player.Msg(Localizer.Format($"{foodTaste.Key.GetLocDisplayNameColored()}"));
+                    message += $"{foodTaste.Key.GetLocDisplayNameColored()}\n";
                 }
             }
 
+            MessageManager.SendWelcomeMsg(user, $"Les gouts culinaires de {target}", message);
         }
+        [ChatSubCommand("LVDiet", "test8 - popup bouffe sans extreme", ChatAuthorizationLevel.Admin)]
+        public static void Test8(User user, User target = null)
+        {
+            target ??= user;
+
+            var buds = target.Stomach.TasteBuds;
+
+            var preferences = new[]
+            {
+                ItemTaste.TastePreference.Delicious,
+                ItemTaste.TastePreference.Good,
+                ItemTaste.TastePreference.Ok,
+                ItemTaste.TastePreference.Bad,
+                ItemTaste.TastePreference.Horrible
+            };
+
+            string title;
+            title = $"Les gouts culinaires de {target}";
+
+            string message;
+
+            message = TextLoc.BoldLoc($"Son plat {LocTaste(ItemTaste.TastePreference.Favorite)} : ")+ $"{(buds.FavoriteDiscovered ? buds.Favorite.MarkedUpName : "inconnu")}\n\n";
+            message += TextLoc.BoldLoc($"Son plat {LocTaste(ItemTaste.TastePreference.Worst)} : ") + $"{(buds.WorstDiscovered ? buds.Worst.MarkedUpName : "inconnu")}\n\n";
+
+            foreach (var preference in preferences)
+            {
+                message += TextLoc.BoldLoc($"La nourriture qu'il trouve {LocTaste(preference)} :\n");
+                foreach (var food in buds.FoodToTaste.Where(x => x.Value.Discovered && x.Value.Preference == preference))
+                {
+                    message += $"{Item.Get(food.Key).MarkedUpName}\n";
+                }
+                message += "\n";
+            }
+
+            MessageManager.SendWelcomeMsg(user, title, message);
+        }
+
+        public static LocString LocTaste(ItemTaste.TastePreference pref) => pref switch
+        {
+            ItemTaste.TastePreference.Delicious => TextLoc.ColorLocStr(Color.LightGreen, "Delicious"),
+            ItemTaste.TastePreference.Good => TextLoc.ColorLocStr(Color.GreenGrey, "Good"),
+            ItemTaste.TastePreference.Ok => TextLoc.ColorLocStr(Color.White, "Ok"),
+            ItemTaste.TastePreference.Bad => TextLoc.ColorLocStr(Color.BlueGrey, "Bad"),
+            ItemTaste.TastePreference.Horrible => TextLoc.ColorLocStr(Color.Grey, "Horrible"),
+            ItemTaste.TastePreference.Worst => TextLoc.ColorLocStr(Color.Red, "Least favorite"),
+            ItemTaste.TastePreference.Favorite => TextLoc.ColorLocStr(Color.Green, "Favorite"),
+        };
     }
 }
