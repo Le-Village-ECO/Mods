@@ -42,7 +42,7 @@ namespace Eco.Mods.TechTree
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
     [Tag("TinyLeatherCarcass")]
     [Tag("TinyCarcass")]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead snapping turtle.")] //The tooltip description for the item.
     public partial class SnappingTurtleCarcassItem : Item
     {

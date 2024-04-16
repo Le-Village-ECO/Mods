@@ -41,7 +41,7 @@ namespace Eco.Mods.TechTree
     [Weight(1000)] // Defines how heavy HareCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
     [Tag("TinyCarcass")]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead hare.")] //The tooltip description for the item.
     public partial class HareCarcassItem : Item
     {

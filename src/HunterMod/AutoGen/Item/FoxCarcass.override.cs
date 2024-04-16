@@ -41,7 +41,7 @@ namespace Eco.Mods.TechTree
     [Weight(2000)] // Defines how heavy FoxCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
     [Tag("SmallCarcass")]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead fox.")] //The tooltip description for the item.
     public partial class FoxCarcassItem : Item
     {

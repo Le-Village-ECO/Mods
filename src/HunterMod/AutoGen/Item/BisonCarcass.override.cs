@@ -40,7 +40,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Bison Carcass")] // Defines the localized name of the item.
     [Weight(5500)] // Defines how heavy BisonCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead bison.")] //The tooltip description for the item.
     public partial class BisonCarcassItem : Item
     {

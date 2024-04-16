@@ -42,7 +42,7 @@ namespace Eco.Mods.TechTree
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
     [Tag("TinyFurCarcass")]
     [Tag("TinyCarcass")]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead agouti.")] //The tooltip description for the item.
     public partial class AgoutiCarcassItem : Item
     {

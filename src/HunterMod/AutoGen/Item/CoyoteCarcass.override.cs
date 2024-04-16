@@ -41,7 +41,7 @@ namespace Eco.Mods.TechTree
     [Weight(2000)] // Defines how heavy CoyoteCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
     [Tag("SmallCarcass")]
-    [Tag("Carcass")]
+    [Tag("Carcasse")]
     [LocDescription("A dead coyote.")] //The tooltip description for the item.
     public partial class CoyoteCarcassItem : Item
     {
