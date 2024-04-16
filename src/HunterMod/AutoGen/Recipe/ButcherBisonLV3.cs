@@ -20,28 +20,28 @@ namespace Eco.Mods.TechTree
 
 
     /// <summary>
-    /// <para>Server side recipe definition for "ButcherTinyLeatherAnimal".</para>
+    /// <para>Server side recipe definition for "ButcherBison".</para>
     /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
     /// </summary>
     /// <remarks>
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(ButcherySkill), 1)]
-    public partial class ButcherTinyLeatherAnimalLV3Recipe : RecipeFamily
+    [RequiresSkill(typeof(ButcherySkill), 2)]
+    public partial class ButcherBisonLV3Recipe : RecipeFamily
     {
-        public ButcherTinyLeatherAnimalLV3Recipe()
+        public ButcherBisonLV3Recipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "ButcherTinyLeatherAnimal",  //noloc
-                displayName: Localizer.DoStr("Butcher Tiny Leather Animal"),
+                name: "ButcherBison",  //noloc
+                displayName: Localizer.DoStr("Butcher Bison"),
 
                 // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("TinyLeatherCarcass", 2, typeof(ButcherySkill), typeof(ButcheryLavishResourcesTalent)), //noloc
+                    new IngredientElement(typeof(BisonCarcassItem), 2, typeof(ButcherySkill), typeof(ButcheryLavishResourcesTalent)),
                 },
 
                 // Define our recipe output items.
@@ -49,21 +49,22 @@ namespace Eco.Mods.TechTree
                 // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<RawMeatItem>(3),
+                    new CraftingElement<RawMeatItem>(25),
                     new CraftingElement<LeatherHideItem>(3),
+                    
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 1; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 5; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(45, typeof(ButcherySkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(ButcherySkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ButcherTinyLeatherAnimalLV3Recipe), start: 1, skillType: typeof(ButcherySkill), typeof(ButcheryFocusedSpeedTalent), typeof(ButcheryParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ButcherBisonLV3Recipe), start: 4, skillType: typeof(ButcherySkill), typeof(ButcheryFocusedSpeedTalent), typeof(ButcheryParallelSpeedTalent));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Butcher Tiny Leather Animal"
+            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Butcher Bison"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Butcher Tiny Leather Animal"), recipeType: typeof(ButcherTinyLeatherAnimalLV3Recipe));
+            this.Initialize(displayText: Localizer.DoStr("Butcher Bison"), recipeType: typeof(ButcherBisonLV3Recipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
