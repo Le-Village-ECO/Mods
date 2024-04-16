@@ -1,23 +1,20 @@
 ﻿// Le Village Core - Outils pour alimenter la log des mods du Village
 // TODO - Principe d'activation on/off paramétrable global et/ou par mod ?
 // TODO - Solution plus industrielle sur le paramétre "mod"
-// TODO - gestion des messages d'erreur donc avec exception
 
 using Eco.Core.Utils.Logging;
 using System.Reflection;
 
 namespace Village.Eco.Mods.Core
 {
-    public enum Level 
+    public enum Criticity
     {
         Info,
-        Warning,
-        //Error,  //TODO
-        Debug
+        Warning
     }
     public class Logger
     {
-        public static void SendLog(Level level,string mod, string msg) 
+        public static void SendLog(Criticity level,string mod, string msg) 
         {
             var log = NLogManager.GetLogWriter("LeVillageMods");
 
@@ -26,14 +23,11 @@ namespace Village.Eco.Mods.Core
             
             switch (level) 
             {
-                case Level.Info:
+                case Criticity.Info:
                     log.Write($"[{mod}] - {msg}");
                     break;
-                case Level.Warning:
+                case Criticity.Warning:
                     log.WriteWarning($"[{mod}] - {msg}");
-                    break;
-                case Level.Debug:
-                    log.Debug($"[{mod}] - {msg}");
                     break;
             }
         }
