@@ -36,9 +36,25 @@ namespace Village.Eco.Mods.Nutrition
             }
             // Alimente ToolTip de la spécialité - TODO cela ne fonctionne pas toujours... cela semble être lié au PlayerDefaults.cs
             SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_time);
+
+            UserManager.NewUserJoinedEvent.Add(NewUserJoinedEvent);
+            UserManager.OnUserLoggedIn.Add(OnUserLoggedIn);
+            UserManager.OnUserLoggedOut.Add(OnUserLoggedOut);
+
+        }
+        public static void NewUserJoinedEvent(User user) 
+        {
+            //UserStat stat = user.ModifiedStats.GetStat(UserStatType.MaxCarryWeight);
+            //stat.ModifierSkill = new MultiDynamicValue(MultiDynamicOps.Sum, stat.ModifierSkill, new TalentModifiedValue(typeof(UserStatType), typeof(DietTest2Talent), 0));
+        }
+        public static void OnUserLoggedIn(User user) 
+        {
+        }
+        public static void OnUserLoggedOut(User user)
+        {
         }
 
-        public static int CalcLevel(User user) 
+        public static int CalcLevel(User user)
         {
             //Récupération de la configuration
             var tiers = LVConfigurePlugin.Config.DietTiers;
@@ -51,7 +67,7 @@ namespace Village.Eco.Mods.Nutrition
             var palier = stars < tiers.Length ? tiers[stars] : tiers.Last(); //Récupère la valeur palier de SkillRate en fonction du nombre d'étoile
 
             //Log de contrôle
-            if (logActive) Logger.SendLog(Core.Level.Debug,"Diet" ,$"Niveau de {skill.Name} = {skill.Level} / Skill Rate = {skillRate} / Total stars = {stars} / Palier = {palier}");
+            if (logActive) Logger.SendLog(Criticity.Info,"Diet" ,$"Niveau de {skill.Name} = {skill.Level} / Skill Rate = {skillRate} / Total stars = {stars} / Palier = {palier}");
 
             if (skillRate >= palier)
             {
@@ -65,7 +81,7 @@ namespace Village.Eco.Mods.Nutrition
                 int resultat = (skill.MaxLevel - arrondi < 1) ? 1 : (skill.MaxLevel - arrondi); //On ne peut pas descendre en dessous du niveau 1 de la spécialité
 
                 //Log de contrôle
-                if (logActive) Logger.SendLog(Core.Level.Debug, "Diet", $"Delta = {delta} / multiple = {multiple} / arrondi = {arrondi} / resultat = {resultat}");
+                if (logActive) Logger.SendLog(Criticity.Info, "Diet", $"Delta = {delta} / multiple = {multiple} / arrondi = {arrondi} / resultat = {resultat}");
 
                 return resultat;
             }
@@ -78,12 +94,11 @@ namespace Village.Eco.Mods.Nutrition
             var skill = user.Skillset.GetSkill(typeof(DietSkill));
 
             skill.ForceSetLevel(user, CalcLevel(user));
+            if (skill.Talents != null) skill.ResetTalents(user); //Remise à 0 du talent si ce dernier avait été pris
             user.Skillset.RefreshSkills();
 
-            //user.Skillset.LevelUp(typeof(DietSkill)); // Affichage du message de gain d'un niveau
-
             //Log de contrôle
-            if (logActive) Logger.SendLog(Core.Level.Debug, "Diet", $"Changement de **{skill.Name}** : **{skill.Level}**");
+            if (logActive) Logger.SendLog(Criticity.Info, "Diet", $"Changement de **{skill.Name}** : **{skill.Level}**");
         }
 
         [ChatCommand("Diet Info", ChatAuthorizationLevel.User)]
@@ -122,7 +137,7 @@ namespace Village.Eco.Mods.Nutrition
             message = $"Niveau de diététique mis à jour : {oldLevel} -> {newLevel}\n";
             user.OkBoxLocStr(message);
 
-            Logger.SendLog(Core.Level.Info, "Diet", $"DIET MOD - Le joueur **{user.Player.DisplayName}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
+            Logger.SendLog(Criticity.Info, "Diet", $"DIET MOD - Le joueur **{user.Player.DisplayName}** a forcé la mise à jour de diététique : {oldLevel} -> {newLevel}");
         }
 
         [ChatCommand("Nourriture", ChatAuthorizationLevel.User)]

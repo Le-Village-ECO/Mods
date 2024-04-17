@@ -43,6 +43,7 @@ namespace Village.Eco.Mods.Nutrition
             var skill = user.Skillset[skillType];
 
             skill.ForceSetLevel(user, level);
+            if (skill.Talents != null) skill.ResetTalents(user);
             user.Skillset.RefreshSkills();
 
             user.Player.Msg(Localizer.Format($"coucou"));
@@ -107,20 +108,10 @@ namespace Village.Eco.Mods.Nutrition
             user.Player.MsgLocStr($"Skill count **{totStars}** / Stars earned **{stars}**");
         }
 
-        [ChatSubCommand("LVDiet", "test7 - Ajout Skill Modifier", ChatAuthorizationLevel.Admin)]
-        public static void Test7(User user, int num)
+        [ChatSubCommand("LVDiet", "test7 - Test Logger", ChatAuthorizationLevel.Admin)]
+        public static void Test7(User user, string msg)
         {
-            switch (num)
-            {
-                case 1:
-                    SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
-                    SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_time);
-                    break;
-                case 2:
-                    SkillModifiedValue smv_test = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Test"), DynamicValueType.Misc);
-                    SkillModifiedValueManager.AddSkillBenefit(typeof(DietSkill), smv_test);
-                    break;
-            }
+            Logger.SendLog(Criticity.Info, "test", $"{msg}");
         }
         [ChatSubCommand("LVDiet", "test8 - popup bouffe sans extreme", ChatAuthorizationLevel.Admin)]
         public static void Test8(User user, User target = null)
