@@ -60,10 +60,10 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [RequireRoomContainment]
-    [RequireRoomVolume(18)]
+    [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(2.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
     [Tag("Usable")]
-    [Ecopedia("Housing Objects", "Kitchen", subPageName: "Table de boucherie Industrielle Item")]
+    [Ecopedia("Work Stations", "Craft Tables", subPageName: "Table de boucherie Industrielle Item")]
     public partial class IndustrialButcheryTableObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(IndustrialButcheryTableItem);
@@ -75,6 +75,8 @@ namespace Eco.Mods.TechTree
             this.ModsPreInitialize();
             this.GetComponent<PowerConsumptionComponent>().Initialize(100);
             this.GetComponent<PowerGridComponent>().Initialize(10, new ElectricPower());
+            this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Crafting"));
+            this.GetComponent<HousingComponent>().HomeValue = IndustrialButcheryTableItem.homeValue;
             this.ModsPostInitialize();
         }
 
@@ -90,7 +92,7 @@ namespace Eco.Mods.TechTree
     [LocDescription("Le nec plus ultra de la boucherie")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Housing Objects", "Kitchen", createAsSubPage: true)]
-    [Tag("Housing")]
+    [Tag("Usable")]
     [Weight(2000)] // Défini le poids de la Table de boucherie Industrielle.
     [AllowPluginModules(Tags = new[] { "AdvancedUpgrade" }, ItemTypes = new[] { typeof(AdvancedButcheryUpgradeItem) })] //noloc
     public partial class IndustrialButcheryTableItem : WorldObjectItem<IndustrialButcheryTableObject>, IPersistentData
@@ -100,7 +102,7 @@ namespace Eco.Mods.TechTree
         public override HomeFurnishingValue HomeValue => homeValue;
         public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
         {
-            ObjectName = typeof(AdvancedMasonryTableObject).UILink(),
+            ObjectName = typeof(IndustrialButcheryTableObject).UILink(),
             Category = HousingConfig.GetRoomCategory("Industrial"),
             TypeForRoomLimit = Localizer.DoStr(""),
 
@@ -118,7 +120,7 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(BlacksmithSkill), 1)]
+    [RequiresSkill(typeof(MechanicsSkill), 2)]
     [Ecopedia("Housing Objects", "Kitchen", subPageName: "Table de boucherie Industrielle Item")]
     public partial class IndustrialButcheryTableRecipe : RecipeFamily
     {

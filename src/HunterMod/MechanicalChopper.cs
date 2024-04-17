@@ -63,7 +63,7 @@ namespace Eco.Mods.TechTree
     [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(1.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
     [Tag("Usable")]
-    [Ecopedia("Housing Objects", "Kitchen", subPageName: "Hachoir Mécanique Item")]
+    [Ecopedia("Work Stations", "Craft Tables", subPageName: "Hachoir Mécanique Item")]
     public partial class MechanicalChopperObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(MechanicalChopperItem);
@@ -75,6 +75,8 @@ namespace Eco.Mods.TechTree
             this.ModsPreInitialize();
             this.GetComponent<PowerConsumptionComponent>().Initialize(20);
             this.GetComponent<PowerGridComponent>().Initialize(5, new MechanicalPower());
+            this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Crafting"));
+            this.GetComponent<HousingComponent>().HomeValue = MechanicalChopperItem.homeValue;
             this.ModsPostInitialize();
         }
 
@@ -90,7 +92,7 @@ namespace Eco.Mods.TechTree
     [LocDescription("Comme une table de boucherie mais en plus rapide")]
     [IconGroup("World Object Minimap")]
     [Ecopedia("Work Stations", "Craft Tables", createAsSubPage: true)]
-    [Tag("Housing")]
+    [Tag("Usable")]
     [Weight(2000)] // Défini le poids de la Hachoir Mécanique.
     [AllowPluginModules(Tags = new[] { "AdvancedUpgrade" }, ItemTypes = new[] { typeof(AdvancedButcheryUpgradeItem) })] //noloc
     public partial class MechanicalChopperItem : WorldObjectItem<MechanicalChopperObject>, IPersistentData
@@ -99,7 +101,7 @@ namespace Eco.Mods.TechTree
         public override HomeFurnishingValue HomeValue => homeValue;
         public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
         {
-            ObjectName = typeof(AdvancedMasonryTableObject).UILink(),
+            ObjectName = typeof(MechanicalChopperObject).UILink(),
             Category = HousingConfig.GetRoomCategory("Industrial"),
             TypeForRoomLimit = Localizer.DoStr(""),
 
