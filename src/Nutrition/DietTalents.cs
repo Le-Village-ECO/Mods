@@ -1,59 +1,17 @@
-﻿using Eco.Gameplay.DynamicValues;
+﻿using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
-using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.Nutrition
 {
-    #region Talent1
-    public partial class Test1Talent : Talent
+    #region DietAddWeightTalent
+    public partial class AddWeightTalent : Talent
     {
         public override bool Base => true;
-    }
-
-    [Serialized]
-    [LocDisplayName("Talent 1 : Test")]
-    [LocDescription("En cours de développement...")]
-    public partial class DietTest1TalentGroup : TalentGroup
-    {
-        public DietTest1TalentGroup()
-        {
-            Talents = new Type[]
-            {
-                typeof(DietTest1Talent),
-            };
-            this.OwningSkill = typeof(DietSkill);
-            this.Level = 5;
-        }
-    }
-
-    [Serialized]
-    public partial class DietTest1Talent : Test1Talent
-    {
-        public override bool Base { get { return false; } }
-        public override Type TalentGroupType { get { return typeof(DietTest1TalentGroup); } }
-        public DietTest1Talent()
-        {
-            this.Value = 1;
-        }
-    }
-    #endregion
-
-    #region Talent2
-    public partial class Test2Talent : Talent
-    {
-        public override bool Base => true;
-    }
-    public partial class Test2Talent
-    {
         public override void OnLearned(User user)
         {
             base.OnLearned(user);
@@ -67,15 +25,15 @@ namespace Village.Eco.Mods.Nutrition
     }
 
     [Serialized]
-    [LocDisplayName("Talent 2 : 5kg")]
-    [LocDescription("En cours de développement...")]
-    public partial class DietTest2TalentGroup : TalentGroup
+    [LocDisplayName("Extension de sac : Diététique")]
+    [LocDescription("Ajoute 5kg au sac à dos")]
+    public partial class DietAddWeightTalentGroup : TalentGroup
     {
-        public DietTest2TalentGroup()
+        public DietAddWeightTalentGroup()
         {
             Talents = new Type[]
             {
-                typeof(DietTest2Talent),
+                typeof( DietAddWeightTalent),
             };
             this.OwningSkill = typeof(DietSkill);
             this.Level = 5;
@@ -83,14 +41,83 @@ namespace Village.Eco.Mods.Nutrition
     }
 
     [Serialized]
-    public partial class DietTest2Talent : Test2Talent
+    public partial class DietAddWeightTalent : AddWeightTalent
     {
         public override bool Base { get { return false; } }
-        public override Type TalentGroupType { get { return typeof(DietTest2TalentGroup); } }
-        public DietTest2Talent()
+        public override Type TalentGroupType { get { return typeof(DietAddWeightTalentGroup); } }
+        public DietAddWeightTalent()
         {
             this.Value = 5000;
         }
+    }
+    #endregion
+
+    #region DietStackSizeTalent
+    public class StackSizeTalent : Talent
+    {
+        public override bool Base => true;
+        public override void OnLearned(User user)
+        {
+            base.OnLearned(user);
+
+            var carryInventory = user.Inventory.Carried;
+
+            if (!carryInventory.Restrictions.Any(restriction => restriction is MultiplierInventoryRestriction))
+            {
+                carryInventory.AddInvRestriction(new MultiplierInventoryRestriction(DietStackSizeTalent.STACK_SIZE));
+            }
+        }
+        public override void OnUnLearned(User user)
+        {
+            base.OnUnLearned(user);
+
+            Inventory carryInventory = user.Inventory.Carried;
+            carryInventory.RemoveAllRestrictions(restriction => restriction is MultiplierInventoryRestriction);
+        }
+    }
+
+    [Serialized]
+    [LocDisplayName("Force herculéenne : Diététique")]
+    [LocDescription("Vous pouvez porter 50% d'objet en plus")]
+    public partial class DietStackSizeTalentGroup : TalentGroup
+    {
+        public DietStackSizeTalentGroup()
+        {
+            Talents = new Type[]
+            {
+                typeof(DietStackSizeTalent),
+            };
+            this.OwningSkill = typeof(DietSkill);
+            this.Level = 5;
+        }
+    }
+
+    [Serialized]
+    public partial class DietStackSizeTalent : StackSizeTalent
+    {
+        public const float STACK_SIZE = 1.5f;
+
+        public override bool Base { get { return false; } }
+        public override Type TalentGroupType { get { return typeof(DietStackSizeTalentGroup); } }
+
+    }
+
+    public class MultiplierInventoryRestriction : InventoryRestriction
+    {
+        private float value;
+
+        public MultiplierInventoryRestriction(float value)
+        {
+            this.value = value;
+        }
+
+        public override LocString Message => new ();
+
+        public override int MaxAccepted(Item item, int currentQuantity)
+        {
+            return (int)(item.MaxStackSize * value);
+        }
+        public override bool SurpassStackSize => true;
     }
     #endregion
 }

@@ -45,10 +45,19 @@ namespace Village.Eco.Mods.Nutrition
         public static void NewUserJoinedEvent(User user) 
         {
             //UserStat stat = user.ModifiedStats.GetStat(UserStatType.MaxCarryWeight);
-            //stat.ModifierSkill = new MultiDynamicValue(MultiDynamicOps.Sum, stat.ModifierSkill, new TalentModifiedValue(typeof(UserStatType), typeof(DietTest2Talent), 0));
+            //stat.ModifierSkill = new MultiDynamicValue(MultiDynamicOps.Sum, stat.ModifierSkill, new TalentModifiedValue(typeof(UserStatType), typeof(DietStackSizeTalent), 0));
         }
         public static void OnUserLoggedIn(User user) 
         {
+            if (user.Talentset.HasTalent<DietStackSizeTalent>()) 
+            {
+                var carryInventory = user.Inventory.Carried;
+
+                if (!carryInventory.Restrictions.Any(restriction => restriction is MultiplierInventoryRestriction))
+                {
+                    carryInventory.AddInvRestriction(new MultiplierInventoryRestriction(DietStackSizeTalent.STACK_SIZE));
+                }
+            }
         }
         public static void OnUserLoggedOut(User user)
         {
