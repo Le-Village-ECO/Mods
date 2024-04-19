@@ -1,5 +1,5 @@
 ﻿// Le village
-// Ralentir le Temps
+// Changement de table
 
 namespace Eco.Mods.TechTree
 {

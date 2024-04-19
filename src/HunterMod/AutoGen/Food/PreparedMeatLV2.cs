@@ -1,5 +1,5 @@
 ﻿// Le village
-// Changement de table
+// Changement de table + Meilleur recette
 
 namespace Eco.Mods.TechTree
 {
@@ -85,7 +85,7 @@ namespace Eco.Mods.TechTree
             this.ExperienceOnCraft = 1; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(15, typeof(ButcherySkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(30, typeof(ButcherySkill));
 
             // Defines our crafting time for the recipe
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(PreparedMeatLV2Recipe), start: 0.8f, skillType: typeof(ButcherySkill), typeof(ButcheryFocusedSpeedTalent), typeof(ButcheryParallelSpeedTalent));

@@ -29,11 +29,12 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Systems.NewTooltip;
     using Eco.Shared.Items;
 
+
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Bison Carcass")] // Defines the localized name of the item.
     [Weight(5500)] // Defines how heavy BisonCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
-    [Tag("Carcasse")]
+    [Tag("Carcasse")]    
     [LocDescription("A dead bison.")] //The tooltip description for the item.
     public partial class BisonCarcassItem : FoodItem //Modification de la carcasse de bison en FoodItem
     {
@@ -44,8 +45,7 @@ namespace Eco.Mods.TechTree
 
         /// <summary>Defines the default time it takes for this item to spoil. This value can be modified by the inventory this item currently resides in.</summary>
         protected override float BaseShelfLife => (float)TimeUtil.HoursToSeconds(144);
-
-                    
+        
         //Suppression de l'action de manger dans les lignes suivantes
         // On modifie via l'override du parent (FoodItem dans notre cas) afin que le OnUsed affiche un message vide plutôt que de faire le OnUsed classique du FoodItem
         public override string OnUsed(Player player, ItemStack itemStack) 

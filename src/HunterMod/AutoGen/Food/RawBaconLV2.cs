@@ -1,5 +1,5 @@
 ﻿//Le village
-//Changement de table de craft
+//Changement de table de craft + Meilleure recette
 
 namespace Eco.Mods.TechTree
 {

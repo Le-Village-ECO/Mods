@@ -68,7 +68,7 @@ namespace Eco.Mods.TechTree
             this.GetComponent<HousingComponent>().HomeValue = HunterJarItem.homeValue;
             var storage = this.GetComponent<PublicStorageComponent>();
             storage.Initialize(4);
-            storage.Storage.AddInvRestriction(new TagRestriction("Carcasse"));// Tag Carcass
+            storage.Storage.AddInvRestriction(new TagRestriction("Carcasse","Spoiled Food"));// Tag Carcass
             storage.ShelfLifeMultiplier = 1.6f;
             this.ModsPostInitialize();
         }

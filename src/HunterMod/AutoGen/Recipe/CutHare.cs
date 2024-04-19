@@ -1,4 +1,4 @@
-﻿// Le village découpage en privilégiant la peau
+﻿// Le village découpage en privilégiant la peau - Métier Chasseur
 
 namespace Eco.Mods.TechTree
 {
@@ -18,16 +18,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Settlements.ClaimStakes;
     using Eco.Gameplay.Items.Recipes;
 
-
-    /// <summary>
-    /// <para>Server side recipe definition for "CutHare".</para>
-    /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
-    /// </summary>
-    /// <remarks>
-    /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
-    /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
-    /// </remarks>
-    [RequiresSkill(typeof(ButcherySkill), 1)]
+    [RequiresSkill(typeof(HuntingSkill), 1)]
     public partial class CutHareRecipe : RecipeFamily
     {
         public CutHareRecipe()
@@ -41,7 +32,7 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(HareCarcassItem), 1, typeof(ButcherySkill), typeof(ButcheryLavishResourcesTalent)),
+                    new IngredientElement(typeof(HareCarcassItem), 1, typeof(HuntingSkill)),
                 },
 
                 // Define our recipe output items.
@@ -57,10 +48,10 @@ namespace Eco.Mods.TechTree
             this.ExperienceOnCraft = 1; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(25, typeof(ButcherySkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(25, typeof(HuntingSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(CutHareRecipe), start: 1, skillType: typeof(ButcherySkill), typeof(ButcheryFocusedSpeedTalent), typeof(ButcheryParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(CutHareRecipe), start: 0.5f, skillType: typeof(HuntingSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Butcher Hare"
             this.ModsPreInitialize();

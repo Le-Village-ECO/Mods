@@ -1,4 +1,4 @@
-﻿//Le Village 1Peau et double la vitesse
+﻿//Le Village plus de peau et viande 
 
 namespace Eco.Mods.TechTree
 {

@@ -76,7 +76,8 @@ namespace Eco.Mods.TechTree
             var storage = this.GetComponent<PublicStorageComponent>();
             storage.Initialize(8);
             storage.Storage.AddInvRestriction(new StackLimitRestriction(200));
-            storage.Storage.AddInvRestriction(new TagRestriction("Carcasse"));
+            storage.Storage.AddInvRestriction(new TagRestriction("Carcasse","Spoiled Food"));
+            //storage.Storage.AddInvRestriction(new TagRestriction("Spoiled Food"));
             storage.ShelfLifeMultiplier = 2.2f;
             this.ModsPostInitialize();
         }

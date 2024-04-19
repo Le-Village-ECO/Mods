@@ -29,7 +29,7 @@ namespace Eco.Mods.TechTree
 
             
     /// <summary>
-    /// <para>Server side item definition for the "TurkeyCarcass" item.</para>
+    /// <para>Server side item definition for the "CrabCarcass" item.</para>
     /// <para>More information about Item objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.Item.html</para>
     /// </summary>
     /// <remarks>
@@ -37,16 +37,15 @@ namespace Eco.Mods.TechTree
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
     [Serialized] // Tells the save/load system this object needs to be serialized. 
-    [LocDisplayName("Turkey Carcass")] // Defines the localized name of the item.
-    [Weight(1000)] // Defines how heavy TurkeyCarcass is.
+    [LocDisplayName("Crab Carcass")] // Defines the localized name of the item.
+    [Weight(2000)] // Defines how heavy CrabCarcass is.
     [Ecopedia("Natural Resources", "Animal", createAsSubPage: true)]
-    [Tag("TinyLeatherCarcass")]
-    [Tag("TinyCarcass")]
+    [Tag("SmallFish")]
     [Tag("Carcasse")]
-    [LocDescription("A dead turkey.")] //The tooltip description for the item.
-    public partial class TurkeyCarcassItem : FoodItem
+    [LocDescription("A crustacean that loves the ocean, just don't get caught in its pinch!")] //The tooltip description for the item.
+    public partial class CrabCarcassItem : FoodItem
     {
-        public override LocString DisplayNamePlural => Localizer.DoStr("Turkey Carcass");
+        public override LocString DisplayNamePlural => Localizer.DoStr("Crab Carcass");
         public override float Calories => 0;
 
         public override Nutrients Nutrition => new Nutrients() { Carbs = 0, Fat = 0, Protein = 0, Vitamins = 0 };
