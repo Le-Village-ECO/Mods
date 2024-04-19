@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
-// Le Village : Ajout des boisson énergisantes
+// Le Village : Ajout de la spécialité Diététique
 
 using System;
 using System.Collections.Generic;
@@ -53,7 +53,7 @@ public static class PlayerDefaults
         {
             typeof(SurvivalistSkill),
             typeof(SelfImprovementSkill),
-			typeof(DietSkill),
+			typeof(DietSkill), //Le Village - Ajout de la spécialité diététique
         };
     }
 
@@ -73,7 +73,7 @@ public static class PlayerDefaults
             typeof(HuntingSkill),
             typeof(SurvivalistSkill),
             typeof(SelfImprovementSkill),
-            typeof(DietSkill),
+            typeof(DietSkill), //Le Village - Ajout de la spécialité diététique
         };
     }
 
@@ -91,6 +91,7 @@ public static class PlayerDefaults
             UserStatType.MaxCarryWeight, new MultiDynamicValue(MultiDynamicOps.Sum,
                 CreateSmv(0f, new BonusUnitsDecoratorStrategy(SelfImprovementSkill.AdditiveStrategy, "kg", (float val) => val/1000f), typeof(SelfImprovementSkill), Localizer.DoStr("carry weight"), DynamicValueType.Misc),
                 new TalentModifiedValue(typeof(UserStatType), typeof(SelfImprovementDeeperPocketsTalent), 0),
+                new TalentModifiedValue(typeof(UserStatType), typeof(DietAddWeightTalent), 0), //Le Village - Ajout talent de la spécialité diététique
                 new ConstantValue(ToolbarBackpackInventory.DefaultWeightLimit))
         },
         {
