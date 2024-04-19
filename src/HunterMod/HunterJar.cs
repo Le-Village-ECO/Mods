@@ -46,6 +46,8 @@ namespace Eco.Mods.TechTree
 
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
@@ -63,9 +65,11 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
+            this.GetComponent<HousingComponent>().HomeValue = HunterJarItem.homeValue;
             var storage = this.GetComponent<PublicStorageComponent>();
             storage.Initialize(4);
-            storage.Storage.AddInvRestriction(new TagRestriction("MediumCarcass","SmallCarcass","TinyCarcass"));// Carcass only A MODIFIER 
+            storage.Storage.AddInvRestriction(new TagRestriction("Carcasse"));// Tag Carcass
+            storage.ShelfLifeMultiplier = 1.6f;
             this.ModsPostInitialize();
         }
 
@@ -82,7 +86,17 @@ namespace Eco.Mods.TechTree
     [Weight(1000)] // Defines how heavy HunterJar is.
     public partial class HunterJarItem : WorldObjectItem<HunterJarObject>
     {
+        protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(HunterJarObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Decoration"),
+            BaseValue = 1,
+            TypeForRoomLimit = Localizer.DoStr("Decoration"),
+            DiminishingReturnMultiplier = 0.4f
 
+        };         
     }
 
     /// <summary>
@@ -93,6 +107,7 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
+    [RequiresSkill(typeof(MasonrySkill), 2)]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Jarre du chasseur Item")]
     public partial class HunterJarRecipe : RecipeFamily
     {
@@ -107,7 +122,8 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("Wood", 10,typeof(Skill)), //noloc
+                    new IngredientElement(typeof(ClayItem), 4,typeof(MasonryLavishResourcesTalent)), //noloc
+                    new IngredientElement(typeof(LeatherHideItem), 1,typeof(MasonryLavishResourcesTalent)), //noloc
                 },
 
                 // Define our recipe output items.
@@ -120,10 +136,10 @@ namespace Eco.Mods.TechTree
             this.Recipes = new List<Recipe> { recipe };
 
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(25);
+            this.LaborInCalories = CreateLaborInCaloriesValue(180,typeof(MasonrySkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(1);
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(HunterJarRecipe), start: 2, skillType: typeof(MasonrySkill), typeof(MasonryFocusedSpeedTalent));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Jarre du chasseur"
             this.ModsPreInitialize();
@@ -131,7 +147,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(MasonryTableObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
