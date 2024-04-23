@@ -13,7 +13,7 @@ using System.ComponentModel;
 
 namespace Eco.Mods.TechTree
 {
-    [RequiresSkill(typeof(SmeltingSkill), 1)]
+    [RequiresSkill(typeof(BlacksmithSkill), 1)]
     public partial class IronRepairKitRecipe : RecipeFamily
     {
         public IronRepairKitRecipe()
@@ -25,7 +25,8 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                new(typeof(IronBarItem), 4, typeof(SmeltingSkill), typeof(SmeltingLavishResourcesTalent)),
+                new(typeof(IronBarItem), 4, typeof(BlacksmithSkill), typeof(BlacksmithLavishResourcesTalent)),
+                new(typeof(LeatherHideItem), 4, typeof(BlacksmithSkill),typeof(BlacksmithLavishResourcesTalent)),
                 },
 
                 items: new List<CraftingElement>
@@ -35,8 +36,8 @@ namespace Eco.Mods.TechTree
             this.Recipes = new List<Recipe> { recipe };
 
             this.ExperienceOnCraft = 1;
-            this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(SmeltingSkill));
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronRepairKitRecipe), start: 2, skillType: typeof(SmeltingSkill), typeof(SmeltingFocusedSpeedTalent), typeof(SmeltingParallelSpeedTalent));
+            this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(BlacksmithSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronRepairKitRecipe), start: 2, skillType: typeof(BlacksmithSkill), typeof(BlacksmithFocusedSpeedTalent), typeof(BlacksmithParallelSpeedTalent));
 
             this.ModsPreInitialize();
             this.Initialize(displayText: Localizer.DoStr("Kit de réparation en fer"), recipeType: typeof(IronRepairKitRecipe));
