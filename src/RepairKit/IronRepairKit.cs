@@ -43,7 +43,7 @@ namespace Eco.Mods.TechTree
             this.Initialize(displayText: Localizer.DoStr("Kit de réparation en fer"), recipeType: typeof(IronRepairKitRecipe));
             this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(AnvilObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(GrindstoneObject), recipe: this);
         }
 
         partial void ModsPreInitialize();
