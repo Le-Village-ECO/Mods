@@ -33,7 +33,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Smelting")]
     [LocDescription("Metal is an important part of progress and smelting is the first step into a new age. Levels up by crafting related recipes.")]
     [Ecopedia("Professions", "Smith", createAsSubPage: true)]
-    [RequiresSkill(typeof(SmithSkill), 0), Tag("Smith Specialty"), Tier(1)] //Le Village
+    [RequiresSkill(typeof(SmithSkill), 0), Tag("Smith Specialty"), Tier(2)] //Le Village
     [Tag("Specialty")]
     [Tag("Teachable")]
     public partial class SmeltingSkill : Skill
@@ -71,7 +71,7 @@ namespace Eco.Mods.TechTree
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
         public override int MaxLevel { get { return 7; } }
-        public override int Tier { get { return 3; } }
+        public override int Tier { get { return 2; } } //Le Village
     }
 
     [Serialized]

@@ -71,7 +71,7 @@ namespace Eco.Mods.TechTree
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
         public override int MaxLevel { get { return 7; } }
-        public override int Tier { get { return 5; } }
+        public override int Tier { get { return 4; } } //Le Village
     }
 
     [Serialized]
