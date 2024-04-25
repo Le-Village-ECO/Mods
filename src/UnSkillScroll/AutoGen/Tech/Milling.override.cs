@@ -33,7 +33,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Milling")]
     [LocDescription("Milling various products can create important materials for baking and other uses. Levels up by crafting related recipes.")]
     [Ecopedia("Professions", "Farmer", createAsSubPage: true)]
-    [RequiresSkill(typeof(FarmerSkill), 0), Tag("Farmer Specialty"), Tier(1)] //Le Village
+    [RequiresSkill(typeof(FarmerSkill), 0), Tag("Farmer Specialty"), Tier(2)] //Le Village
     [Tag("Specialty")]
     [Tag("Teachable")]
     public partial class MillingSkill : Skill
@@ -71,7 +71,7 @@ namespace Eco.Mods.TechTree
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
         public override int MaxLevel { get { return 7; } }
-        public override int Tier { get { return 1; } } //Le Village
+        public override int Tier { get { return 2; } } //Le Village
     }
 
     [Serialized]
