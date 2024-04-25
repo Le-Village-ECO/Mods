@@ -1,5 +1,5 @@
 ﻿{
-  "SkillTierCost": false,
+  "SkillTierCost": true,
   "ExhaustInitialBoost": true,
   "HiddenOilField": true,
   "RevealOilField": true,
