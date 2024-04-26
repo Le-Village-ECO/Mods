@@ -102,7 +102,13 @@ namespace Village.Eco.Mods.Nutrition
 
             var skill = user.Skillset.GetSkill(typeof(DietSkill));
 
-            skill.ForceSetLevel(user, CalcLevel(user));
+            int level = CalcLevel(user);
+
+            // Comme le déclencheur est une mise à jour du SkillRate en général, il se peut que le niveau calculé reste inchangé
+            // Donc si aucun changement de niveau nécessaire, ne rien faire
+            if (level == skill.Level) return;
+
+            skill.ForceSetLevel(user, level);
             if (skill.Talents != null) skill.ResetTalents(user); //Remise à 0 du talent si ce dernier avait été pris
             user.Skillset.RefreshSkills();
 
