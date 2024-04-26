@@ -26,6 +26,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Pipes;
     using Eco.Core.Controller;
     using Eco.Gameplay.Items.Recipes;
+    using Eco.Shared.Utils.TimeConversion;
 
 
     /// <summary>
@@ -58,7 +59,7 @@ namespace Eco.Mods.TechTree
         // On modifie via l'override du parent (FoodItem dans notre cas) afin que le OnUsed affiche un message vide plutôt que de faire le OnUsed classique du FoodItem
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            return string.Empty;
+            return $"Durée de conservation restante {SpoilageTime.TimeLeft().SecToDays():F1} jour(s).";
         }
 
     }
