@@ -33,7 +33,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Cutting Edge Cooking")]
     [LocDescription("Cutting edge cooking works with ingredients that don't quite sound like food but can potentially provide high calorie and nutrition. Levels up by crafting related recipes.")]
     [Ecopedia("Professions", "Chef", createAsSubPage: true)]
-    [RequiresSkill(typeof(ChefSkill), 0), Tag("Chef Specialty"), Tier(4)] //Le Village
+    [RequiresSkill(typeof(ChefSkill), 0), Tag("Chef Specialty"), Tier(3)] //Le Village
     [Tag("Specialty")]
     [Tag("Teachable")]
     public partial class CuttingEdgeCookingSkill : Skill
@@ -71,7 +71,7 @@ namespace Eco.Mods.TechTree
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
         public override int MaxLevel { get { return 7; } }
-        public override int Tier { get { return 4; } } //Le Village
+        public override int Tier { get { return 3; } } //Le Village
     }
 
     [Serialized]

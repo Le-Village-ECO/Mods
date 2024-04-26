@@ -33,7 +33,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Shipwright")]
     [LocDescription("Shipwrights uses the fundamental practical application of carpenters and applying it to maritime usage.")]
     [Ecopedia("Professions", "Carpenter", createAsSubPage: true)]
-    [RequiresSkill(typeof(CarpenterSkill), 0), Tag("Carpenter Specialty"), Tier(2)] //LeVillage
+    [RequiresSkill(typeof(CarpenterSkill), 0), Tag("Carpenter Specialty"), Tier(1)] //LeVillage
     [Tag("Specialty")]
     [Tag("Teachable")]
     public partial class ShipwrightSkill : Skill

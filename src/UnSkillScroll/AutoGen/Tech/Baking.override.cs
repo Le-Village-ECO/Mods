@@ -33,7 +33,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Baking")]
     [LocDescription("An introduction to cooking with an oven. Levels up by crafting related unleavened recipes.")]
     [Ecopedia("Professions", "Chef", createAsSubPage: true)]
-    [RequiresSkill(typeof(ChefSkill), 0), Tag("Chef Specialty"), Tier(1)] //Le Village
+    [RequiresSkill(typeof(ChefSkill), 0), Tag("Chef Specialty"), Tier(2)] //Le Village
     [Tag("Specialty")]
     [Tag("Teachable")]
     public partial class BakingSkill : Skill
@@ -71,7 +71,7 @@ namespace Eco.Mods.TechTree
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
         public override int MaxLevel { get { return 7; } }
-        public override int Tier { get { return 1; } } //Le Village
+        public override int Tier { get { return 2; } } //Le Village
     }
 
     [Serialized]
