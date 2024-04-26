@@ -10,8 +10,5 @@
     <PackageReference Include="Eco.ReferenceAssemblies" Version="0.10.2.1-beta-release-647" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AutoGen\WorldObject\" />
-  </ItemGroup>
 
 </Project>
