@@ -108,6 +108,10 @@ namespace Village.Eco.Mods.Nutrition
             // Donc si aucun changement de niveau nécessaire, ne rien faire
             if (level == skill.Level) return;
 
+            // Si estomac vide, on évite une mise à jour du niveau de la spécialité car elle tombera forcément au niveau 1
+            // Cela évite aussi de perdre le talent
+            if (user.Stomach.Calories == 0f) return;
+
             skill.ForceSetLevel(user, level);
             if (skill.Talents != null) skill.ResetTalents(user); //Remise à 0 du talent si ce dernier avait été pris
             user.Skillset.RefreshSkills();
