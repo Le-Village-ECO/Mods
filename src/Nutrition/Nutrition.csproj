@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Objects\" />
     <Folder Include="Unity\" />
     <Folder Include="Player\" />
   </ItemGroup>
