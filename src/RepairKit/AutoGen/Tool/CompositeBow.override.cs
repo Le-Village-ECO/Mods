@@ -38,7 +38,7 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(AdvancedSmeltingSkill), 4)]
+    [RequiresSkill(typeof(HuntingSkill), 6)]
     [Ecopedia("Items", "Tools", subPageName: "Composite Bow Item")]
     public partial class CompositeBowRecipe : RecipeFamily
     {
@@ -53,8 +53,9 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(FiberglassItem), 10, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)),
-                    new IngredientElement(typeof(NylonThreadItem), 20, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)),
+                    new IngredientElement(typeof(FiberglassItem), 10,typeof(HuntingSkill)),
+                    new IngredientElement(typeof(NylonThreadItem), 20,typeof(HuntingSkill)),
+                    new IngredientElement(typeof(LeatherHideItem), 2,typeof(HuntingSkill)),
                 },
 
                 // Define our recipe output items.
@@ -66,12 +67,12 @@ namespace Eco.Mods.TechTree
                 });
             this.Recipes = new List<Recipe> { recipe };
             this.ExperienceOnCraft = 1; // Defines how much experience is gained when crafted.
-            
+
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(AdvancedSmeltingSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(HuntingSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(CompositeBowRecipe), start: 0.5f, skillType: typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingFocusedSpeedTalent), typeof(AdvancedSmeltingParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(CompositeBowRecipe), start: 0.5f, skillType: typeof(HuntingSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Composite Bow"
             this.ModsPreInitialize();
@@ -79,7 +80,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AssemblyLineObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(FletchingTableObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
@@ -93,7 +94,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Composite Bow")]
     [LocDescription("A modern composite bow made with fiberglass that makes hunting a breeze. Requires arrows to fire.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(AdvancedSmeltingSkill), 0)]
+    [RepairRequiresSkill(typeof(HuntingSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

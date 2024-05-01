@@ -25,8 +25,8 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                new(typeof(IronBarItem), 4, typeof(BlacksmithSkill), typeof(BlacksmithLavishResourcesTalent)),
-                new(typeof(LeatherHideItem), 4, typeof(BlacksmithSkill),typeof(BlacksmithLavishResourcesTalent)),
+                new(typeof(IronBarItem), 2, typeof(BlacksmithSkill)),
+                new(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill))
                 },
 
                 items: new List<CraftingElement>

@@ -38,7 +38,8 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(SmeltingSkill), 1)]
+    [RequiresModule(typeof(AnvilObject))]
+    [RequiresSkill(typeof(BlacksmithSkill), 1)]
     [Ecopedia("Items", "Tools", subPageName: "Iron Pickaxe Item")]
     public partial class IronPickaxeRecipe : RecipeFamily
     {
@@ -53,8 +54,9 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(IronBarItem), 4, typeof(SmeltingSkill), typeof(SmeltingLavishResourcesTalent)),
-                    new IngredientElement("WoodBoard", 4, typeof(SmeltingSkill), typeof(SmeltingLavishResourcesTalent)), //noloc
+                    new IngredientElement(typeof(IronBarItem), 4, typeof(BlacksmithSkill)),
+                    new IngredientElement(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
+                    new IngredientElement("WoodBoard", 4, typeof(BlacksmithSkill)), //noloc
                 },
 
                 // Define our recipe output items.
@@ -65,13 +67,13 @@ namespace Eco.Mods.TechTree
                     new CraftingElement<IronPickaxeItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 0.1f; // Defines how much experience is gained when crafted.
-            
+            this.ExperienceOnCraft = 0.5f; // Defines how much experience is gained when crafted.
+
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(SmeltingSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronPickaxeRecipe), start: 0.5f, skillType: typeof(SmeltingSkill), typeof(SmeltingFocusedSpeedTalent), typeof(SmeltingParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(IronPickaxeRecipe), start: 0.5f, skillType: typeof(BlacksmithSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Iron Pickaxe"
             this.ModsPreInitialize();
@@ -79,7 +81,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AnvilObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(GrindstoneObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
@@ -93,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Iron Pickaxe")]
     [LocDescription("A sturdy iron pickaxe used to break down stone and ore into usable rubble.")]
     [Tier(2)]
-    //[RepairRequiresSkill(typeof(SmeltingSkill), 0)]
+    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
@@ -106,7 +108,7 @@ namespace Eco.Mods.TechTree
         private static IDynamicValue exp                    = new ConstantValue(0.1f);
         private static IDynamicValue tier                   = new ConstantValue(2);
         private static IDynamicValue perkDamage             = new MultiDynamicValue(MultiDynamicOps.Sum, new ConstantValue(0), new TalentModifiedValue(typeof(IronPickaxeItem), typeof(MiningToolStrengthTalent), 0));
-        //private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(4, SmeltingSkill.MultiplicativeStrategy, typeof(SmeltingSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
+        //private static SkillModifiedValue skilledRepairCost = new SkillModifiedValue(4, BlacksmithSkill.MultiplicativeStrategy, typeof(BlacksmithSkill), Localizer.DoStr("repair cost"), DynamicValueType.Efficiency);
         private static IDynamicValue skilledRepairCost = new ConstantValue(1);
 
         // Tool overrides

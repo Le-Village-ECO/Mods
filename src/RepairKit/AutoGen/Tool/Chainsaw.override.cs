@@ -38,7 +38,8 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(AdvancedSmeltingSkill), 3)]
+    [RequiresModule(typeof(BlacksmithTableObject))]
+    [RequiresSkill(typeof(BlacksmithSkill), 5)]
     [Ecopedia("Items", "Tools", subPageName: "Chainsaw Item")]
     public partial class ChainsawRecipe : RecipeFamily
     {
@@ -53,8 +54,9 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(FiberglassItem), 10, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)),
-                    new IngredientElement(typeof(SteelBarItem), 4, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)),
+                    new IngredientElement(typeof(FiberglassItem), 10, typeof(BlacksmithSkill)),
+                    new IngredientElement(typeof(SteelBarItem), 4, typeof(BlacksmithSkill)),
+                    new IngredientElement(typeof(SyntheticRubberItem), 2, typeof(BlacksmithSkill)),
                     new IngredientElement(typeof(CombustionEngineItem), 1, true),
                 },
 
@@ -66,13 +68,13 @@ namespace Eco.Mods.TechTree
                     new CraftingElement<ChainsawItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 0.1f; // Defines how much experience is gained when crafted.
-            
+            this.ExperienceOnCraft = 0.5f; // Defines how much experience is gained when crafted.
+
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(AdvancedSmeltingSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ChainsawRecipe), start: 0.5f, skillType: typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingFocusedSpeedTalent), typeof(AdvancedSmeltingParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ChainsawRecipe), start: 0.5f, skillType: typeof(BlacksmithSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Chainsaw"
             this.ModsPreInitialize();
@@ -80,7 +82,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AssemblyLineObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(PowerHammerObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
@@ -94,7 +96,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Chainsaw")]
     [LocDescription("A gasoline-powered alternative to cutting trees.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(AdvancedSmeltingSkill), 0)]  //Pas besoin de spécialité pour remplir d'essense
+    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

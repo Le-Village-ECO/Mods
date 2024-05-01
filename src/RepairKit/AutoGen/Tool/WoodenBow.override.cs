@@ -52,8 +52,8 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(PlantFibersItem), 30),
-                    new IngredientElement("Wood", 16), //noloc
+                    new IngredientElement(typeof(PlantFibersItem), 30,typeof(Skill)),
+                    new IngredientElement("Wood", 16,typeof(Skill)), //noloc
                 },
 
                 // Define our recipe output items.
@@ -64,7 +64,7 @@ namespace Eco.Mods.TechTree
                     new CraftingElement<WoodenBowItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            
+
             // Defines the amount of labor required and the required skill to add labor
             this.LaborInCalories = CreateLaborInCaloriesValue(10);
 
@@ -78,6 +78,7 @@ namespace Eco.Mods.TechTree
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
             CraftingComponent.AddRecipe(tableType: typeof(ToolBenchObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(FletchingTableObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>

@@ -25,8 +25,8 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(SteelBarItem), 4, typeof(BlacksmithSkill), typeof(BlacksmithLavishResourcesTalent)),
-                    new(typeof(LeatherHideItem), 4, typeof(BlacksmithSkill),typeof(BlacksmithLavishResourcesTalent)),
+                    new(typeof(SteelBarItem), 2, typeof(BlacksmithSkill)),
+                    new(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
 
                 },
 
@@ -44,7 +44,7 @@ namespace Eco.Mods.TechTree
             this.Initialize(displayText: Localizer.DoStr("Kit de réparation en acier"), recipeType: typeof(SteelRepairKitRecipe));
             this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(GrindstoneObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(PowerHammerObject), recipe: this);
         }
 
         partial void ModsPreInitialize();

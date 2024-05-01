@@ -53,8 +53,9 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(SteelBarItem), 10, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)),
-                    new IngredientElement("Lumber", 5, typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingLavishResourcesTalent)), //noloc
+                     new IngredientElement(typeof(SteelBarItem), 10, typeof(BlacksmithSkill)),
+                    new IngredientElement(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
+                    new IngredientElement("Lumber", 5, typeof(BlacksmithSkill)), //noloc
                 },
 
                 // Define our recipe output items.
@@ -79,7 +80,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(AnvilObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(PowerHammerObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>

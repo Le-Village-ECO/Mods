@@ -53,8 +53,9 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(FiberglassItem), 10, typeof(ElectronicsSkill), typeof(ElectronicsLavishResourcesTalent)),
-                    new IngredientElement(typeof(PlasticItem), 8, typeof(ElectronicsSkill), typeof(ElectronicsLavishResourcesTalent)),
+                    new IngredientElement(typeof(FiberglassItem), 10, typeof(ElectronicsSkill)),
+                    new IngredientElement(typeof(PlasticItem), 8, typeof(ElectronicsSkill)),
+                    new IngredientElement(typeof(SyntheticRubberItem), 2, typeof(ElectronicsSkill)),
                     new IngredientElement(typeof(GlassLensItem), 1, true),
                     new IngredientElement(typeof(LightBulbItem), 1, true),
                     new IngredientElement(typeof(BasicCircuitItem), 2, true),
