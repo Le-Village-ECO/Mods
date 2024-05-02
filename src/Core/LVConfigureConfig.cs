@@ -31,7 +31,7 @@ namespace Village.Eco.Mods.Core
         #region Nutrition
         [Category("Nutrition")]
         [LocDisplayName("Paliers de bonus de nourriture")]
-        [LocDescription("Il y a 4 paliers pour chacune des 4 premières étoiles puis même valeur")]
+        [LocDescription("Palier pour chaque étoile, au delà, pour les autres étoiles la valeur du palier ne change plus")]
         [SyncToView] public int[] DietTiers { get; set; } = new int[] { 0, 20, 32, 44 };
         
         [Category("Nutrition")]
