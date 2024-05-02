@@ -28,8 +28,8 @@ namespace Village.Eco.Mods.Nutrition
                 1 + 19f,        //niveau 0 - 2000%
                 1 + 19f,        //niveau 1 - 2000%
                 1 + 9f,         //niveau 2 - 1000%
-                1 + 7.5f,       //niveau 3 - 750%
-                1 + 2.5f,       //niveau 4 - 250%
+                1 + 7.5f,       //niveau 3 - 850%
+                1 + 2.5f,       //niveau 4 - 350%
                 1,              //niveau 5 - 100% (max)
             });
         public override MultiplicativeStrategy MultiStrategy => MultiplicativeStrategy;
