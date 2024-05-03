@@ -132,9 +132,15 @@ namespace Village.Eco.Mods.Nutrition
             title = "Informations concernant ta diététique";
 
             string message;
-            message = $"Tu as gagné <b>{stars} étoiles</b> depuis le début de la partie.\n";
+            message = $"Voici les paramètres définis pour avoir le <b>niveau maximum en fonction du nombre d'étoiles gagnées</b> :\n";
+            for (int  i = 0; i < tiers.Length; i++) 
+            {
+                message += $"Avec {i} étoile(s), il faut avoir {tiers[i]} en bonus de nourriture.\n";
+            }
+            message += $"Au delà, les autres étoiles ne demandent pas plus que {tiers.Last()}.\n\n";
+            message += $"Tu as gagné <b>{stars} étoiles</b> depuis le début de la partie.\n";
             message += $"Ton bonus de nourriture est actuellement de <b>{roundSkillRate}</b> (arrondi à l'entier le plus proche).\n";
-            message += $"Pour avoir le niveau <b>maximum de diététique</b>, il te faut un bonus de nourriture d'<b>au moins {palier}</b>.\n\n";
+            message += $"Donc pour avoir le niveau <b>maximum de diététique</b>, il te faut un bonus de nourriture d'<b>au moins {palier}</b>.\n\n";
             message += $"Tu peux forcer la mise à jour de la spécialité diététique avec la commande de chat suivante :\n";
             message += $"<b>/ForceDiet</b>\n\n";
             message += $"Pour avoir tes goûts culinaires ou d'un autre joueur, tu peux faire la commande de chat suivante :\n";
