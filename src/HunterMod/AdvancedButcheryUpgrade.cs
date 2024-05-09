@@ -25,7 +25,6 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Controller;
     using Eco.Gameplay.Items.Recipes;
 
-    [RequiresModule(typeof(HunterJarObject))]
     [RequiresSkill(typeof(ButcherySkill), 7)]
     [Ecopedia("Upgrade Modules", "Specialty Upgrades", subPageName: "Advanced Butchery Upgrade Item")]
     public partial class AdvancedButcheryUpgradeRecipe : RecipeFamily
