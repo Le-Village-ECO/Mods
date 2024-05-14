@@ -26,7 +26,7 @@ namespace Village.Eco.Mods.OilField
         {
             var log = NLogManager.GetLogWriter("LeVillageMods");
 
-            //Statut de vaisibilité des champs pétroliers - par défaut true au lancement serveur
+            //Statut de visibilité des champs pétroliers - par défaut true au lancement serveur
             WorldLayer oilLayer = WorldLayerManager.Obj.GetLayer("Oilfield");
             bool isOilVisible = oilLayer.Settings.Visible;
             //Log
