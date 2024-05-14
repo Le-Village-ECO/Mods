@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Steel Axe")]
     [LocDescription("A Steel axe made for cutting down trees.")]
     [Tier(3)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

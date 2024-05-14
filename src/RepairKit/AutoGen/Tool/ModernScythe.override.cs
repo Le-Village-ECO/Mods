@@ -94,10 +94,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Scythe")]
     [LocDescription("A modern scythe used to harvest crops or cut grass. Has a large AoE with each swing.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(
-    //
-    //
-    //Skill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

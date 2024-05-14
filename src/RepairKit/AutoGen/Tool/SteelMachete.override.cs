@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Steel Machete")]
     [LocDescription("A machete used to quickly clear plants.")]
     [Tier(3)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

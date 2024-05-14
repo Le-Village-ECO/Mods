@@ -94,10 +94,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Shovel")]
     [LocDescription("Terraforming is the first step towards a flourishing civilization and now you can do it with style and less repairs.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(
-    //
-    //
-    //Skill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

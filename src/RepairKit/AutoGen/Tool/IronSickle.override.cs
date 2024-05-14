@@ -38,6 +38,7 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
+    [RequiresModule(typeof(AnvilObject))]
     [RequiresSkill(typeof(BlacksmithSkill), 1)]
     [Ecopedia("Items", "Tools", subPageName: "Iron Sickle Item")]
     public partial class IronSickleRecipe : RecipeFamily

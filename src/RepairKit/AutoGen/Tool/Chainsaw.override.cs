@@ -96,7 +96,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Chainsaw")]
     [LocDescription("A gasoline-powered alternative to cutting trees.")]
     [Tier(4)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Steel Hammer")]
     [LocDescription("A robust steel hammer useful for shaping blocks and deconstruction.")]
     [Tier(3)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

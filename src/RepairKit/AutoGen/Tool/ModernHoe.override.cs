@@ -94,15 +94,13 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Hoe")]
     [LocDescription("A modern hoe with increased range.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(
-    //
-    //
-    //Skill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     public partial class ModernHoeItem : HoeItem, IAoeToolItem
+
     {
                                                                                                                                                                                                                                            // Static values
         private static IDynamicValue caloriesBurn           = new MultiDynamicValue(MultiDynamicOps.Multiply, new TalentModifiedValue(typeof(ModernHoeItem), typeof(ToolEfficiencyTalent)), CreateCalorieValue(20, typeof(FarmingSkill), typeof(ModernHoeItem)));

@@ -66,7 +66,7 @@ namespace Eco.Mods.TechTree
                     new CraftingElement<SteelSickleItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 0.1f; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 0.5f; // Defines how much experience is gained when crafted.
             
             // Defines the amount of labor required and the required skill to add labor
             this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));

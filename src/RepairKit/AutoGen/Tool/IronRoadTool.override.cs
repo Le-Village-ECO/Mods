@@ -115,7 +115,7 @@ namespace Eco.Mods.TechTree
         public override IDynamicValue ExperienceRate    => exp;
         public override IDynamicValue Tier              => tier;
         public override IDynamicValue SkilledRepairCost => skilledRepairCost;
-        //public override float DurabilityRate            => DurabilityMax / 1000f;
+        public override float DurabilityRate            => DurabilityMax / 1000f;
         //public override Item RepairItem                 => Item.Get<IronBarItem>();
         public override Item RepairItem                 => Item.Get<IronRoadRepairKitItem>();
         public override int FullRepairAmount            => 1; //4 to 1

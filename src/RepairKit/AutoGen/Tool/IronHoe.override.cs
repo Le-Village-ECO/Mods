@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Iron Hoe")]
     [LocDescription("A sturdy iron hoe made for tilling the soil.")]
     [Tier(2)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

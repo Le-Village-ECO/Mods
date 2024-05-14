@@ -95,14 +95,12 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Rock Drill")]
     [LocDescription("A gasoline-powered alternative for faster geological sampling.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(
-    //
-    //
-    //Skill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
+
     public partial class ModernRockDrillItem : DrillItem
     {
                                                                                                                                                                                                                                            // Static values

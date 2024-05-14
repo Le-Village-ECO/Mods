@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Iron Rock Drill")]
     [LocDescription("A drill used to retreive geological samples and discover what treasures can be found underground.")]
     [Tier(2)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

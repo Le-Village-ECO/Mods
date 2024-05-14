@@ -94,7 +94,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Hammer")]
     [LocDescription("A modern hammer with a non-slip handle made using fiberglass.")]
     [Tier(4)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

@@ -38,7 +38,8 @@ namespace Eco.Mods.TechTree
     /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
-    [RequiresSkill(typeof(BlacksmithSkill), 2)]
+    [RequiresModule(typeof(BlacksmithTableObject))]
+    [RequiresSkill(typeof(BlacksmithSkill), 5)]
     [Ecopedia("Items", "Tools", subPageName: "Modern Axe Item")]
     public partial class ModernAxeRecipe : RecipeFamily
     {
@@ -66,13 +67,13 @@ namespace Eco.Mods.TechTree
                     new CraftingElement<ModernAxeItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 0.1f; // Defines how much experience is gained when crafted.
-            
+            this.ExperienceOnCraft = 0.5f; // Defines how much experience is gained when crafted.
+
             // Defines the amount of labor required and the required skill to add labor
             this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ModernAxeRecipe), start: 0.5f, skillType: typeof(BlacksmithSkill), typeof(BlacksmithFocusedSpeedTalent), typeof(BlacksmithParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ModernAxeRecipe), start: 0.5f, skillType: typeof(BlacksmithSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Modern Axe"
             this.ModsPreInitialize();
@@ -94,10 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Modern Axe")]
     [LocDescription("A modern axe with a non-slip handle made using fiberglass.")]
     [Tier(4)]
-    //[RepairRequiresSkill(typeof(
-    //
-    //
-    //Skill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]

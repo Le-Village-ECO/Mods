@@ -95,7 +95,7 @@ namespace Eco.Mods.TechTree
     [LocDisplayName("Steel Pickaxe")]
     [LocDescription("A steel pickaxe used to break down stone and ore into usable rubble.")]
     [Tier(3)]
-    [RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
+    //[RepairRequiresSkill(typeof(BlacksmithSkill), 0)]
     [Weight(1000)]
     [Category("Tool")]
     [Tag("Tool")]
