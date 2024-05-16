@@ -15,6 +15,7 @@ using Eco.Gameplay.Systems.Chat;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.ModKit;
 using Eco.Shared.Localization;
+using Eco.Gameplay.Objects;
 
 namespace Village.Eco.Mods.Core
 {
@@ -31,8 +32,8 @@ namespace Village.Eco.Mods.Core
             user.IsInvisible = !user.IsInvisible;
             //Portion de code inspirée de UserCommands.cs avec aussi MinimapManager.cs
             //Cela semble fonctionner !!
-            if (user.IsInvisible) MinimapManager.Obj.Objects.Remove(user.Player.MinimapObject);
-            else MinimapManager.Obj.Objects.Add(user.Player.MinimapObject);
+            if (user.IsInvisible) MinimapManager.Obj.DeltaHashSetObjects.Remove(user.Player.MinimapObject);
+            else MinimapManager.Obj.DeltaHashSetObjects.Add(user.Player.MinimapObject);
         }
 
         //Sous-commande : Forcer la sauvegarde du fichier PlayersData sur le serveur

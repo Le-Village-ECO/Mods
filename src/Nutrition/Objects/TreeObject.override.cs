@@ -170,7 +170,7 @@ namespace Eco.Mods.Organisms
         }
 
         private bool IsGrowthConditionsNotMet => this.Species == null || this.Fallen || this.currentGrowthThreshold >= GrowthThresholds.Length || this.GrowthPercent < GrowthThresholds[this.currentGrowthThreshold];
-        private bool CanHarvest => this.branches.None(branch => branch != null && branch.Health > 0f);  // can't harvest if any branches are still alive
+        private bool CanHarvest => this.Fallen;
 
         public INetObjectViewer Controller { get; private set; }
     
@@ -178,7 +178,11 @@ namespace Eco.Mods.Organisms
         int GetBasePickupSize(TrunkPiece trunk) => Math.Max(Mathf.RoundUpToInt((trunk.SliceEnd - trunk.SliceStart) * this.ResourceMultiplier), 1);
 
         [Interaction(InteractionTrigger.InteractKey, requiredEnvVars: new[] { "canPickup", "id" }, animationDriven: true)]                        //A definition for when we can actually pickup
-        public void PickUp(Player player, InteractionTriggerInfo trigger, InteractionTarget target) { if (target.TryGetParameter("id", out var id)) this.PickupLog(player, (Guid) id, target.HitPos); }
+        public void PickUp(Player player, InteractionTriggerInfo trigger, InteractionTarget target) 
+        { 
+            if (target.TryGetParameter("id", out var id)) 
+                this.PickupLog(player, (Guid) id, target.HitPos); 
+        }
 
         #region IController
         int controllerID;
@@ -208,7 +212,7 @@ namespace Eco.Mods.Organisms
 
             this.UpdateMinimapObjectScale();
             if (!this.Fallen)
-                MinimapManager.Obj.Objects.Add(this.minimapObject);
+                MinimapManager.Obj.DeltaHashSetObjects.Add(this.minimapObject);
         }
 
         //The scale formula for the minimap is based on the Species's Scale and the Tree's Growth.
@@ -259,7 +263,7 @@ namespace Eco.Mods.Organisms
                         if (!carried.IsEmpty) // Early tests: neeed to check type mismatch and max quantity.
                         { 
                             if      (carried.Stacks.First().Item.Type != resourceType)                    { player.Error(Localizer.Format("You are already carrying {0:items} and cannot pick up {1:items}.", carried.Stacks.First().Item.UILink(LinkConfig.ShowPlural), resource.UILink(LinkConfig.ShowPlural)));  return; }
-                            // else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize) { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize)); return; }  //Le village
+                            //else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize)  { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize));                        return; }   //Le village
                             else //Le village - réécriture du ELSE - inspiration du mod XP Benefit
                             {
                                 //Let the carry inventory decide how many logs it can hold, instead of using the default log stack size
@@ -489,7 +493,7 @@ namespace Eco.Mods.Organisms
 
             if (player != null)
                 PlantSimEvents.TreeFelledEvent.Invoke(player.User, this.Species);
-            MinimapManager.Obj.Objects.Remove(this.minimapObject);
+            MinimapManager.Obj.DeltaHashSetObjects.Remove(this.minimapObject);
 
             this.MarkDirty();
         }
@@ -733,9 +737,8 @@ namespace Eco.Mods.Organisms
             if (viewer is IWorldObserver observer)
             {
                 var closestWrapped = World.ClosestWrappedLocation(observer.Position, this.Position);
-                var visibleDistance = observer.ViewDistance.Visible;
                 var v = closestWrapped - observer.Position;
-                if (Mathf.Abs(v.X) < visibleDistance && Mathf.Abs(v.Z) < visibleDistance)
+                if (World.WrappedDistanceSq(this.Position, observer.Position) < observer.ChunkViewDistance.VisibleSq)
                 {
                     if (this.Controller == null)
                         this.SetPhysicsController(observer);
@@ -749,7 +752,7 @@ namespace Eco.Mods.Organisms
         {
             if (viewer is not IWorldObserver observer) return false;                                   // only can check for IWorldObserver
             var closestWrapped     = World.ClosestWrappedLocation(observer.Position, this.Position);
-            var notVisibleDistance = observer.ViewDistance.NotVisible;
+            var notVisibleDistance = observer.ChunkViewDistance.NotVisible;
             var v                  = closestWrapped - observer.Position;
             if (Mathf.Abs(v.X) >= notVisibleDistance || Mathf.Abs(v.Z) >= notVisibleDistance)         // check if any of horizontal distances to viewer length enough to go out of view
             {
@@ -817,7 +820,7 @@ namespace Eco.Mods.Organisms
                     break;
                 treeBlockCheck += Vector3i.Up;
             }
-            MinimapManager.Obj.Objects.Remove(this.minimapObject);
+            MinimapManager.Obj.DeltaHashSetObjects.Remove(this.minimapObject);
             base.Destroy();
         }
     }
