@@ -20,6 +20,7 @@ using System.Linq.Expressions;
 
 namespace Village.Eco.Mods.OilField
 {
+    [LocDisplayName(nameof(OilFieldPlugin))]
     public class OilFieldPlugin : IInitializablePlugin, IModKitPlugin
     {
         public void Initialize(TimedTask timer)
