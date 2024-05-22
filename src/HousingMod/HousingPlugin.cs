@@ -1,6 +1,5 @@
 ﻿using Eco.Core.Plugins.Interfaces;
 using Eco.Gameplay.Players;
-using Eco.Shared.Localization;
 
 namespace Village.Eco.Mods.HousingMod
 {
