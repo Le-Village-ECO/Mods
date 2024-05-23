@@ -2,7 +2,6 @@
 // Initialement ils sont visibles (voir WorldLayerSettingsOilfield.cs)
 // Au lancement du serveur, si la spécialisation n'est pas découverte, champs deviennent invisibles
 // A la découverte de la spécialisation, les champs deviennent visibles mais cela demande une déco/reco du client
-// TODO - Retirer les logs ?
 // TODO - Utiliser le fichier de configuration
 // TODO - Ajouter un message au joueur qui découvre la spécialité pour déco/reco
 
@@ -15,8 +14,6 @@ using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Simulation.WorldLayers;
 using Eco.Simulation.WorldLayers.Layers;
-using System;
-using System.Linq.Expressions;
 
 namespace Village.Eco.Mods.OilField
 {
