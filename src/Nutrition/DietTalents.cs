@@ -26,7 +26,7 @@ namespace Village.Eco.Mods.Nutrition
 
     [Serialized]
     [LocDisplayName("Extension de sac : Diététique")]
-    [LocDescription("Ajoute 5kg au sac à dos")]
+    [LocDescription("Ajoute 15kg au sac à dos")]
     public partial class DietAddWeightTalentGroup : TalentGroup
     {
         public DietAddWeightTalentGroup()
@@ -36,7 +36,7 @@ namespace Village.Eco.Mods.Nutrition
                 typeof( DietAddWeightTalent),
             };
             this.OwningSkill = typeof(DietSkill);
-            this.Level = 5;
+            this.Level = 15;
         }
     }
 
