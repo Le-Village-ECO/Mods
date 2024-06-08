@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
-// Le Village : Ajout de la spécialité Diététique
+// Le Village : Ajout du talent de la spécialité Diététique
 
 using System;
 using System.Collections.Generic;
@@ -53,7 +53,6 @@ public static class PlayerDefaults
         {
             typeof(SurvivalistSkill),
             typeof(SelfImprovementSkill),
-			typeof(DietSkill), //Le Village - Ajout de la spécialité diététique
         };
     }
 
@@ -73,7 +72,6 @@ public static class PlayerDefaults
             typeof(HuntingSkill),
             typeof(SurvivalistSkill),
             typeof(SelfImprovementSkill),
-            typeof(DietSkill), //Le Village - Ajout de la spécialité diététique
         };
     }
 

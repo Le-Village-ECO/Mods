@@ -44,8 +44,9 @@ namespace Village.Eco.Mods.Nutrition
         }
         public static void NewUserJoinedEvent(User user) 
         {
-            //UserStat stat = user.ModifiedStats.GetStat(UserStatType.MaxCarryWeight);
-            //stat.ModifierSkill = new MultiDynamicValue(MultiDynamicOps.Sum, stat.ModifierSkill, new TalentModifiedValue(typeof(UserStatType), typeof(DietStackSizeTalent), 0));
+            // Ajoute la spécialité au niveau 1 à la 1ère connexion
+            var skill = user.Skillset.GetOrAddSkill(typeof(DietSkill));
+            skill.ForceSetLevel(user, 1);
         }
         public static void OnUserLoggedIn(User user) 
         {
