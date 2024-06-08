@@ -58,6 +58,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HunterMod", "HunterMod\Hunt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingMod", "HousingMod\HousingMod.csproj", "{0625F1F1-4696-4340-AB91-C969F3CAA47B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratory", "Laboratory\Laboratory.csproj", "{97568D78-C341-43CD-88B8-0DF701E37F3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,10 @@ Global
 		{0625F1F1-4696-4340-AB91-C969F3CAA47B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0625F1F1-4696-4340-AB91-C969F3CAA47B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0625F1F1-4696-4340-AB91-C969F3CAA47B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
