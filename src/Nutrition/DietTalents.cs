@@ -36,7 +36,7 @@ namespace Village.Eco.Mods.Nutrition
                 typeof( DietAddWeightTalent),
             };
             this.OwningSkill = typeof(DietSkill);
-            this.Level = 15;
+            this.Level = 5;
         }
     }
 
@@ -47,7 +47,7 @@ namespace Village.Eco.Mods.Nutrition
         public override Type TalentGroupType { get { return typeof(DietAddWeightTalentGroup); } }
         public DietAddWeightTalent()
         {
-            this.Value = 5000;
+            this.Value = 15000;
         }
     }
     #endregion
