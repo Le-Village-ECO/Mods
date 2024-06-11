@@ -101,6 +101,15 @@ namespace Eco.Mods.FiniteOil
             var extractAmount = currentAmount * Config.ExtractRate;
             oilExtraction.AddAmount(itemCraftedAction.ActionLocation, -extractAmount);
         }
+
+        public void AddAmount(Vector3i pos, float amount)
+        {
+            oilExtraction.AddAmount(pos, amount);
+        }
+        public void RemoveAmount(Vector3i pos, float amount)
+        {
+            oilExtraction.AddAmount(pos, -amount);
+        }
     }
 
     //Ajout d'une commande de chat pour récupérer les valeurs utiles
