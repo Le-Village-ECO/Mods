@@ -7,6 +7,7 @@ using Eco.Shared.Items;
 using Eco.Shared.Localization;
 using Eco.Shared.Math;
 using Eco.Shared.Serialization;
+using System;
 
 namespace Village.Eco.Mods.Templates
 {
