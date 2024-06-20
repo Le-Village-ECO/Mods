@@ -58,7 +58,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HunterMod", "HunterMod\Hunt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingMod", "HousingMod\HousingMod.csproj", "{0625F1F1-4696-4340-AB91-C969F3CAA47B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratory", "Laboratory\Laboratory.csproj", "{97568D78-C341-43CD-88B8-0DF701E37F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laboratory", "Laboratory\Laboratory.csproj", "{97568D78-C341-43CD-88B8-0DF701E37F3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monnaie", "Monnaie\Monnaie.csproj", "{3F86A7F6-C0FD-4144-93AA-B9D64AE31F48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates", "Templates2\Templates.csproj", "{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,6 +130,14 @@ Global
 		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97568D78-C341-43CD-88B8-0DF701E37F3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F86A7F6-C0FD-4144-93AA-B9D64AE31F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F86A7F6-C0FD-4144-93AA-B9D64AE31F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F86A7F6-C0FD-4144-93AA-B9D64AE31F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F86A7F6-C0FD-4144-93AA-B9D64AE31F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
