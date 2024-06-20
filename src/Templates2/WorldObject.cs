@@ -8,7 +8,7 @@ using Eco.Shared.Localization;
 using Eco.Shared.Math;
 using Eco.Shared.Serialization;
 
-namespace Village.Eco.Mods.OilField
+namespace Village.Eco.Mods.Templates
 {
     [Serialized]
     public partial class TemplateObject : WorldObject, IRepresentsItem
