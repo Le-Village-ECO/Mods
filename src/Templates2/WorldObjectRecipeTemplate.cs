@@ -68,7 +68,7 @@ namespace Village.Eco.Mods.Templates
             this.Initialize(displayText: Localizer.DoStr("Template Recipe"), recipeType: typeof(TemplateRecipeRecipe));
             this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(ResearchTableObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);
         }
         partial void ModsPreInitialize();
         partial void ModsPostInitialize();
