@@ -97,7 +97,7 @@ namespace Eco.Mods.TechTree
         public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
         {
             ObjectName                              = typeof(LumberChairObject).UILink(),
-            Category                                = HousingConfig.GetRoomCategory("Recherche"),
+            Category                                = HousingConfig.GetRoomCategory("Research Centre"),
             BaseValue                               = 1,
             TypeForRoomLimit                        = Localizer.DoStr("Chair"),
             DiminishingReturnMultiplier             = 0.7f

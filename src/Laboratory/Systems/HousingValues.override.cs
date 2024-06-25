@@ -84,7 +84,7 @@ namespace Eco.Mods.TechTree
                 //Special room types.
                 new RoomCategory() { Color = EcoColors.Culture  ,  DisplayName = Localizer.DoStr("Cultural"),      AffectsPropertyTypes = new[] { PropertyType.Cultural},  MaxSupportPercentOfPrimary = .2f, SupportingRoomCategoryNames = new[] {"Seating"} },
                 new RoomCategory() { Color = new Color("A300B4"),  DisplayName = Localizer.DoStr("Industrial"),    NegatesValue = true },
-                new RoomCategory() { Color = new Color("4889DB"),  DisplayName = Localizer.DoStr("Recherche"),      AffectsPropertyTypes = new[] { PropertyType.Cultural},  MaxSupportPercentOfPrimary = .2f, SupportingRoomCategoryNames = new[] {"Seating"} },  //Le village
+                new RoomCategory() { Color = new Color("4889DB"),  DisplayName = Localizer.DoStr("Research Centre"),     AffectsPropertyTypes = new[] { PropertyType.Cultural} },  //Le village
                 //Supporting rooms, these do not generating their own unique room types but only add value to existing rooms based on the percentile value set.
                 //This value cannot exceed the total value of the MaxSupportPercent.
                 new RoomCategory() { Color = new Color("E5956E"),  DisplayName = Localizer.DoStr("Seating"),       CanBeRoomCategory = false, MaxSupportPercentOfPrimary = .2f },

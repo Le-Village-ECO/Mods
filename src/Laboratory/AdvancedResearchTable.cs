@@ -46,12 +46,10 @@ namespace Village.Eco.Mods.Laboratory
     [RequireComponent(typeof(OnOffComponent))]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(MinimapComponent))]
-    [RequireComponent(typeof(LinkComponent))]
-    [RequireComponent(typeof(CraftingComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
-    [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(ResearchComponent))]
     [RequireRoomContainment]
     [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(0.8f)]
@@ -68,6 +66,7 @@ namespace Village.Eco.Mods.Laboratory
             this.ModsPreInitialize();
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Research"));
             this.GetComponent<HousingComponent>().HomeValue = AdvancedResearchTableItem.homeValue;
+            this.GetComponent<ResearchComponent>().Initialize(5, 2, typeof(ScienceItem));
             this.ModsPostInitialize();
         }
 
@@ -88,14 +87,15 @@ namespace Village.Eco.Mods.Laboratory
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
         public override HomeFurnishingValue HomeValue => homeValue;
-        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        public static readonly HomeFurnishingValue homeValue = new()
         {
             ObjectName = typeof(AdvancedResearchTableObject).UILink(),
-            Category = HousingConfig.GetRoomCategory("Recherche"),
+            //UniqueObjectName = Localizer.DoStr("Laboratoire"),  //En cours de test...
+            //DiminishingMultiplierAcrossFullProperty = 0f,  //En cours de test...
+            Category = HousingConfig.GetRoomCategory("Research Centre"),
             BaseValue = 1,
-            TypeForRoomLimit = Localizer.DoStr("Research Table"),
-            DiminishingReturnMultiplier = 0.9f
-
+            //TypeForRoomLimit = Localizer.DoStr("Research Table"),
+            //DiminishingReturnMultiplier = 0f
         };
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
