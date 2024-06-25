@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>Logging_Speciality</RootNamespace>
+	<LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eco.ReferenceAssemblies" Version="0.10.2.3-beta-release-669" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoGen\Benefit\" />
+    <Folder Include="Tools\" />
+  </ItemGroup>
+
+</Project>
