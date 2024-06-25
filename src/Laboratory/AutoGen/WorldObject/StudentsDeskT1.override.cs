@@ -85,7 +85,7 @@ namespace Eco.Mods.TechTree
         public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
         {
             ObjectName = typeof(AdvancedResearchTableObject).UILink(),
-            Category = HousingConfig.GetRoomCategory("Recherche"),
+            Category = HousingConfig.GetRoomCategory("Research Centre"),
             BaseValue = 0.2f,
             TypeForRoomLimit = Localizer.DoStr("Student Desk"),
             DiminishingReturnMultiplier = 0.1f
