@@ -1,6 +1,6 @@
 ﻿// Le Village - Researh Component
 // Ce composant génère de la recherche utilisable ensuite pour découvrir les spécialités
-// 
+// GROS BUG EN COURS D'ANALYSE : casser une pièce fait planter le serveur 
 
 using Eco.Core.Utils;
 using Eco.Gameplay.Components;
@@ -25,6 +25,7 @@ namespace Village.Eco.Mods.Laboratory
     [RequireComponent(typeof(StatusComponent))]
     [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(MustBeOwnedComponent))]
+    [RequireComponent(typeof(OnOffComponent))]
     public class ResearchComponent : WorldObjectComponent
     {
         // craft time tracking
@@ -33,8 +34,8 @@ namespace Village.Eco.Mods.Laboratory
 
         //pour gerer le status enabled/disabled et informer le joueur
         private StatusElement status;
-        LocString SuccessStatus => Localizer.Do($"Le recherche est en cours à raison de 1 {Item.Get(itemType).MarkedUpName} toutes les {(passiveCraftTime / CheckRoom()):F0} secondes.");
-        LocString FailStatus => Localizer.Do($"Le recherche est à l'arrêt : Stockage {Item.Get(itemType).MarkedUpName} plein !");
+        //LocString SuccessStatus => Localizer.Do($"Le recherche est en cours à raison de 1 {Item.Get(itemType).MarkedUpName} toutes les {(passiveCraftTime / ValRoom()):F0} secondes.");
+        //LocString FailStatus => Localizer.Do($"Le recherche est à l'arrêt : Stockage {Item.Get(itemType).MarkedUpName} plein !");
 
         //article fabriqué
         private Type itemType;
@@ -53,6 +54,7 @@ namespace Village.Eco.Mods.Laboratory
             this.itemType = itemType;
             // Gestion du statut de l'objet
             status = Parent.GetComponent<StatusComponent>().CreateStatusElement(50);
+            //status.Message = UpdateStatusDescription();
             // Initialisation du stockage
             publicStorage = Parent.GetComponent<PublicStorageComponent>();
             publicStorage.Initialize(slots);
@@ -67,22 +69,25 @@ namespace Village.Eco.Mods.Laboratory
             {
                 if (IsDuplicatedInDeed())
                 {
-                    status.SetStatusMessage(false, Localizer.Do($"OK duplicate"), Localizer.Do($"duplicate PAS BON !"));
+                    status.Message = UpdateStatusDescription();
                     return;
                 }
 
-                if (timeSinceLastCraft < (passiveCraftTime / CheckRoom()))
+                if (ValRoom() == 0f)
+                {
+                    status.Message = UpdateStatusDescription();
+                    return;
+                }
+
+                if (timeSinceLastCraft < (passiveCraftTime / ValRoom()))
                 {
                     timeSinceLastCraft += deltaTime;
+                    status.Message = UpdateStatusDescription();
                     return;
                 }
 
-                //Mise a jour du statut
-                status.SetStatusMessage(Research(), SuccessStatus, FailStatus);
-
-                //var val = RoomData.Obj.GetEnclosedRoomForWorldObject(this.Parent).RoomValue.Value;
-                //status.Message = Localizer.NL($"\nResearch Value");  //En cours de test... (homefurnishingvalue.cs)
-                //status.Message = Localizer.NL($"\n{val}");  //En cours de test... (homefurnishingvalue.cs)  
+                Research();
+                status.Message = UpdateStatusDescription();
             }
         }
         public bool Research()
@@ -113,25 +118,43 @@ namespace Village.Eco.Mods.Laboratory
                 shutdownFromFullInv = false;
             }
         }
-        public float CheckRoom() 
+        public float ValRoom() 
         {
             //Récupération de la valeur de la pièce
-            var room = RoomData.Obj.GetEnclosedRoomForWorldObject(this.Parent);
-            var roomVal = room.RoomValue.Value;
-            return roomVal;
+            //var room = RoomData.Obj.GetEnclosedRoomForWorldObject(this.Parent);
+            //var roomVal = room.RoomValue.Value;
+            //return roomVal;
+            return 1.0f;
         }
         public bool IsDuplicatedInDeed() 
         {
-            // Voir PropertyValue.cs (42) & ParallelProcessing.cs
+            // Voir PropertyValue.cs (ligne 42) & ParallelProcessing.cs (ligne 19)
             var room = RoomData.Obj.GetEnclosedRoomForWorldObject(this.Parent);
             var roomDeed = room.RoomDeed;
             var nbResearchComponent = room.RoomDeed.Rooms.SelectMany(r => r.RoomStats.ContainedWorldObjects).Select(x => x.GetComponent<ResearchComponent>()).Count(x => x is ResearchComponent);
 
-            Log.WriteLine(Localizer.Do($"Nb Research Component = {nbResearchComponent}"));
+            //Log.WriteLine(Localizer.Do($"Nb Research Component = {nbResearchComponent}"));
 
             if (nbResearchComponent > 1) return true;
 
             return false;
+        }
+        public LocString UpdateStatusDescription() 
+        {
+            //Voir RoomRequirement.cs & homefurnishingvalue.cs
+
+            var sb = new LocStringBuilder();
+            
+            //Titre du statut
+            sb.AppendLine(TextLoc.HeaderLocStr("Requis du laboratoire :"));
+            //Différents éléments vérifiés
+            sb.AppendLine(Localizer.Do($"1 seul laboratoire par propriété").Prepend($"{StatusElement.GetEnabledIcon(!IsDuplicatedInDeed())} "));
+            //sb.AppendLine(Localizer.Do($"Valeur de la pièce ({Text.Info(ValRoom())}) est non nulle").Prepend($"{StatusElement.GetEnabledIcon(ValRoom() > 0)} "));
+            sb.AppendLine(Localizer.Do($"Stockage est libre").Prepend($"{StatusElement.GetEnabledIcon(!shutdownFromFullInv)} "));
+            //Vitesse
+            //sb.AppendLine(TextLoc.BoldLoc($"Vitesse : {Text.StyledNum(1.0f)} {Item.Get(itemType).MarkedUpName} toutes les {(passiveCraftTime / ValRoom()):F0} secondes."));
+
+            return sb.ToLocString();
         }
     }
 }

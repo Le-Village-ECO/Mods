@@ -45,11 +45,14 @@ namespace Eco.Mods.TechTree
     using Eco.Core.Utils;
 	using Eco.Gameplay.Components.Storage;
     using Eco.Gameplay.Items.Recipes;
+    using Village.Eco.Mods.Core;
 
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(RoomRequirementsComponent))] //Le village
+    [RequireRoomContainment] //Le village
     [Tag("Usable")]
     public partial class StudentsDeskT3Object : WorldObject, IRepresentsItem
     {

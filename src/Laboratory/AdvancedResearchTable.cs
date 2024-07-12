@@ -39,11 +39,12 @@ using Eco.Core.Controller;
 using Eco.Core.Utils;
 using Eco.Gameplay.Components.Storage;
 using Eco.Gameplay.Items.Recipes;
+using Village.Eco.Mods.Core;
+using Eco.Mods.TechTree;
 
 namespace Village.Eco.Mods.Laboratory
 {
     [Serialized]
-    [RequireComponent(typeof(OnOffComponent))]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(MinimapComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
@@ -53,6 +54,8 @@ namespace Village.Eco.Mods.Laboratory
     [RequireRoomContainment]
     [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(0.8f)]
+    [PropertyTypeRoomRequirement(PropertyType.Cultural)]
+    //[RequireRoomValue(1.0f)]
     [Tag("Usable")]
     [Ecopedia("Work Stations", "Researching", subPageName: "Advanced Research Table Item")]
     public partial class AdvancedResearchTableObject : WorldObject, IRepresentsItem
@@ -93,7 +96,7 @@ namespace Village.Eco.Mods.Laboratory
             //UniqueObjectName = Localizer.DoStr("Laboratoire"),  //En cours de test...
             //DiminishingMultiplierAcrossFullProperty = 0f,  //En cours de test...
             Category = HousingConfig.GetRoomCategory("Research Centre"),
-            BaseValue = 1,
+            BaseValue = 1.0f,
             //TypeForRoomLimit = Localizer.DoStr("Research Table"),
             //DiminishingReturnMultiplier = 0f
         };

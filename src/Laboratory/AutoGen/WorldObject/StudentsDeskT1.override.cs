@@ -51,7 +51,6 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(HousingComponent))]  //Le Village
-    [RequireRoomMaterialTier(0.8f)]  //Le Village
     [RequireComponent(typeof(ForSaleComponent))]
     [Tag("Usable")]
     public partial class StudentsDeskT1Object : WorldObject, IRepresentsItem
@@ -86,9 +85,9 @@ namespace Eco.Mods.TechTree
         {
             ObjectName = typeof(AdvancedResearchTableObject).UILink(),
             Category = HousingConfig.GetRoomCategory("Research Centre"),
-            BaseValue = 0.2f,
+            BaseValue = 1.0f,
             TypeForRoomLimit = Localizer.DoStr("Student Desk"),
-            DiminishingReturnMultiplier = 0.1f
+            DiminishingReturnMultiplier = 0.5f
 
         };
 
