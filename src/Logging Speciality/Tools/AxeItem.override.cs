@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
+//Le village - Ajout du talent pour ramasser les copeaux de bois sans dépenser de calorie
 
 #nullable enable
 
@@ -27,6 +28,7 @@ namespace Eco.Mods.TechTree
     using System.Linq;
     using System.Collections.Generic;
     using Eco.Shared.Utils;
+    using Eco.Gameplay.Systems.Messaging.Notifications;
 
     [Category("Hidden"), Tag("Logging")]
     public abstract partial class AxeItem : MeleeWeaponItem, IInteractor
@@ -68,6 +70,8 @@ namespace Eco.Mods.TechTree
                         //Set description and reduce XP multiplier for cleaning debris
                         multiblockContext.ActionDescription = GameActionDescription.DoStr("clean up tree debris", "cleaning up tree debris");
                         multiblockContext.ExperiencePerAction *= 0.1f;
+
+                        if(player.User.Talentset.HasTalent(typeof(LoggingCleanupCrewTalent))) multiblockContext.CaloriesPerAction = 0; //Le village
 
                         pack.DeleteBlock(multiblockContext);           //Add block deletion to the pack and try to perform it
 
