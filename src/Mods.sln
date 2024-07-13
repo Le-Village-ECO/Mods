@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monnaie", "Monnaie\Monnaie.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates", "Templates2\Templates.csproj", "{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging Speciality", "Logging Speciality\Logging Speciality.csproj", "{381BC9FC-4E39-4004-ADBA-1700131A625F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging Specialty", "Logging Speciality\Logging Specialty.csproj", "{381BC9FC-4E39-4004-ADBA-1700131A625F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
