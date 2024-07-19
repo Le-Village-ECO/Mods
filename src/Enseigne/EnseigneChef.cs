@@ -30,7 +30,7 @@ namespace Eco.Mods.TechTree
     public partial class EnseigneChefObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(EnseigneChefItem);
-        public override LocString DisplayName => Localizer.DoStr("Enseigne de cuicinier en bois");
+        public override LocString DisplayName => Localizer.DoStr("Enseigne de cuisinier en bois");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 
         protected override void Initialize()
@@ -47,8 +47,8 @@ namespace Eco.Mods.TechTree
     }
 
     [Serialized]
-    [LocDisplayName("Enseigne de cuicinier en bois")]
-    [LocDescription("Une Enseigne de cuicinier en bois")]
+    [LocDisplayName("Enseigne de cuisinier en bois")]
+    [LocDescription("Une Enseigne de cuisinier en bois")]
     [Weight(1000)] // Defines how heavy EnseigneChef is.
     public partial class EnseigneChefItem : WorldObjectItem<EnseigneChefObject>, IPersistentData
     {
@@ -56,17 +56,17 @@ namespace Eco.Mods.TechTree
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
-    [RequiresSkill(typeof(CarpentrySkill), 1)]
+    [RequiresSkill(typeof(CampfireCookingSkill), 1)]
     [ForceCreateView]
-    [Ecopedia("Crafted Objects", "Signs", subPageName: "enseigne de cuicinier en bois")]
+    [Ecopedia("Crafted Objects", "Signs", subPageName: "enseigne de cuisinier en bois")]
     public partial class EnseigneChefRecipe : RecipeFamily
     {
         public EnseigneChefRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "Enseigne de cuicinier en bois",  //noloc
-                displayName: Localizer.DoStr("Enseigne de cuicinier en bois"),
+                name: "Enseigne de cuisinier en bois",  //noloc
+                displayName: Localizer.DoStr("Enseigne de cuisinier en bois"),
 
                 // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
                 // type of the item, the amount of the item, the skill required, and the talent used.
@@ -86,14 +86,14 @@ namespace Eco.Mods.TechTree
             this.ExperienceOnCraft = 20; // Defines how much experience is gained when crafted.
 
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(ChefSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(CampfireCookingSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(EnseigneRecipe), start: 4, skillType: typeof(ChefSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(EnseigneRecipe), start: 4, skillType: typeof(CampfireCookingSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Advanced Combustion Engine"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Enseigne de cuicinier en bois"), recipeType: typeof(EnseigneChefRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Enseigne de cuisinier en bois"), recipeType: typeof(EnseigneChefRecipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.

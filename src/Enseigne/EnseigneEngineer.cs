@@ -56,7 +56,7 @@ namespace Eco.Mods.TechTree
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
-    [RequiresSkill(typeof(CarpentrySkill), 1)]
+    [RequiresSkill(typeof(BasicEngineeringSkill), 1)]
     [ForceCreateView]
     [Ecopedia("Crafted Objects", "Signs", subPageName: "enseigne d'ingénieur en bois")]
     public partial class EnseigneEngineerRecipe : RecipeFamily
@@ -85,10 +85,10 @@ namespace Eco.Mods.TechTree
             this.ExperienceOnCraft = 20; // Defines how much experience is gained when crafted.
 
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(EngineerSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(BasicEngineeringSkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(EnseigneEngineerRecipe), start: 4, skillType: typeof(EngineerSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(EnseigneEngineerRecipe), start: 4, skillType: typeof(BasicEngineeringSkill));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Advanced Combustion Engine"
             this.ModsPreInitialize();
