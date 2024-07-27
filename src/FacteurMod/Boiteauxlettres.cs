@@ -80,13 +80,13 @@
             this.ModsPostInitialize();
         }
         [Interaction(InteractionTrigger.RightClick, "Tirer le levier")]
-        public void Levier(Player context, InteractionTriggerInfo interactionTriggerInfo, InteractionTarget interactionTarget)
+        public void Leviers(Player context, InteractionTriggerInfo interactionTriggerInfo, InteractionTarget interactionTarget)
         {
             var isAuthorized = ServiceHolder<IAuthManager>.Obj.IsAuthorized(this, context.User);
 
             if (isAuthorized)
             {
-                Leviers = !Leviers;
+                Levier = !Levier;
             }
             else
             {
@@ -97,7 +97,7 @@
         public override void Tick()
         {
             base.Tick();
-            SetAnimatedState("Levier", Leviers);
+            SetAnimatedState("Levier", Levier);
         }
 
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
@@ -151,7 +151,7 @@
             this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(CarpentrySkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(BoiteAuxLettresRecipe), start: 8, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(BoiteAuxLettresRecipe), start: 8, skillType: typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Lumber Stockpile"
             this.ModsPreInitialize();

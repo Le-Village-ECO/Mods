@@ -123,7 +123,7 @@ namespace Eco.Mods.TechTree
             this.LaborInCalories = CreateLaborInCaloriesValue(120, typeof(CarpentrySkill));
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(LettresItem), start: 3, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelProcessingTalentGroup));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(LettresItem), start: 3, skillType: typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Hanging Steel Framed Sign"
             this.ModsPreInitialize();
