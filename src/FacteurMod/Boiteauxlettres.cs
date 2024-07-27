@@ -49,75 +49,38 @@
     [RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(PublicStorageComponent))]
 
     [Tag("Usable")]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Boite aux lettres Item")]
-
-    public partial class BoiteAuxLettresObject : WorldObject, IRepresentsItem, IHasInteractions
+    public partial class BoiteAuxLettresObject : WorldObject, IRepresentsItem
     {
-        [Serialized] public bool Levier { get; set; }
         public virtual Type RepresentedItemType => typeof(BoiteAuxLettresItem);
-        public override LocString DisplayName => Localizer.DoStr("Boite aux Lettres");
+        public override LocString DisplayName => Localizer.DoStr("Boite aux lettres");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
-        static BoiteAuxLettresObject()
-        {
-            var BlockOccupancyList = new List<BlockOccupancy>
-            {
-                // A réaliser taille 1/2/1
-            };
-
-            AddOccupancy<BoiteAuxLettresObject>(BlockOccupancyList);
-        }
-
 
         protected override void Initialize()
         {
             this.ModsPreInitialize();
-            this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Storage"));
-            var storage = this.GetComponent<PublicStorageComponent>();
-            storage.Initialize(16);
-            //storage.Storage.AddInvRestriction();
             this.ModsPostInitialize();
-        }
-        [Interaction(InteractionTrigger.RightClick, "Tirer le levier")]
-        public void Leviers(Player context, InteractionTriggerInfo interactionTriggerInfo, InteractionTarget interactionTarget)
-        {
-            var isAuthorized = ServiceHolder<IAuthManager>.Obj.IsAuthorized(this, context.User);
-
-            if (isAuthorized)
-            {
-                Levier = !Levier;
-            }
-            else
-            {
-                context.ErrorLocStr("Tu n'est pas autorisé à faire cela.");
-                return;
-            }
-        }
-        public override void Tick()
-        {
-            base.Tick();
-            SetAnimatedState("Levier", Levier);
         }
 
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
         /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
         partial void ModsPostInitialize();
-
-
     }
+
     [Serialized]
-    [LocDisplayName("Boite aux Lettres")]
+    [LocDisplayName("Boite aux lettres")]
     [LocDescription("Le facteur est-il passé, j'éspère que ce n'est pas une facture. ")]
     [Ecopedia("Crafted Objects", "Storage", createAsSubPage: true)]
-    [Weight(2000)] 
-    public partial class BoiteAuxLettresItem: WorldObjectItem<BoiteAuxLettresObject>
+    [Weight(500)] // Defines how heavy SmallStockpile is.
+    public partial class BoiteAuxLettresItem : WorldObjectItem<BoiteAuxLettresObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
 
     }
-
     [RequiresSkill(typeof(CarpentrySkill), 1)]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Boite aux Lettres Item")]
     public partial class BoiteAuxLettresRecipe : RecipeFamily
@@ -133,7 +96,6 @@
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("Lumber", 15, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), //noloc
                     new IngredientElement("WoodBoard", 10, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), //noloc
                 },
 
@@ -159,7 +121,7 @@
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(SawmillObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
