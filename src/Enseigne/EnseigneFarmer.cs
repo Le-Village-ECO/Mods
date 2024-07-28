@@ -56,7 +56,7 @@ namespace Eco.Mods.TechTree
 
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
-    [RequiresSkill(typeof(CarpentrySkill), 1)]
+    [RequiresSkill(typeof(FarmingSkill), 1)]
     [ForceCreateView]
     [Ecopedia("Crafted Objects", "Signs", subPageName: "enseigne de fermier en bois")]
     public partial class EnseigneFarmerRecipe : RecipeFamily
@@ -82,10 +82,26 @@ namespace Eco.Mods.TechTree
                 {
                     new CraftingElement<EnseigneFarmerItem>()
                 });
-            // Perform post initialization steps for user mods and initialize our recipe instance as a tag product with the crafting system
+            this.Recipes = new List<Recipe> { recipe };
+            this.ExperienceOnCraft = 20; // Defines how much experience is gained when crafted.
+
+            // Defines the amount of labor required and the required skill to add labor
+            this.LaborInCalories = CreateLaborInCaloriesValue(600, typeof(FarmingSkill));
+
+            // Defines our crafting time for the recipe
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(EnseigneRecipe), start: 4, skillType: typeof(FarmingSkill));
+
+            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Advanced Combustion Engine"
+            this.ModsPreInitialize();
+            this.Initialize(displayText: Localizer.DoStr("Enseigne de fermier en bois"), recipeType: typeof(EnseigneChefRecipe));
             this.ModsPostInitialize();
+
+            // Register our RecipeFamily instance with the crafting system so it can be crafted.
             CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
+
+        /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
+        partial void ModsPreInitialize();
 
         /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
         partial void ModsPostInitialize();

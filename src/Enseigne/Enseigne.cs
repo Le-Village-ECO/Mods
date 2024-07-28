@@ -40,6 +40,8 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
         }
 
+
+
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
         /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
@@ -98,7 +100,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(CarpenterSkill), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
