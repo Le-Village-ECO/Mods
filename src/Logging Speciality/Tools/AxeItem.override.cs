@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
-//Le village - Ajout du talent pour ramasser les copeaux de bois sans dépenser de calorie
+// Le village - Ajout du talent pour ramasser les copeaux de bois sans dépenser de calorie
 
 #nullable enable
 
@@ -54,16 +54,7 @@ namespace Eco.Mods.TechTree
         [Interaction(InteractionTrigger.LeftClick, tags: BlockTags.Choppable, DisallowedEnvVars = new[] {"felled" }, AnimationDriven = true, InteractionDistance = 1.5f)] //Dont allow felled trees to be chopped, they get 'sliced' with a different limiter (below interaction)
         [Interaction(InteractionTrigger.LeftClick, "Slice", requiredEnvVars: new[] { "slice" }, highlightColorHex: InteractionHexColors.Yellow, AnimationDriven = true, InteractionDistance = 1.5f)]
         public bool Chop(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
-        {
-            // Le village - Controle du Tier de l'objet
-            var requiredTier = this.Tier.GetCurrentValue(player?.User);
-            var requiredTalent = player?.User.Talentset.HasTalent(typeof(LoggingToolEfficiencyTalent));
-            if (requiredTier > 1 && requiredTalent is false) 
-            {
-                NotificationManager.ServerMessageToAllLoc($"Objet Tier = {requiredTier} / Talent = {requiredTalent}");
-                return false;
-            }
-            
+        {   
             if (triggerInfo == InteractionTrigger.LeftClick)
             {
                 //Try delete tree debris with reduced XP multiplier
