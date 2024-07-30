@@ -31,6 +31,8 @@ using Eco.Gameplay.Components;
 using Eco.Gameplay.Items.Recipes;
 using System.Runtime.CompilerServices;
 using Eco.Gameplay.Skills;
+using Village.Eco.Mods.Core;
+using Eco.Gameplay.Systems.Messaging.Notifications;
 
 namespace Village.Eco.Mods.OilField
 {
@@ -43,6 +45,7 @@ namespace Village.Eco.Mods.OilField
     [Tag("Tool")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     [Weight(1000)]
+    [RequiresTalent(typeof(LoggingToolEfficiencyTalent))]
     public class OilProspectorItem : ToolItem, IInteractor
     {
         public override float DurabilityRate { get { return 0; } }
@@ -53,6 +56,16 @@ namespace Village.Eco.Mods.OilField
         [Interaction(InteractionTrigger.LeftClick,"Prospecter le sol")]
         public bool Prospect(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
         {
+            // Le village - Controle du Tier de l'objet
+            var requiredTier = this.Tier.GetCurrentValue(player?.User);
+            var requiredTalent = player?.User.Talentset.HasTalent(typeof(LoggingToolEfficiencyTalent));
+            if (requiredTier > 1 && requiredTalent is false)
+            {
+                NotificationManager.ServerMessageToAllLoc($"Objet Tier = {requiredTier} / Talent = {requiredTalent}");
+                return false;
+            }
+
+
             if (target.IsBlock && base.Durability > 0f)
             {
                 var title = new LocStringBuilder();
