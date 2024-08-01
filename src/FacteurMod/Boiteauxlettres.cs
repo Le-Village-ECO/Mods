@@ -43,32 +43,45 @@
     using Eco.Core.Utils;
     using Eco.Gameplay.Components.Storage;
     using Eco.Gameplay.GameActions;
+    using Village.Eco.Mods.Core;
+    using System.Linq;
 
     [Serialized]
-    [RequireComponent(typeof(PropertyAuthComponent))]
-    [RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
-    [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(PublicStorageComponent))]
+    [RequireComponent(typeof(PropertyAuthComponent))]
 
     [Tag("Usable")]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Boite aux lettres Item")]
-    public partial class BoiteAuxLettresObject : WorldObject, IRepresentsItem
+    public partial class BoiteAuxLettresObject : WorldObject
     {
-        public virtual Type RepresentedItemType => typeof(BoiteAuxLettresItem);
+        public PublicStorageComponent Storage { get; set; }
+
         public override LocString DisplayName => Localizer.DoStr("Boite aux lettres");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            this.ModsPostInitialize();
+            base.Initialize();
+            Storage = this.GetComponent<PublicStorageComponent>();
+            Storage.Initialize(20);
+            //Storage.Storage.AddInvRestriction(new TagRestriction("Carcasse", "Spoiled Food"));
+            Storage.Inventory.OnChanged.Add(UpdateHasContent);
+            UpdateHasContent();
+            Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content initialized");
         }
 
-        /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
-        partial void ModsPreInitialize();
-        /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
-        partial void ModsPostInitialize();
+        public void UpdateHasContent(User? user = null) 
+        {
+            SetAnimatedState("HasContent", Storage.Inventory.IsEmpty is false);
+
+            Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content ={Storage.Inventory.IsEmpty is false}");
+            Logger.SendLog(Criticity.Info, "FacteurMod", $"Animated State={string.Join(' ',AnimatedStates.Select(a=>$"{a.Key} {a.Value}"))}");
+
+        }
+
+
+
     }
 
     [Serialized]
