@@ -115,7 +115,7 @@ namespace Village.Eco.Mods.MiningSpecialty
                 typeof(MiningCoronTalent),
             };
             this.OwningSkill = typeof(MiningSkill);
-            this.Level = 7;
+            this.Level = 5;
         }
     }
 
@@ -157,7 +157,7 @@ namespace Village.Eco.Mods.MiningSpecialty
                 typeof(MiningGoldRusherTalent),
             };
             this.OwningSkill = typeof(MiningSkill);
-            this.Level = 7;
+            this.Level = 5;
         }
     }
 
