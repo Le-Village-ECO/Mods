@@ -1,7 +1,7 @@
 ﻿// Le village - Ore detector - Sur le principe du chaud-froid
 // TODO:
 // - En faire un outil générique qui est appelé par des outils spécifiques en fonction du minerai : il reste de passer le paramètre du type de minerai
-// - Ajouter un contrôle optionnel en fonction d'un talent qui l'active
+// - Améliorer le contrôle sur le talent : Tooltip sur l'outil ? Affichage message bloquant ? Utiliser un attribut de l'item ?
 // - Finaliser la gestion du coût calorique (override possible par l'outil final)
 // - finaliser la gestion de la durabilité (override possible par l'outil final)
 
@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using Eco.Shared.Services;
+using Eco.Gameplay.Systems.Messaging.Notifications;
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
@@ -36,9 +37,9 @@ namespace Village.Eco.Mods.MiningSpecialty
 	{
 		public const int SCAN_RANGE = 30; //Max range for detection
 		public override ItemCategory ItemCategory => ItemCategory.Drill;
-        public override float DurabilityRate { get { return 0; } }
+        public abstract Block Block { get; }  //Get the Ore from item
 
-		// Calories burn
+        // Calories burn
         private static SkillModifiedValue caloriesBurn = CreateCalorieValue(20, typeof(MiningSkill), typeof(OreDetectorItem));
         public override IDynamicValue CaloriesBurn => caloriesBurn;
 
@@ -47,6 +48,7 @@ namespace Village.Eco.Mods.MiningSpecialty
         public override IDynamicValue Tier { get { return tier; } }
 
         // Repair - TODO
+        public override float DurabilityRate { get { return 0; } }
         /*
         private static IDynamicValue skilledRepairCost = new ConstantValue(1);
         public override IDynamicValue SkilledRepairCost { get { return skilledRepairCost; } }
@@ -58,6 +60,15 @@ namespace Village.Eco.Mods.MiningSpecialty
         [Interaction(InteractionTrigger.InteractKey, overrideDescription: "Analyze area", animationDriven: false, interactionDistance: 3, authRequired: AccessType.ConsumerAccess)]
 		public void Analyze(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
 		{
+            // Controle du talent du joueur
+            bool hasTalent = player.User.Talentset.HasTalent(typeof(MiningGoldRusherTalent));
+            if (!hasTalent)
+            {
+                //NotificationManager.ServerMessageToAllLoc($"Has Talent? {hasTalent}");
+                player.MsgLocStr($"Talent {TextLoc.BoldLocStr("Chercheur d'or : Minage")} requis pour utiliser L'objet", NotificationStyle.Error);
+                return;
+            }
+
             if (target.IsBlock && this.Durability > 0f)
             {
 				Vector3i? targetPos = target.BlockPosition.Value + (Vector3i)target.HitNormal;

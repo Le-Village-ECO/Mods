@@ -11,6 +11,7 @@ using Eco.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Village.Eco.Mods.Core;
 
 
 namespace Village.Eco.Mods.MiningSpecialty
@@ -59,6 +60,7 @@ namespace Village.Eco.Mods.MiningSpecialty
     [LocDescription("Indique la proximité de filon d'or (chaud-froid)")]
     [Category("Tools"), Tag("Tool"), Weight(1000)]
     [Tier(1)]
+    //[RequiresTalent(typeof(LoggingToolEfficiencyTalent))]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     public partial class GoldDetectorItem : OreDetectorItem, IInteractor
     {
