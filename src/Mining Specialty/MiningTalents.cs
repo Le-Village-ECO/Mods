@@ -104,7 +104,7 @@ namespace Village.Eco.Mods.MiningSpecialty
     }
 
     [Serialized]
-    [LocDisplayName("Mineur de fond : Mining")]
+    [LocDisplayName("Mineur de fond : Minage")]
     [LocDescription("Au nord, c'était les corons !")]
     public partial class MiningCoronTalentGroup : TalentGroup
     {
@@ -146,11 +146,11 @@ namespace Village.Eco.Mods.MiningSpecialty
     }
 
     [Serialized]
-    [LocDisplayName("Chercheur d'or : Mining")]
+    [LocDisplayName("Chercheur d'or : Minage")]
     [LocDescription("Tout ce qui brille est bon à prendre !")]
-    public partial class MiningGoldrusherTalentGroup : TalentGroup
+    public partial class MiningGoldRusherTalentGroup : TalentGroup
     {
-        public MiningGoldrusherTalentGroup()
+        public MiningGoldRusherTalentGroup()
         {
             Talents = new Type[]
             {
@@ -165,7 +165,7 @@ namespace Village.Eco.Mods.MiningSpecialty
     public partial class MiningGoldRusherTalent : GoldRusherTalent
     {
         public override bool Base { get { return false; } }
-        public override Type TalentGroupType { get { return typeof(MiningGoldrusherTalentGroup); } }
+        public override Type TalentGroupType { get { return typeof(MiningGoldRusherTalentGroup); } }
         public MiningGoldRusherTalent()
         {
             this.Value = 1;

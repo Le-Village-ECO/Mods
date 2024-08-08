@@ -1,105 +1,78 @@
 ﻿using Eco.Core.Items;
+using Eco.Gameplay.Components;
+using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Interactions.Interactors;
 using Eco.Gameplay.Items;
-using Eco.Gameplay.Players;
-using Eco.Gameplay.Systems.Messaging.Notifications;
-using Eco.Gameplay.Systems.NewTooltip.TooltipLibraryFiles;
+using Eco.Gameplay.Items.Recipes;
+using Eco.Gameplay.Skills;
+using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
-using Eco.Shared.Math;
 using Eco.Shared.Serialization;
-using Eco.Shared.SharedTypes;
-using Eco.Shared.Utils;
-using Eco.World;
-using Eco.World.Blocks;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using Village.Eco.Mods.Core;
+
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
+    [RequiresModule(typeof(AnvilObject))]
+    [RequiresSkill(typeof(BlacksmithSkill), 1)]
+    [Ecopedia("Items", "Tools", subPageName: "Gold Detector Item")]
+    public partial class GoldDetectorRecipe : RecipeFamily
+    {
+        public GoldDetectorRecipe() 
+        {
+            var recipe = new Recipe();
+            recipe.Init(
+                name: "GoldDetector",  //noloc
+                displayName: Localizer.DoStr("Gold Detector"),
+
+                ingredients: new List<IngredientElement>
+                {
+                    new IngredientElement(typeof(IronBarItem), 4, typeof(BlacksmithSkill)),
+                    new IngredientElement(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
+                    new IngredientElement("WoodBoard", 4, typeof(BlacksmithSkill)), //noloc
+                },
+
+                items: new List<CraftingElement>
+                {
+                    new CraftingElement<GoldDetectorItem>()
+                });
+            this.Recipes = new List<Recipe> { recipe };
+            
+            this.ExperienceOnCraft = 0.5f;
+            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(GoldDetectorItem), start: 0.5f, skillType: typeof(BlacksmithSkill));
+
+            this.ModsPreInitialize();
+            this.Initialize(displayText: Localizer.DoStr("Gold Detector Item"), recipeType: typeof(IronRockDrillRecipe));
+            this.ModsPostInitialize();
+
+            CraftingComponent.AddRecipe(tableType: typeof(GrindstoneObject), recipe: this);
+        }
+        partial void ModsPreInitialize();
+        partial void ModsPostInitialize();
+    }
+
     [Serialized]
     [LocDisplayName("Gold Detector")]
     [LocDescription("Indique la proximité de filon d'or (chaud-froid)")]
-    [Category("Tools")]
-    [Tag("Tool")]
+    [Category("Tools"), Tag("Tool"), Weight(1000)]
+    [Tier(1)]
+    //[RequiresTalent(typeof(LoggingToolEfficiencyTalent))]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
-    [Weight(1000)]
-    public class GoldDetector : ToolItem, IInteractor
+    public partial class GoldDetectorItem : OreDetectorItem, IInteractor
     {
-        [Interaction(InteractionTrigger.LeftClick, "Rechercher de l'or")]
-        public bool SearchGold(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
-        {
-            if (target.IsBlock) 
-            {
-                int range = GetGoldOreDistance(target.BlockPosition.Value);
-
-                NotificationManager.ServerMessageToAllLoc($"Range = {range} / Temperature = {LocDistance(range)}");
-
-                return true;
-            }
-
-            return false;
-        }
-        public static int GetGoldOreDistance(Vector3i position)
-        {
-            int x = position.X;
-            int y = position.Y;
-            int z = position.Z;
-            int rangeMax = 3;
-
-            NotificationManager.ServerMessageToAllLoc($"X-Y-Z = {x}-{y}-{z}");
-
-            for (int i = x - rangeMax; i <= x + rangeMax; i++) 
-            {
-                for (int j = y - rangeMax; j <= y + rangeMax; j++) 
-                {
-                    for (int k = z - rangeMax; k <= z + rangeMax; k++) 
-                    {
-                        //Calcul de la distance euclidienne entre (x,y,z) et (i,j,k)
-                        double distance = Math.Sqrt(Math.Pow(i - x, 2) + Math.Pow(j - y, 2) + Math.Pow(k - z, 2));
-                        if (distance <= rangeMax) 
-                        {
-                            NotificationManager.ServerMessageToAllLoc($"I-J-K = {i}-{j}-{k}");
-                            if (IsGoldFound(position)) return (int)distance;
-                        }
-                    }
-                }
-            };
-            WorldRange range = WorldRange.SurroundingSpace(position.Value, 30);
-            return rangeMax+1;
-        }
-        public static bool IsGoldFound(Vector3i position) 
-        {
-            //Inspiration de DrillItem.cs
-
-            // Unpack block from position, block position won't be null
-            var block = World.GetBlock(position);
-
-            // Get resulting item from block
-            var typeId = -1;
-            if (block is IRepresentsItem item) typeId = Item.Get(item)?.TypeID ?? -1;
-            if (typeId == -1) typeId = BlockItem.CreatingItem(block.GetType())?.TypeID ?? -1;
-            if (World.GetBlock(position).Is<Impenetrable>() || position.y <= 0) typeId = -2;
+        //Calories
+        private static IDynamicValue caloriesBurn = new MultiDynamicValue(
+            MultiDynamicOps.Multiply, 
+            new TalentModifiedValue(typeof(GoldDetectorItem), typeof(MiningToolEfficiencyTalent)), 
+            CreateCalorieValue(15, typeof(MiningSkill), typeof(GoldDetectorItem)));
+        public override IDynamicValue CaloriesBurn => caloriesBurn;
+        //Tier
+        private static IDynamicValue tier = new ConstantValue(1);
 
 
-            NotificationManager.ServerMessageToAllLoc($"typeId = {typeId} / block = {block}");
-            if (block is IRepresentsItem item2)
-            {
-                NotificationManager.ServerMessageToAllLoc($"Name = {Item.Get(item2).Name}");
-                if (Item.Get(item2).Name == "SandstoneItem") return true;
-            }   
-
-            return false;
-        }
-        public static LocString LocDistance(int distance) => distance switch
-        {
-            0 => TextLoc.ColorLocStr(Color.Red, "Very hot!!"),
-            1 => TextLoc.ColorLocStr(Color.Red, "Very hot!!"),
-            2 => TextLoc.ColorLocStr(Color.LightRed, "Hot!"),
-            3 => TextLoc.ColorLocStr(Color.Grey, "Lukewarm."),
-            4 => TextLoc.ColorLocStr(Color.BlueGrey, "Cold..."),
-            5 => TextLoc.ColorLocStr(Color.Blue, "Really cold..."),
-            _ => throw new NotImplementedException(), //Ajout Visual Studio
-        };
     }
 }
