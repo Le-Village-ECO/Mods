@@ -56,6 +56,8 @@
     public partial class BoiteAuxLettresObject : WorldObject
     {
         public PublicStorageComponent Storage { get; set; }
+        [Serialized] public bool UpLevers { get; set; }
+
 
         public override LocString DisplayName => Localizer.DoStr("Boite aux lettres");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
@@ -66,19 +68,32 @@
             Storage = this.GetComponent<PublicStorageComponent>();
             Storage.Initialize(20);
             //Storage.Storage.AddInvRestriction(new TagRestriction("Carcasse", "Spoiled Food"));
-            Storage.Inventory.OnChanged.Add(UpdateHasContent);
-            UpdateHasContent();
             Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content initialized");
         }
 
-        public void UpdateHasContent(User? user = null) 
+        [Interaction(InteractionTrigger.RightClick, "Up Lever")]
+        public void UpLever(Player context, InteractionTriggerInfo interactionTriggerInfo, InteractionTarget interactionTarget)
         {
-            SetAnimatedState("HasContent", Storage.Inventory.IsEmpty is false);
+            var isAuthorized = ServiceHolder<IAuthManager>.Obj.IsAuthorized(this, context.User);
 
-            Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content ={Storage.Inventory.IsEmpty is false}");
-            Logger.SendLog(Criticity.Info, "FacteurMod", $"Animated State={string.Join(' ',AnimatedStates.Select(a=>$"{a.Key} {a.Value}"))}");
-
+            if (isAuthorized)
+            {
+                UpLevers = !UpLevers;
+            }
+            else
+            {
+                context.ErrorLocStr("You Are Not Authorized To Do That");
+                return;
+            }
         }
+
+        public override void Tick()
+        {
+            base.Tick();
+            SetAnimatedState("UpLever", UpLevers);
+        }
+
+
 
 
 

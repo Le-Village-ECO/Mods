@@ -26,9 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alcohol", "Alcohol\Alcohol.csproj", "{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OilField", "OilField\OilField.csproj", "{29F9AC7B-63D8-473A-A80E-761AEE95B937}"
-	ProjectSection(ProjectDependencies) = postProject
-		{75E08884-4A3C-491E-A307-693EDA164D10} = {75E08884-4A3C-491E-A307-693EDA164D10}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{75E08884-4A3C-491E-A307-693EDA164D10}"
 EndProject
@@ -71,7 +68,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging Specialty", "Loggin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiningSpecialty", "Mining Specialty\MiningSpecialty.csproj", "{592501C6-4F94-4375-93D9-FA9996692FFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enseigne", "Enseigne\Enseigne.csproj", "{06A47C4E-0F44-481A-8D7C-1CC8E277FB2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enseigne(projetabandonnéSlgencours)", "Enseigne\Enseigne(projetabandonnéSlgencours).csproj", "{06A47C4E-0F44-481A-8D7C-1CC8E277FB2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacteurMod", "FacteurMod\FacteurMod.csproj", "{A58427DC-A46D-4C36-8BAE-5BCE37C2AD31}"
 EndProject
