@@ -26,6 +26,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alcohol", "Alcohol\Alcohol.csproj", "{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OilField", "OilField\OilField.csproj", "{29F9AC7B-63D8-473A-A80E-761AEE95B937}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75E08884-4A3C-491E-A307-693EDA164D10} = {75E08884-4A3C-491E-A307-693EDA164D10}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{75E08884-4A3C-491E-A307-693EDA164D10}"
 EndProject
