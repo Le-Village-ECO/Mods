@@ -28,6 +28,18 @@ namespace Village.Eco.Mods.Core
         [LocDescription("Si vrai, les champs pétroliers seront révélés en découvrant la spécialité")]
         [SyncToView] public bool RevealOilField { get; set; } = true;
 
+        #region Monnaie
+        [Category("Monnaie")]
+        [LocDisplayName("Monnaie illimitée")]
+        [LocDescription("Si true, alors paramétrage vanille avec une monnaie personelle illimitée, sinon valeur du paramètre suivant")]
+        [SyncToView] public bool MonnaieVanille { get; set; } = true;
+
+        [Category("Monnaie")]
+        [LocDisplayName("Montant monnaie perso")]
+        [LocDescription("Montant de la monnaie personnelle dans le compte personnel du joueur")]
+        [SyncToView] public float MonnaiePerso { get; set; } = 1000f;
+        #endregion
+
         #region Nutrition
         [Category("Nutrition")]
         [LocDisplayName("Paliers de bonus de nourriture")]
