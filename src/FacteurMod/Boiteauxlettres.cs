@@ -43,7 +43,6 @@
     using Eco.Core.Utils;
     using Eco.Gameplay.Components.Storage;
     using Eco.Gameplay.GameActions;
-    using Village.Eco.Mods.Core;
     using System.Linq;
 
     [Serialized]
@@ -68,7 +67,7 @@
             Storage = this.GetComponent<PublicStorageComponent>();
             Storage.Initialize(20);
             //Storage.Storage.AddInvRestriction(new TagRestriction("Carcasse", "Spoiled Food"));
-            Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content initialized");
+            //Logger.SendLog(Criticity.Info, "FacteurMod", $"Has Content initialized");
         }
 
         [Interaction(InteractionTrigger.RightClick, "Up Lever")]
