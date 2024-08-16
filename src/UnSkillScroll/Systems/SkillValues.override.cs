@@ -11,7 +11,6 @@ namespace Eco.Mods.TechTree
     using System.Linq;
     using Eco.Gameplay.Items;
     using Eco.Gameplay.Skills;
-    using static Eco.Shared.Services.DifficultyModifiers;
 
     //Defines the cost of skills and specialty numbers
     public class SkillValues : IModInit

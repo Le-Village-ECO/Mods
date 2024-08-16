@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
+using Eco.Shared.Logging;
 using Eco.Shared.Utils;
 using Eco.Simulation.WorldLayers;
 using Eco.Simulation.WorldLayers.Layers;

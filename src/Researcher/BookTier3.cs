@@ -22,8 +22,9 @@ namespace Eco.Mods.TechTree
     using Eco.World.Blocks;
     using Eco.Gameplay.Pipes;
     using Eco.Core.Controller;
+    using Eco.Gameplay.Items.Recipes;
 
-     [RequiresSkill(typeof(ResearcherSkill), 1)]
+    [RequiresSkill(typeof(ResearcherSkill), 1)]
     public partial class BookTier3Recipe : RecipeFamily
     {
         public BookTier3Recipe()

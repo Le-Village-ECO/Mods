@@ -26,7 +26,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Pipes;
     using Eco.Core.Controller;
     using Eco.Gameplay.Items.Recipes;
-    using Eco.Shared.Utils.TimeConversion;
+    using Eco.Shared.Time;
 
 
     /// <summary>

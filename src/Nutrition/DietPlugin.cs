@@ -217,6 +217,7 @@ namespace Village.Eco.Mods.Nutrition
             ItemTaste.TastePreference.Horrible => TextLoc.ColorLocStr(Color.Grey, "Horrible"),
             ItemTaste.TastePreference.Worst => TextLoc.ColorLocStr(Color.Red, "Least favorite"),
             ItemTaste.TastePreference.Favorite => TextLoc.ColorLocStr(Color.Green, "Favorite"),
+            _ => throw new NotImplementedException(),
         };
 
         public string GetCategory() => "LeVillageMods";

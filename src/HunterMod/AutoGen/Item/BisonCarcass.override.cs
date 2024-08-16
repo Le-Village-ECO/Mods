@@ -28,7 +28,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items.Recipes;
     using Eco.Gameplay.Systems.NewTooltip;
     using Eco.Shared.Items;
-    using Eco.Shared.Utils.TimeConversion;
+    using Eco.Shared.Time;
 
     [Serialized] // Tells the save/load system this object needs to be serialized. 
     [LocDisplayName("Bison Carcass")] // Defines the localized name of the item.

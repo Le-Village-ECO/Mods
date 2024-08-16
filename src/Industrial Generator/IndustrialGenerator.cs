@@ -18,6 +18,7 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Utils;
     using Eco.Shared.Items;
     using Eco.Gameplay.Housing.PropertyValues;
+    using Eco.Gameplay.Items.Recipes;
 
     [Serialized]
     [RequireComponent(typeof(AirPollutionComponent))]

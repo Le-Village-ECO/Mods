@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Eco.Gameplay.Players;
+using Eco.Shared.Time;
 using Eco.Shared.Utils;
 
 namespace Village.Eco.Mods.ExhaustionMod

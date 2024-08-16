@@ -179,7 +179,7 @@ namespace Eco.Mods.TechTree
 
         //Le Village - Copié/collé depuis MultiblockActionContext.cs
         //Le village - Suppression de la partie calorie pour ne pas déclencher le contrôle sur l'Exhaustion
-        public static MultiblockActionContext CreateMultiblockContext(ToolItem tool, Player player, bool applyXPSkill, IEnumerable<Vector3i>? area = null, IEnumerable<Type>? blockTypesInArea = null, Func<GameAction>? gameActionConstructor = null) =>
+        public static MultiblockActionContext CreateMultiblockContext(ToolItem tool, Player player, bool applyXPSkill, IEnumerable<Vector3i> area = null, IEnumerable<Type> blockTypesInArea = null, Func<GameAction> gameActionConstructor = null) =>
             new MultiblockActionContext()
             {
                 Player = player,
