@@ -74,7 +74,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacteurMod", "FacteurMod\Fa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiseasesMod", "DiseasesMod\DiseasesMod.csproj", "{7268D806-4F13-4F27-9ACF-EA5F1897BA86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleTestMod", "VehicleTestMod\VehicleTestMod.csproj", "{4AF958C6-39A4-4BDC-A098-51C0E2470683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleTestMod", "VehicleTestMod\VehicleTestMod.csproj", "{4AF958C6-39A4-4BDC-A098-51C0E2470683}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F29D44D1-0700-4EC1-8E99-F29C7ADA1ACB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
