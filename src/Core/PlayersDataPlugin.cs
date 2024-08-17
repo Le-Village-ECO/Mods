@@ -22,7 +22,7 @@ namespace Village.Eco.Mods.Core
         public string GetStatus() => Localizer.DoStr("Active");
 
         public static string GetUserId(User user)
-            => user.SteamId?.IfEmpty(user.SlgId) ?? user.SlgId;
+            => user.SteamId?.IfEmpty(user.StrangeId) ?? user.StrangeId;
         public static string GetPlayerId(Player player) => GetUserId(player.User);
         
         public PlayerData GetUserDataOrDefault(User user)

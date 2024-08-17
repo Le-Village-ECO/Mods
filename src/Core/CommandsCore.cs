@@ -67,7 +67,7 @@ namespace Village.Eco.Mods.Core
         [ChatSubCommand("LVCore", "Récupérer l'ID d'un joueur", ChatAuthorizationLevel.Admin)]
         public static void PlayerID(User user, User targetUser)
         {
-            string playerID = targetUser.SteamId?.IfEmpty(targetUser.SlgId) ?? targetUser.SlgId;
+            string playerID = targetUser.SteamId?.IfEmpty(targetUser.StrangeId) ?? targetUser.StrangeId;
             user.Player.Msg(Localizer.Format($"Joueur {targetUser}  = ID {playerID}"));
 
         }
