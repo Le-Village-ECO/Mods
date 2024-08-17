@@ -29,7 +29,7 @@ namespace Village.Eco.Mods.Nutrition
             UserXP.UserSkillRateChangedEvent.Add(SkillLevel);
 
             // Technique de "Reflexion" pour modifier toutes les recettes
-            SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
+            SkillModifiedValue smv_time = new(1f, DietSkill.MultiplicativeStrategy, typeof(DietSkill), typeof(Player), Localizer.DoStr("Temps de fabrication"), DynamicValueType.Speed);
             foreach (RecipeFamily recipe in RecipeManager.AllRecipeFamilies)
             {
                 recipe.SetPropertyByName("CraftMinutes", new MultiDynamicValue(MultiDynamicOps.Multiply, smv_time, recipe.CraftMinutes));
