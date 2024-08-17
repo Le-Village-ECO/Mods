@@ -153,7 +153,9 @@ namespace Village.Eco.Mods.UnSkillScroll
 
             skill.ForceSetLevel(user, 0);
             if (skill.Talents != null) skill.ResetTalents(user);
-            user.Skillset.UnLearnSkillInSkillset(skill.Type, user);
+            if (user.Skillset.LastSkillsGained.Contains(skill.TypeID)) user.Skillset.LastSkillsGained.RemoveAll(x => x == skill.TypeID);
+            this.Changed(nameof(user.Skillset.LastSkillsGained));
+            this.Changed(nameof(user.Skillset.Skills));
         }
     }
 

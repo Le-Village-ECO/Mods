@@ -48,7 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoGen\Benefit\" />
     <Folder Include="Tools\" />
   </ItemGroup>
 
