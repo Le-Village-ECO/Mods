@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
-using Eco.Gameplay.Settlements;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
-using Village.Eco.Mods.Nutrition;
+using Village.Eco.Mods.Nutrition;  // Le Village
 
 // default starting player items / skills
 public static class PlayerDefaults
@@ -111,8 +110,7 @@ public static class PlayerDefaults
 
     private static SkillModifiedValue CreateSmv(float startValue, ModificationStrategy strategy, Type skillType, LocString benefitsDescription, DynamicValueType valueType)
     {
-        var smv = new SkillModifiedValue(startValue, strategy, skillType, benefitsDescription, valueType);
-        SkillModifiedValueManager.AddSkillBenefit(skillType, smv, typeof(Player));
+        var smv = new SkillModifiedValue(startValue, strategy, skillType, typeof(Player), benefitsDescription, valueType);
         return smv;
     }
 
