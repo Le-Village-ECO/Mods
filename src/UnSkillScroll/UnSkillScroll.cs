@@ -9,14 +9,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Eco.Core;
+using Eco.Core.Controller;
 using Eco.Core.Items;
 using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items;
+using Eco.Gameplay.GameActions;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.TextLinks;
-using Eco.ModKit.Internal;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using Eco.Shared.Services;
@@ -100,13 +101,15 @@ namespace Village.Eco.Mods.UnSkillScroll
             //Une confirmation finale du joueur est indispensable et obligatoire
             if (await player.User.ConfirmBoxLoc($"Etes-vous sûr de vouloir abandonner {skill.UILink()} ?") is false) return;
 
-            //Oubli de la specialite
-            await player.User.Skillset.Reset(SkillType, false);
-
             //Récupération des étoiles
             int stars = LVConfigurePlugin.Config.SkillTierCost ? skill.Tier : 1;
 
+            ResetStar(player.User, stars);
+            //await player.User.Skillset.Reset(SkillType, false);
+            player.User.MailLoc($"You have abandoned {skill.UILink()} specialty", NotificationCategory.Skills);
+
             player.User.UserXP.AddStars(stars);
+            player.User.UserXP.Changed(nameof(UserXP.StarsAvailable));
             player.User.MailLoc($"Vous avez récupéré {stars} étoile(s)", NotificationCategory.Skills);
 
             //TODO en cours de Warang sur les events
@@ -128,6 +131,29 @@ namespace Village.Eco.Mods.UnSkillScroll
             //Log
             var log = NLogManager.GetLogWriter("LeVillageMods");
             log.Write($"Le joueur **{player.DisplayName}** a oublié **{skill.DisplayName}**.");
+        }
+
+        public void ResetStar(User user, int stars)
+        {
+            //Log
+            var log = NLogManager.GetLogWriter("LeVillageMods");
+            log.Write($"ResetStar appelé pour l'utilisateur {user.Name}");
+
+            var skill = user.Skillset[SkillType];
+
+            var pack = new GameActionPack();
+            pack.AddGameAction(new LoseSpecialty()
+            {
+                Profession = skill.RootSkillTree.StaticSkill,
+                Specialty = skill,
+                Citizen = user,
+                StarsRefunded = stars
+            });
+            pack.TryPerform(user);
+
+            skill.ForceSetLevel(user, 0);
+            if (skill.Talents != null) skill.ResetTalents(user);
+            user.Skillset.UnLearnSkillInSkillset(skill.Type, user);
         }
     }
 
