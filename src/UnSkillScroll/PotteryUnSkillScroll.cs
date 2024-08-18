@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Potterie")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Potterie sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Potterie sous certaines conditions : /unskill conditions")]
     public partial class PotteryUnSkillScroll : UnSkillScroll<PotterySkill> { }
 
     [RequiresSkill(typeof(PotterySkill), 7)]

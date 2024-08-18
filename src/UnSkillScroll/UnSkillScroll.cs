@@ -24,6 +24,7 @@ using Eco.Shared.Services;
 using Eco.Shared.Utils;
 using Eco.Simulation.Time;
 using Village.Eco.Mods.Core;
+using static Eco.Shared.Utils.TimeFormatter;
 
 namespace Village.Eco.Mods.UnSkillScroll
 {
@@ -31,17 +32,17 @@ namespace Village.Eco.Mods.UnSkillScroll
     [Category("Hidden/Research")]
     [ItemGroup("Skill Scrolls")]
     [Tag("Skill Scrolls")]
-    public abstract class UnSkillScroll : Item  //Item generique avec lien vers Unity3D
+    public abstract class UnSkillScroll : Item
     {
         //Event d'oubli de la spécialité
         public static ThreadSafeAction<Player, Skill> UnlearnSkillEvent = new();
 
-        public const double RefundSpecialtyDaysCooldown = 2; //Delai entre 2 utilisation de parchemin d'oubli
+        public const double RefundSpecialtyDaysCooldown = 2; //Delai entre 2 utilisations de parchemin d'oubli
         public abstract Type SkillType { get; }  //Recuperation de la specialite definie dans le parchemin (1 pour chaque spe.)
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            // Execute la Task en parallele afin de terminer OnUsed
+            //Execute la Task en parallele afin de terminer OnUsed
             Task.Run(() => OnUsedAsync(player, itemStack));
 
             return base.OnUsed(player, itemStack);
@@ -54,7 +55,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             if (skill == null) //Le joueur n'a pas la specialite du parchemin
             {
                 message = Localizer.Do($"Vous n'avez pas cette spécialité.");
-                player.ErrorLocStr(message);
+                player.OkBoxLocStr(message);
 
                 return;
             }
@@ -62,7 +63,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             if (skill.Level != skill.MaxLevel) //Le joueur n'est pas au niveau maximum de la specialite
             {
                 message = Localizer.Do($"Vous devez avoir le niveau maximum de {skill.UILink()}.");
-                player.ErrorLocStr(message);
+                player.OkBoxLocStr(message);
 
                 return;
             }
@@ -74,7 +75,7 @@ namespace Village.Eco.Mods.UnSkillScroll
             if (hasWorkOrders)
             {
                 message = Localizer.Do($"Impossible d'oublier {skill.UILink()} tant que des fabrications l'utilisant sont en cours.");
-                player.ErrorLocStr(message);
+                player.OkBoxLocStr(message);
 
                 return;
             }
@@ -90,11 +91,9 @@ namespace Village.Eco.Mods.UnSkillScroll
                 var timeUntilUnspecializing = RefundSpecialtyDaysCooldown - daysSinceLastUnspecializing;
                 var coolDownDuration = TimeSpan.FromDays(timeUntilUnspecializing);
 
-                //TODO : Revoir le format d'affichage du temps d'attente
-                //Voir UserCommands.cs : public static void Now
-                message = Localizer.Do($"Vous devez attendre {TimeFormatter.FormatSimple(coolDownDuration)} avant d'oublier {skill.UILink()}.");
-                player.ErrorLocStr(message);
-
+                message = Localizer.Do($"Vous devez attendre {TextLoc.BoldLocStr(TimeFormatter.FormatSpan(coolDownDuration,Rounding.ShowTwoBiggest , false))} avant d'oublier {skill.UILink()}.");
+                player.OkBoxLocStr(message);
+                
                 return;
             }
 
@@ -106,21 +105,20 @@ namespace Village.Eco.Mods.UnSkillScroll
 
             ResetStar(player.User, stars);
             //await player.User.Skillset.Reset(SkillType, false);
-            player.User.MailLoc($"You have abandoned {skill.UILink()} specialty", NotificationCategory.Skills);
+            player.User.MailLoc($"Vous avez abandonné la spécialité {skill.UILink()}", NotificationCategory.Skills);
 
             player.User.UserXP.AddStars(stars);
             player.User.UserXP.Changed(nameof(UserXP.StarsAvailable));
             player.User.MailLoc($"Vous avez récupéré {stars} étoile(s)", NotificationCategory.Skills);
 
-            //TODO en cours de Warang sur les events
-            // Event lié à l'oubli de la spécialité
+            //Event lié à l'oubli de la spécialité
             UnlearnSkillEvent?.Invoke(player, skill);
 
-            //Mise a jour des donnees du joueur
+            //Mise a jour des données du joueur
             playerData.LastUnspecializingDay = WorldTime.Day;
             plugin.AddOrSetPlayerData(player, playerData);
 
-            //  Supprimer le parchemin apres utilisation avec succes
+            //Supprimer le parchemin apres utilisation avec succes
             var inventory = new Inventory[] { player.User.Inventory, itemStack.Parent }.Distinct();
             using (var changes = InventoryChangeSet.New(inventory, player.User))
             {
@@ -135,10 +133,6 @@ namespace Village.Eco.Mods.UnSkillScroll
 
         public void ResetStar(User user, int stars)
         {
-            //Log
-            var log = NLogManager.GetLogWriter("LeVillageMods");
-            log.Write($"ResetStar appelé pour l'utilisateur {user.Name}");
-
             var skill = user.Skillset[SkillType];
 
             var pack = new GameActionPack();

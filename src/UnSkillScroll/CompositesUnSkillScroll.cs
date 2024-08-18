@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Composites")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Composites sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Composites sous certaines conditions : /unskill conditions")]
     public partial class CompositesUnSkillScroll : UnSkillScroll<CompositesSkill> { }
 
     [RequiresSkill(typeof(CompositesSkill), 7)]

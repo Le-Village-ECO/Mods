@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Maçonnerie avancée")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Maçonnerie avancée sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Maçonnerie avancée sous certaines conditions : /unskill conditions")]
     public partial class AdvancedMasonryUnSkillScroll : UnSkillScroll<AdvancedMasonrySkill> { }
 
     [RequiresSkill(typeof(AdvancedMasonrySkill), 7)]
