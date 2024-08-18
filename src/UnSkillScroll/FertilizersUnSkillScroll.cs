@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Engrais")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Engrais sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Engrais sous certaines conditions : /unskill conditions")]
     public partial class FertilizersUnSkillScroll : UnSkillScroll<FertilizersSkill> { }
 
     [RequiresSkill(typeof(FertilizersSkill), 7)]

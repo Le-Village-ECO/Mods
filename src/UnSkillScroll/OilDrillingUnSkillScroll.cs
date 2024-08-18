@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Extraction de pétrole")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Extraction de pétrole sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Extraction de pétrole sous certaines conditions : /unskill conditions")]
     public partial class OilDrillingUnSkillScroll : UnSkillScroll<OilDrillingSkill> { }
 
     [RequiresSkill(typeof(OilDrillingSkill), 7)]

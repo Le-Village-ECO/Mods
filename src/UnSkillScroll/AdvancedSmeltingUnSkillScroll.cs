@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Fonte avancée")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Fonte avancée sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Fonte avancée sous certaines conditions : /unskill conditions")]
     public partial class AdvancedSmeltingUnSkillScroll : UnSkillScroll<AdvancedSmeltingSkill> { }
 
     [RequiresSkill(typeof(AdvancedSmeltingSkill), 7)]

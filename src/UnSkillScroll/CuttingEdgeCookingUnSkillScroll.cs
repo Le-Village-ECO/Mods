@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Cuisine gastronomique")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Cuisine gastronomique sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Cuisine gastronomique sous certaines conditions : /unskill conditions")]
     public partial class CuttingEdgeCookingUnSkillScroll : UnSkillScroll<CuttingEdgeCookingSkill> { }
 
     [RequiresSkill(typeof(CuttingEdgeCookingSkill), 7)]

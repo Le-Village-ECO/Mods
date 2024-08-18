@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Mécanique")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Mécanique sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Mécanique sous certaines conditions : /unskill conditions")]
     public partial class MechanicsUnSkillScroll : UnSkillScroll<MechanicsSkill> { }
 
     [RequiresSkill(typeof(MechanicsSkill), 7)]

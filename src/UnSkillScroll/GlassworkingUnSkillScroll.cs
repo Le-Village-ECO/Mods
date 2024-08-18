@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Travail du verre")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Travail du verre sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Travail du verre sous certaines conditions : /unskill conditions")]
     public partial class GlassworkingUnSkillScroll : UnSkillScroll<GlassworkingSkill> { }
 
     [RequiresSkill(typeof(GlassworkingSkill), 7)]

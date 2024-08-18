@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Ingénierie basique")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Ingénierie basique sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Ingénierie basique sous certaines conditions : /unskill conditions")]
     public partial class BasicEngineeringUnSkillScroll : UnSkillScroll<BasicEngineeringSkill> { }
 
     [RequiresSkill(typeof(BasicEngineeringSkill), 7)]

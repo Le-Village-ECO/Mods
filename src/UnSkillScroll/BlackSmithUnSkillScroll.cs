@@ -13,7 +13,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 {
     [Serialized]
     [LocDisplayName("Parchemin d'oubli : Forgeron")]
-    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Forgeron sous certaines conditions")]
+    [LocDescription("Lire ce parchemin vous fera oublier la spécialité Forgeron sous certaines conditions : /unskill conditions")]
     public partial class BlacksmithUnSkillScroll : UnSkillScroll<BlacksmithSkill> { }
 
     [RequiresSkill(typeof(BlacksmithSkill), 7)]
