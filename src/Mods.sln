@@ -64,11 +64,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monnaie", "Monnaie\Monnaie.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Templates", "Templates\Templates.csproj", "{5FD6ECFF-D9E7-4E78-982F-7245D4E644C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging Specialty", "Logging Speciality\Logging Specialty.csproj", "{381BC9FC-4E39-4004-ADBA-1700131A625F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingSpecialty", "Logging Speciality\LoggingSpecialty.csproj", "{381BC9FC-4E39-4004-ADBA-1700131A625F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiningSpecialty", "Mining Specialty\MiningSpecialty.csproj", "{592501C6-4F94-4375-93D9-FA9996692FFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enseigne(projetabandonneSLGencours)", "Enseigne\Enseigne(projetabandonneSLGencours).csproj", "{06A47C4E-0F44-481A-8D7C-1CC8E277FB2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enseigne", "Enseigne\Enseigne.csproj", "{06A47C4E-0F44-481A-8D7C-1CC8E277FB2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacteurMod", "FacteurMod\FacteurMod.csproj", "{A58427DC-A46D-4C36-8BAE-5BCE37C2AD31}"
 EndProject
@@ -80,6 +80,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Obsolete", "Obsolete", "{022639BF-F1D7-4D76-9949-76737A3A019E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{165B99EE-966E-43DF-9F1D-4AF9588F2255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,6 +186,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C48F0E7F-055E-41FD-A119-B4766A391D09} = {022639BF-F1D7-4D76-9949-76737A3A019E}
+		{D9B80170-DC91-4CED-8466-67133F37F58B} = {022639BF-F1D7-4D76-9949-76737A3A019E}
+		{3CAC8FF9-38DE-4856-881B-5A06B6FACF2A} = {022639BF-F1D7-4D76-9949-76737A3A019E}
+		{EC2BCD14-7B1B-43E0-929E-F62A09A485D5} = {022639BF-F1D7-4D76-9949-76737A3A019E}
+		{8F6A6581-BB00-45E7-8E26-8E4F4E3E29AC} = {022639BF-F1D7-4D76-9949-76737A3A019E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4984F33F-9894-4492-A8A5-0CB2E475A2DD}
