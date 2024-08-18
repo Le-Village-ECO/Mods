@@ -36,8 +36,8 @@ namespace Village.Eco.Mods.MiningSpecialty
 	public abstract partial class OreDetectorItem : ToolItem, IInteractor
 	{
 		public const int SCAN_RANGE = 30; //Max range for detection
-		public override ItemCategory ItemCategory => ItemCategory.Drill;
-        public abstract Block Block { get; }  //Get the Ore from item
+		//public override ItemCategory ItemCategory => ItemCategory.Drill;
+        //public abstract Block Block { get; }  //Get the Ore from item
 
         // Calories burn
         private static SkillModifiedValue caloriesBurn = CreateCalorieValue(20, typeof(MiningSkill), typeof(OreDetectorItem));
@@ -48,7 +48,7 @@ namespace Village.Eco.Mods.MiningSpecialty
         public override IDynamicValue Tier { get { return tier; } }
 
         // Repair - TODO
-        public override float DurabilityRate { get { return 0; } }
+        //public override float DurabilityRate { get { return 0; } }
         /*
         private static IDynamicValue skilledRepairCost = new ConstantValue(1);
         public override IDynamicValue SkilledRepairCost { get { return skilledRepairCost; } }
