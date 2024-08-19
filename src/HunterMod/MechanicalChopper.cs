@@ -45,6 +45,7 @@ namespace Eco.Mods.TechTree
     using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
     using Eco.Gameplay.Items.Recipes;
     using System.Runtime.Serialization;
+    using static Eco.Gameplay.Components.PartsComponent;
 
     [Serialized]
     [RequireComponent(typeof(OnOffComponent))]
@@ -59,6 +60,7 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(PluginModulesComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
+    [RequireComponent(typeof(PartsComponent))]
     [RequireRoomContainment]
     [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(1.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
@@ -73,6 +75,10 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
+            this.GetComponent<PartsComponent>().Config(() => this.GetComponent<CraftingComponent>().DecayDescription, new PartInfo[]
+            {
+            new() { TypeName = nameof(PerforedGridItem), Quantity = 1},
+            });
             this.GetComponent<PowerConsumptionComponent>().Initialize(20);
             this.GetComponent<PowerGridComponent>().Initialize(5, new MechanicalPower());
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Crafting"));

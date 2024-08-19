@@ -45,6 +45,7 @@ namespace Eco.Mods.TechTree
     using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
     using Eco.Gameplay.Items.Recipes;
     using System.Runtime.Serialization;
+    using static Eco.Gameplay.Components.PartsComponent;
 
     [Serialized]
     [RequireComponent(typeof(OnOffComponent))]
@@ -57,6 +58,7 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(PluginModulesComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
+    [RequireComponent(typeof(PartsComponent))]
     [RequireRoomContainment]
     [RequireRoomVolume(18)]
     [RequireRoomMaterialTier(0.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
@@ -71,6 +73,11 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
+            this.GetComponent<PartsComponent>().Config(() => this.GetComponent<CraftingComponent>().DecayDescription, new PartInfo[]
+            {
+            new() { TypeName = nameof(HookStoneItem), Quantity = 1},
+            });
+
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Cooking"));
             this.GetComponent<HousingComponent>().HomeValue = CutTableItem.homeValue;
             this.ModsPostInitialize();

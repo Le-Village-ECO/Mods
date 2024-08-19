@@ -45,6 +45,7 @@ namespace Eco.Mods.TechTree
     using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
     using Eco.Gameplay.Items.Recipes;
     using System.Runtime.Serialization;
+    using static Eco.Gameplay.Components.PartsComponent;
 
     [Serialized]
     [RequireComponent(typeof(OnOffComponent))]
@@ -60,6 +61,7 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [RequireRoomContainment]
+    [RequireComponent(typeof(PartsComponent))]
     [RequireRoomVolume(24)]
     [RequireRoomMaterialTier(2.8f, typeof(ButcheryLavishReqTalent), typeof(ButcheryFrugalReqTalent))]
     [Tag("Usable")]
@@ -73,6 +75,10 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
+            this.GetComponent<PartsComponent>().Config(() => this.GetComponent<CraftingComponent>().DecayDescription, new PartInfo[]
+            {
+            new() { TypeName = nameof(IronSawBladeItem), Quantity = 1},
+            });
             this.GetComponent<PowerConsumptionComponent>().Initialize(100);
             this.GetComponent<PowerGridComponent>().Initialize(10, new ElectricPower());
             this.GetComponent<MinimapComponent>().SetCategory(Localizer.DoStr("Crafting"));
