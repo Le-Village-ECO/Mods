@@ -105,7 +105,7 @@ namespace Village.Eco.Mods.Core
 
         //Pour faciliter les tests Unity - TODO - A tester
         [ChatSubCommand("Reloads the Unity Data Files without needing to reboot the server", "rl-unity", ChatAuthorizationLevel.Admin)]
-        public static void ReloadUnityData(IChatClient chatClient)
+        public static void ReloadUnityData(User user, IChatClient chatClient)
         {
             ModKitPlugin.ContentSync.RefreshContent();
 
@@ -114,7 +114,7 @@ namespace Village.Eco.Mods.Core
 
         //Pour faciliter les tests ECOPEDIA - TODO - A tester
         [ChatSubCommand("Rebuilds the ecopedia", "rl-ecopedia", ChatAuthorizationLevel.Admin)]
-        public static void RebuildEcopedia(IChatClient chatClient)
+        public static void RebuildEcopedia(User user, IChatClient chatClient)
         {
             EcopediaManager.Build(ModKitPlugin.ModDirectory);
             chatClient.MsgLocStr("The Ecopedia Has been Rebuilt and should be automatically update. Please check the console for any logged issues with rebuilding the ecopedia");

@@ -4,9 +4,10 @@ Fatigue                 - liste de commandes
 Fatigue reset           - Met à 0 le timer d'un joueur (admin)
 Fatigue checktimer      - Info sur le dernier abandon
 Fatigue checkplayer     - Info sur le dernier abandon d'un joueur (admin)
-Fatigue informations    - Info générale sur UnSkill
+Fatigue informations    - Info générale sur Exhaust
 Fatigue worldday        - Date du jour et calcul bonus connexion
 */
+// ATTENTION : Tout n'a pas été corrigé pour la V11
 
 using Eco.Core;
 using Eco.Gameplay.Aliases;
@@ -50,7 +51,7 @@ namespace Village.Eco.Mods.ExhaustionMod
 
         }
 
-        [ChatSubCommand("Fatigue", "Consulter son délai", ChatAuthorizationLevel.User)]
+        [ChatSubCommand("Fatigue", "Consulter son délai - OBSOLETE V11", ChatAuthorizationLevel.User)]
         public static void CheckTimer(User user)
         {
             //Recuperation des donnees du joueur
@@ -73,7 +74,7 @@ namespace Village.Eco.Mods.ExhaustionMod
             user.Player.InfoBoxLocStr(message);
         }
 
-        [ChatSubCommand("Fatigue", "Consulter le délai d'un joueur", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("Fatigue", "Consulter le délai d'un joueur - OBSOLETE V11", ChatAuthorizationLevel.Admin)]
         public static void CheckPlayer(User user, User targetUser)
         {
             var currentUser = targetUser ?? user;
@@ -95,7 +96,7 @@ namespace Village.Eco.Mods.ExhaustionMod
             user.Player.MsgLocStr(message);
         }
 
-        [ChatSubCommand("Fatigue", "Afficher les informations sur le système d'épuisement", ChatAuthorizationLevel.User)]
+        [ChatSubCommand("Fatigue", "Afficher les informations sur le système d'épuisement - OBSOLETE V11", ChatAuthorizationLevel.User)]
         public static void Informations(User user)
         {
             LocString header;
@@ -126,23 +127,23 @@ namespace Village.Eco.Mods.ExhaustionMod
             user.Player.LargeInfoBox(header, message, button);
         }
 
-        [ChatSubCommand("Fatigue", "Affichage du jour du serveur", ChatAuthorizationLevel.User)]
+        [ChatSubCommand("Fatigue", "Affichage du jour du serveur - OBSOLETE V11", ChatAuthorizationLevel.User)]
         public static void WorldDay(User user)
         {
             StringBuilder sb = new();
-
+            /*  incompatible v11
             sb.AppendLine($"Configuration serveur : {BalanceConfig.Obj.ExhaustionAfterHours} heures/jour ");
             sb.AppendLine($"Jour technique serveur : {InitialBoost.CurrentWorldDay} ");
             sb.AppendLine($"Calcul du bonus : {InitialBoost.Calcul.TotalHours} heures");
             sb.AppendLine($"Un nouveau joueur aura donc {BalanceConfig.Obj.ExhaustionAfterHours} + {InitialBoost.Calcul.TotalHours} heures avant épuisement");
-
+            */
             user.Player.InfoBoxLocStr($"{sb}");
         }
 
-        [ChatSubCommand("Boost", "Ajoute X heure(s) à un joueur", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("Boost", "Ajoute X heure(s) à un joueur - OBSOLETE V11", ChatAuthorizationLevel.Admin)]
         public static void Boost(User user, User target, int hours)
         {
-            target.ExhaustionMonitor.AddEnergy(hours);
+            //target.ExhaustionMonitor.AddEnergy(hours); //incompatible v11
         }
     }
 }
