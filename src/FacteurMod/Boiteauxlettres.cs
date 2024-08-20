@@ -3,12 +3,10 @@
 using Eco.Core.Items;
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Components.Auth;
-using Eco.Gameplay.Components.Storage;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
 using Eco.Gameplay.Objects;
 using Eco.Gameplay.Occupancy;
-using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
 using Eco.Shared.Items;
@@ -21,55 +19,21 @@ namespace Village.Eco.Mods.FacteurMod
 {
     [Serialized]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
-//    [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(PropertyAuthComponent))]
-//  [RequireComponent(typeof(StatusComponent))]
     [RequireComponent(typeof(BalComponent))]
 
     [Tag("Usable")]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Boite aux lettres Item")]
     public partial class BoiteAuxLettresObject : WorldObject
     {
-/*
-       //Pour gérer le stockage
-        public PublicStorageComponent Storage { get; set; }
-
-        //Pour gerer le status enabled/disabled et informer le joueur
-        private StatusElement status;
-*/
         public override LocString DisplayName => Localizer.DoStr("Boite aux lettres");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
         {
-            //base.Initialize();
-
             this.ModsPreInitialize();
-
             this.ModsPostInitialize();
-
-            /*
-            //Gestion du stockage - emplacements et restrictions
-            Storage = this.GetComponent<PublicStorageComponent>();
-            Storage.Initialize(20);
-            Storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(LettreItem) }));
-            Storage.Inventory.OnChanged.Add(CheckStorage);
-
-            //Gestion du status dans l'onglet du même nom
-            status = GetComponent<StatusComponent>().CreateStatusElement(50);*/
         }
-        /*
-        public void CheckStorage(User user) 
-        {
-            if (Storage.Inventory.IsEmpty)
-            {
-                status.SetStatusMessage(false, Localizer.DoStr("La boite est vide. Il n'y a pas de courrier."));
-            }
-            else 
-            {
-                status.SetStatusMessage(true, Localizer.DoStr("Il y a du courrier !"));
-            }
-        }*/
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
         /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
@@ -121,9 +85,7 @@ namespace Village.Eco.Mods.FacteurMod
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
         partial void ModsPreInitialize();
-
         /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
         partial void ModsPostInitialize();
     }
-
 }

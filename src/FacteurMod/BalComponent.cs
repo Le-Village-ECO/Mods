@@ -9,7 +9,6 @@ using Eco.Gameplay.Players;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
-using Eco.World.Blocks;
 
 namespace Village.Eco.Mods.FacteurMod
 {
@@ -47,7 +46,10 @@ namespace Village.Eco.Mods.FacteurMod
             storage.Inventory.OnChanged.Add(CheckStorage);
         }
 
-        public void CheckStorage(User user) =>
+        public void CheckStorage(User user)
+        {
             status.SetStatusMessage(this.hasLetter = !storage.Inventory.IsEmpty, storage.Inventory.IsEmpty ? FailedStatus : SuccessStatus);
+            this.Parent.UpdateEnabledAndOperating(); //Force update object status (obligatoire pour les components qui n'ont pas de tick()
+        }
     }
 }
