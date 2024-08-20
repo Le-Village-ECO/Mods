@@ -36,11 +36,8 @@ namespace Eco.Mods.Organisms
     using Vector3 = System.Numerics.Vector3;
     using System.ComponentModel;
     using Eco.Gameplay.Interactions.Interactors;
-    using Eco.Mods.TechTree;
-    using Eco.Gameplay.Systems.Messaging.Notifications;
-    using Eco.Simulation.Time;
-    using Eco.ModKit.Internal;
     using Eco.Shared.Time;
+    using Eco.Mods.TechTree;
 
     [Serialized]
     [Tag(BlockTags.Choppable)]
@@ -85,7 +82,7 @@ namespace Eco.Mods.Organisms
     }
 
     // gameplay version of simulations tree
-    [Serialized] public class TreeEntity : Tree, IDamageable, IHasInteractions
+    [Serialized] public partial class TreeEntity : Tree, IDamageable, IHasInteractions
     {
         readonly object sync = new();
 
@@ -268,7 +265,7 @@ namespace Eco.Mods.Organisms
                         if (!carried.IsEmpty) // Early tests: neeed to check type mismatch and max quantity.
                         { 
                             if      (carried.Stacks.First().Item.Type != resourceType)                    { player.Error(Localizer.Format("You are already carrying {0:items} and cannot pick up {1:items}.", carried.Stacks.First().Item.UILink(LinkConfig.ShowPlural), resource.UILink(LinkConfig.ShowPlural)));  return; }
-                            //else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize)  { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize));                        return; }   //Le village
+                            //else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize)  { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize));                        return; } //Le Village
                             else //Le village - réécriture du ELSE - inspiration du mod XP Benefit
                             {
                                 //Let the carry inventory decide how many logs it can hold, instead of using the default log stack size
@@ -280,7 +277,7 @@ namespace Eco.Mods.Organisms
                         // Prepare a game action pack.
                         var pack = new GameActionPack();
                             pack.AddPostEffect          (() => { trunk.Collected = true; this.RPC("DestroyLog", logID); this.MarkDirty(); this.CheckDestroy(); }); // Delete the log if succseeded.
-                            pack.GetOrCreateInventoryChangeSet   (carried, player.User).AddItems(this.Species.ResourceItemType, numItems);                         // Add items to the changeset.
+                            pack.GetOrCreateInventoryChangeSet   (carried, player.User).AddItemsNonUnique(this.Species.ResourceItemType, numItems);                         // Add items to the changeset.
                             pack.AddGameAction          (new HarvestOrHunt() {   Species         = this.Species.GetType(),
                                                                                  HarvestedStacks = new ItemStack(Item.Get(this.Species.ResourceItemType), numItems).SingleItemAsEnumerable(),
                                                                                  ActionLocation  = pickupPosition.XYZi(),
@@ -440,7 +437,7 @@ namespace Eco.Mods.Organisms
                                 {
                                     var changes = InventoryChangeSet.New(player.User.Inventory, player.User);
                                     var debrisResources = this.Species.DebrisResources;
-                                    debrisResources.ForEach(x => changes.AddItems(x.Key, x.Value.RandInt));
+                                    debrisResources.ForEach(x => changes.AddItemsNonUnique(x.Key, x.Value.RandInt));
                                     changes.TryApply();
                                 }
                                 else
@@ -449,7 +446,7 @@ namespace Eco.Mods.Organisms
                                     World.SetBlock(this.Species.DebrisType, abovepos);
                                     player.SpawnBlockEffect(abovepos, this.Species.DebrisType, BlockEffect.Place);
                                 }
-                            }
+                            }  //Le Village - fin
                             RoomData.QueueRoomTest(abovepos);
                             if (Interlocked.Increment(ref this.treeDebrisSpawned) >= MaxTreeDebris) return;
                         }
@@ -535,6 +532,13 @@ namespace Eco.Mods.Organisms
             return pack;
         }
 
+        /// <summary>Try to destroy stump by applying full damage.</summary>
+        public bool TryDestroyStump(Player damager)
+        {
+            var action = this.TryDamageStump(new(), damager, this.stumpHealth, null, false);
+            return action.TryPerform(damager.User).Success;
+        }
+
         /// <summary>Perform damaging healthy branches and trunk (if it's a fallen tree).</summary>
         private GameActionPack TrySliceTrunk(GameActionPack pack, INetObject damager, float amount, float slicePoint, Item tool)
         {
@@ -591,7 +595,7 @@ namespace Eco.Mods.Organisms
                             //give tree resources
                             var changes = InventoryChangeSet.New(user.Inventory, user);
                             var trunkResources = this.Species.TrunkResources;
-                            if (trunkResources != null) trunkResources.ForEach(x => changes.AddItems(x.Key, x.Value.RandInt));
+                            if (trunkResources != null) trunkResources.ForEach(x => changes.AddItemsNonUnique(x.Key, x.Value.RandInt));
                             else DebugUtils.Fail("Trunk resources missing for: " + this.Species.Name);
                             changes.TryApply();
 
@@ -600,7 +604,7 @@ namespace Eco.Mods.Organisms
                             // Let another plant grow here
                             EcoSim.PlantSim.UpRootPlant(this);
                         }
-                    }
+                    }  //Le Village - fin
                 }
 
                 this.MarkDirty();
@@ -608,7 +612,7 @@ namespace Eco.Mods.Organisms
             return pack;
         }
 
-        private GameActionPack TryDamageStump(GameActionPack pack, INetObject damager, float amount, Item tool)
+        private GameActionPack TryDamageStump(GameActionPack pack, INetObject damager, float amount, Item tool, bool giveResource = true)
         {
             if (this.Fallen && this.stumpHealth > 0)
             {
@@ -634,11 +638,11 @@ namespace Eco.Mods.Organisms
                         if (World.GetBlock(this.Position.XYZi()).GetType() == this.Species.BlockType) World.DeleteBlock(this.Position.XYZi());
                         this.stumpHealth = 0;
                         //give tree resources
-                        if (player != null)
+                        if (player != null && giveResource)
                         {
                             var changes = InventoryChangeSet.New(player.User.Inventory, player.User);
                             var trunkResources = this.Species.TrunkResources;
-                            if (trunkResources != null) trunkResources.ForEach(x => changes.AddItems(x.Key, x.Value.RandInt));
+                            if (trunkResources != null) trunkResources.ForEach(x => changes.AddItemsNonUnique(x.Key, x.Value.RandInt));
                             else DebugUtils.Fail("Trunk resources missing for: " + this.Species.Name);
                             changes.TryApply();
                         }

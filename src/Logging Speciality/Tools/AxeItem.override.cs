@@ -13,23 +13,14 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.GameActions;
     using Eco.Gameplay.Interactions.Interactors;
     using Eco.Gameplay.Items;
-    using Eco.Gameplay.Objects;
     using Eco.Gameplay.Players;
-    using Eco.Shared.Localization;
     using Eco.Shared.SharedTypes;
     using Eco.Shared.Items;
     using Eco.Simulation;
     using Eco.Simulation.Types;
-    using Eco.World;
     using Eco.World.Blocks;
     using Eco.Mods.Organisms;
-    using Eco.Gameplay.Utils;
     using Eco.Shared.Math;
-    using System.Linq;
-    using System.Collections.Generic;
-    using Eco.Shared.Utils;
-    using Eco.Gameplay.Systems.Messaging.Notifications;
-    using Eco.Simulation.Time;
 
     [Category("Hidden"), Tag("Logging")]
     public abstract partial class AxeItem : MeleeWeaponItem, IInteractor
@@ -46,7 +37,6 @@ namespace Eco.Mods.TechTree
         public override IDynamicValue   Tier                  => tier;
         public override IDynamicValue   SkilledRepairCost     => skilledRepairCost;
         public override Type            ExperienceSkill       => typeof(LoggingSkill);
-        public override ItemCategory    ItemCategory          => ItemCategory.Axe;
         
         //Only block an axe can interact with is tree debris block
         public override bool IsValidForInteraction(Item item) => item is LogItem;
@@ -54,7 +44,7 @@ namespace Eco.Mods.TechTree
         [Interaction(InteractionTrigger.LeftClick, tags: BlockTags.Choppable, DisallowedEnvVars = new[] {"felled" }, AnimationDriven = true, InteractionDistance = 1.5f)] //Dont allow felled trees to be chopped, they get 'sliced' with a different limiter (below interaction)
         [Interaction(InteractionTrigger.LeftClick, "Slice", requiredEnvVars: new[] { "slice" }, highlightColorHex: InteractionHexColors.Yellow, AnimationDriven = true, InteractionDistance = 1.5f)]
         public bool Chop(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
-        {   
+        {
             if (triggerInfo == InteractionTrigger.LeftClick)
             {
                 //Try delete tree debris with reduced XP multiplier
@@ -72,7 +62,7 @@ namespace Eco.Mods.TechTree
                         multiblockContext.ActionDescription = GameActionDescription.DoStr("clean up tree debris", "cleaning up tree debris");
                         multiblockContext.ExperiencePerAction *= 0.1f;
 
-                        if(player.User.Talentset.HasTalent(typeof(LoggingCleanupCrewTalent))) multiblockContext.CaloriesPerAction = 0; //Le village
+                        if (player.User.Talentset.HasTalent(typeof(LoggingCleanupCrewTalent))) multiblockContext.CaloriesPerAction = 0; //Le village
 
                         pack.DeleteBlock(multiblockContext);           //Add block deletion to the pack and try to perform it
 
