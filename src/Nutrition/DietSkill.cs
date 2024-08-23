@@ -23,6 +23,8 @@ namespace Village.Eco.Mods.Nutrition
     [Tag("Teachable")]
     public partial class DietSkill : Skill
     {
+        public override bool CanBeRefunded => false; //New abandon specialty since v11
+
         public static MultiplicativeStrategy MultiplicativeStrategy =
             new(new float[] {
                 1 + 19f,        //niveau 0 - 2000%
