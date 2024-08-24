@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <Folder Include="AutoGen\Item\" />
+    <Folder Include="AutoGen\Tools\" />
   </ItemGroup>
 
 </Project>
