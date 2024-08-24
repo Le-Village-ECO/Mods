@@ -1,5 +1,6 @@
 ﻿using Eco.Core.Items;
 using Eco.Gameplay.Items;
+using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
 using System;
@@ -15,7 +16,7 @@ namespace Village.Eco.Mods.Cooking
     [LocDescription("Un joli bol en bois.")]
     [Ecopedia("Items", "Products", createAsSubPage: true)]
     [Weight(100)]
-    public partial class WoodenBowl : Item
+    public partial class WoodenBowlItem : Item
     {
 
     }
