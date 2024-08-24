@@ -34,19 +34,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Industrial Generator", "Industrial Generator\Industrial Generator.csproj", "{8F6A6581-BB00-45E7-8E26-8E4F4E3E29AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server Config", "Server Config", "{8BBA4972-0A53-444B-A76E-EB97EBB718B2}"
-	ProjectSection(SolutionItems) = preProject
-		Balance.eco = Balance.eco
-		Civics.eco = Civics.eco
-		Difficulty.eco = Difficulty.eco
-		Disasters.eco = Disasters.eco
-		EcoSim.eco = EcoSim.eco
-		Features.eco = Features.eco
-		Localization.eco = Localization.eco
-		Network.eco = Network.eco
-		Rooms.eco = Rooms.eco
-		Settlements.eco = Settlements.eco
-		Users.eco = Users.eco
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traps", "Traps\Traps.csproj", "{07F6B5EF-3B44-4733-81E3-18859F95085C}"
 EndProject
@@ -82,6 +69,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Obsolete", "Obsolete", "{022639BF-F1D7-4D76-9949-76737A3A019E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Equilibrage", "Equilibrage\Equilibrage.csproj", "{BC212F40-145B-47E9-A41D-46B193870A79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cooking", "Cooking\Cooking.csproj", "{E44DF55D-97C7-4B5E-864E-75CB6CE43659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +170,10 @@ Global
 		{BC212F40-145B-47E9-A41D-46B193870A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC212F40-145B-47E9-A41D-46B193870A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC212F40-145B-47E9-A41D-46B193870A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44DF55D-97C7-4B5E-864E-75CB6CE43659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44DF55D-97C7-4B5E-864E-75CB6CE43659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44DF55D-97C7-4B5E-864E-75CB6CE43659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44DF55D-97C7-4B5E-864E-75CB6CE43659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
