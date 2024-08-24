@@ -18,25 +18,27 @@ namespace Village.Eco.Mods.Monnaie
         }
         public static void NewUserJoinedEvent(User user)
         {
-            //Récupération de la configuration
-            bool isVanille = LVConfigurePlugin.Config.MonnaieVanille;
-            float valeur = LVConfigurePlugin.Config.MonnaiePerso;
+            //On ne fait rien si la monnaie est laissé en Vanille
+            if (LVConfigurePlugin.Config.MonnaieVanille) return;
 
-            // Récupération de la devise personnelle du joueur
+            // Limite de monnaie perso
+            float defaultValue = LVConfigurePlugin.Config.MonnaiePerso;
+            // Récupération de la monnaie personnelle du joueur
             var currency = CurrencyManager.GetPlayerCurrency(user);
             // Récupération du compte personnel du joueur
             var account = user.BankAccount;
 
-            if (!isVanille)
+            //Si il y a une valeur de monnaie perso défini, elle remplacera la limite infini
+            if (defaultValue != 0)
             {
-                // Remise à 0 de ce compte pour cette devise
+                var holding = account.CurrencyHoldings.GetOrDefault(currency);
+                holding.SetVal(defaultValue);
+            }
+            else // Sinon on supprime la monnaie perso
+            {
                 account.CurrencyHoldings.Remove(currency);
-                
-                if (valeur != 0)
-                {
-                    // Ajout d'un montant de la devise personnelle dans le compte personel
-                    account.CurrencyHoldings.Add(currency, new CurrencyHolding() { Currency = currency, Val = valeur });
-                }
+                CurrencyManager.Registrar.Remove(currency);
+                CurrencyManager.UsernameToCurrency.Remove(user.Name);
             }
         }
 
