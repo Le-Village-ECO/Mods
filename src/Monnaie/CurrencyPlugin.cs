@@ -1,15 +1,11 @@
-﻿using Eco.Core.Plugins.Interfaces;
-using Eco.Core.Systems;
+﻿// Le Village - Gestion des crédits personnels du joueur à son entrée dans le monde
+// TODO - Possible de supprimer la device complétement dans le Registrar ? (voir CurrencyManager.cs / AddCurrency)
+
+using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
 using Eco.Gameplay.Economy;
 using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.Monnaie
@@ -35,8 +31,12 @@ namespace Village.Eco.Mods.Monnaie
             {
                 // Remise à 0 de ce compte pour cette devise
                 account.CurrencyHoldings.Remove(currency);
-                // Ajout d'un montant de la devise personnelle dans le compte personel
-                account.CurrencyHoldings.Add(currency, new CurrencyHolding() { Currency = currency, Val = valeur });
+                
+                if (valeur != 0)
+                {
+                    // Ajout d'un montant de la devise personnelle dans le compte personel
+                    account.CurrencyHoldings.Add(currency, new CurrencyHolding() { Currency = currency, Val = valeur });
+                }
             }
         }
 
