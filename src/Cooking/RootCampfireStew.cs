@@ -7,7 +7,7 @@ using Village.Eco.Mods.Cooking;
 
 namespace Eco.Mods.TechTree
 {
-    public partial class MeatyStewItem
+    public partial class RootCampfireStewItem
     {
         public override string OnUsed(Player player, ItemStack itemStack)
         {
@@ -20,7 +20,7 @@ namespace Eco.Mods.TechTree
             }
             return message;
         }
-        
+
         public string Consume(Player player) => OnUsed(player, player.User.Inventory.Toolbar.SelectedStack);
     }
 }
