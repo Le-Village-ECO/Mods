@@ -21,7 +21,7 @@ namespace Eco.Mods.TechTree
             }
             return message;
         }
-
+        
         public string Consume(Player player) => OnUsed(player, player.User.Inventory.Toolbar.SelectedStack);
     }
 }
