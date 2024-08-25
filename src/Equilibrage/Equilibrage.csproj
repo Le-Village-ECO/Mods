@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cooking\Cooking.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Eco.Core">
       <HintPath>..\..\dep\Eco.Core.dll</HintPath>
     </Reference>
