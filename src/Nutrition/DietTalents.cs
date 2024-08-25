@@ -26,7 +26,7 @@ namespace Village.Eco.Mods.Nutrition
 
     [Serialized]
     [LocDisplayName("Extension de sac : Diététique")]
-    [LocDescription("Ajoute 15kg au sac à dos")]
+    [LocDescription("Ajoute 15kg au sac à dos et améliore la pelle")]
     public partial class DietAddWeightTalentGroup : TalentGroup
     {
         public DietAddWeightTalentGroup()

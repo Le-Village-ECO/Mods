@@ -48,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Tools\" />
     <Folder Include="Unity\" />
   </ItemGroup>
 
