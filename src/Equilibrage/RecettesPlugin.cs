@@ -3,6 +3,7 @@ using Eco.Core.Utils;
 using Eco.Core.Utils.Logging;
 using Eco.Gameplay.Items.Recipes;
 using Eco.Mods.TechTree;
+using Eco.Shared.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,6 @@ namespace Equilibrage
             //Logger.Write($"[Equilibrage] - {CraftingComponent.AllRecipes.Count()} recipes in Component.");
 
             ReplaceRecipes();
-            ReplaceRecipes();
-            //ReplaceRecipes();
-            ReplaceRecipes();
-            //ReplaceRecipes();
 
             ////Différentes façon d'obtenir une ou des recettes/familles
             //var byRecipe = RecipeManager.GetRecipeByRecipeType(typeof(MortaredGraniteRecipe));
@@ -57,15 +54,10 @@ namespace Equilibrage
             var ingredients = GetIngredients(typeof(T));
             ingredients.AddRange(newIngredients);
         }
-        public static void RemoveIngredients<T>(params Type[] oldItems)
+        public static void RemoveIngredients<T>(params string[] ingredientNames)
         {
             var ingredients = GetIngredients(typeof(T));
-            ingredients.RemoveAll(ingre => oldItems.Any(item => ingre.Item.Type == item));
-        }
-        public static void RemoveIngredients<T>(params string[] oldTags)
-        {
-            var ingredients = GetIngredients(typeof(T));
-            ingredients.RemoveAll(ingre => oldTags.Any(tag => ingre.Tag.Name == tag));
+            ingredients.RemoveAll(i => ingredientNames.Any(n => i.InnerName == n));
         }
         public static void ReplaceAllIngredients<T>(params IngredientElement[] newIngredients)
         {
@@ -82,12 +74,12 @@ namespace Equilibrage
                 ingredients.Add(ingredient);
             }
         }
-        public static void RemoveIngredient<T>(params Type[] recipes)
+        public static void RemoveIngredient(string ingredientName, params Type[] recipes)
         {
             foreach (var recipe in recipes)
             {
                 var ingredients = GetIngredients(recipe);
-                ingredients.RemoveAll(ingre => ingre.Item.Type == recipe);
+                ingredients.RemoveAll(ingre => ingre.InnerName == ingredientName);
             }
         }
         
@@ -104,20 +96,27 @@ namespace Equilibrage
 
         public static void ReplaceRecipes()
         {
-            // On remplace la farine par un bol
-            RemoveIngredients<FishStewRecipe>(typeof(FlourItem));
-            AddIngredients<FishStewRecipe>(new IngredientElement(typeof(WoodenBowlItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)));
-
-            ReplaceAllIngredients<AcornPowderRecipe>(
+            var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent));
+            
+            // On remplace tous les ingredients d'une recette
+            ReplaceAllIngredients<FishStewRecipe>(
                 new IngredientElement(typeof(CharredFishItem), 4, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)),
-                new IngredientElement(typeof(FlourItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)),
+                //new IngredientElement(typeof(FlourItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)),
+                bowlIngredient,
                 new IngredientElement("Fat", 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)));
 
-            RemoveIngredient<FlourItem>(typeof(MeatyStewRecipe), typeof(WildStewRecipe));
-            AddIngredient(new IngredientElement(typeof(WoodenBowlItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)),
-                typeof(MeatyStewRecipe), typeof(WildStewRecipe));
+            // On remplace la farine par un bol sur une recette
+            // On peut aussi le faire sur plusieurs ingredients à la fois
+            RemoveIngredients<WildStewRecipe>(typeof(FlourItem).Name);
+            AddIngredients<WildStewRecipe>(bowlIngredient);
 
-            ReplicateIngredients<FishStewRecipe>(typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe));
+            // On remplace la farine par un bol sur plusieurs recettes à la fois
+            RemoveIngredient(typeof(FlourItem).Name, typeof(MeatyStewRecipe), typeof(WildStewRecipe));
+            AddIngredient(bowlIngredient,
+                typeof(MeatyStewRecipe), typeof(FieldCampfireStewRecipe), typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe));
+
+            // On peut aussi appliquer les ingredients d'une recette vers plusieurs autres recettes
+            //ReplicateIngredients<FishStewRecipe>(typeof(yyyRecipe), typeof(zzzRecipe));
         }
     }
 }
