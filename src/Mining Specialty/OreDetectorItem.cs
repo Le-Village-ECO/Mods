@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using Eco.Shared.Services;
+using Village.Eco.Mods.Core;
+using System.Diagnostics;
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
@@ -68,6 +70,7 @@ namespace Village.Eco.Mods.MiningSpecialty
 
             if (target.IsBlock && Durability > 0f)
             {
+                var perfCounter = Stopwatch.StartNew();
                 Vector3i? targetPos = target.BlockPosition.Value + (Vector3i)target.HitNormal;
                 WorldRange range = WorldRange.SurroundingSpace(targetPos.Value, SCAN_RANGE);
                 Dictionary<Type, int> ores = new();
@@ -87,32 +90,13 @@ namespace Village.Eco.Mods.MiningSpecialty
                         else if (distanceToBlock < dst) ores[creatingItemType] = distanceToBlock;
                     }
                 }
-
-                //Now we have list of ore type at it's closest position and can display to player how we want
-                LocStringBuilder text = new();
-                foreach (KeyValuePair<Type, int> oreAtDst in ores)
-                {
-                    int dst = oreAtDst.Value;
-                    string proximityString = dst switch
-                    {
-                        <= 1 => "Bouillant", //"In front of you"
-                        <= 2 => "Très chaud", //"So close"
-                        <= 4 => "Chaud", //"Getting close"
-                        <= 7 => "Tiède", //"Lukewarm"
-                        <= 10 => "Froid", //"Cold"
-                        <= 15 => "Très froid", //"Colder"
-                        <= SCAN_RANGE => "Glacial", //"Very cold"
-                        > SCAN_RANGE => "Hors de portée", //"Out of range"
-                    };
-                    text.AppendLineLoc($"{Get(oreAtDst.Key)?.MarkedUpName} : {proximityString} (distance {dst})");
-                }
-
-                // Display info to player
-                //player.LargeInfoBox(Localizer.Do($"{DisplayName} {target.BlockPosition}"), text.ToLocString());
-                player.MsgLocStr(text.ToLocString(), NotificationStyle.InfoBox);
+                perfCounter.Stop();
+                Logger.SendLog(Criticity.Info, "MiningSpeciality", $"Ore scanning took {perfCounter.ElapsedMilliseconds}ms");
 
                 //Calories consumption
                 //this.BurnCaloriesNow(player);
+
+                DisplayMessage(player, ores);
 
                 return;
             }
@@ -123,5 +107,7 @@ namespace Village.Eco.Mods.MiningSpecialty
                 return;
             }
         }
+
+        public abstract void DisplayMessage(Player player, Dictionary<Type, int> ores);
     }
 }

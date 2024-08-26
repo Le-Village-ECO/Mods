@@ -4,15 +4,20 @@ using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Interactions.Interactors;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
+using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
+using Eco.Shared.Services;
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
+
+using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
@@ -76,5 +81,26 @@ namespace Village.Eco.Mods.MiningSpecialty
 
         //Tier
         public override IDynamicValue Tier => new ConstantValue(1);
+
+        public override void DisplayMessage(Player player, Dictionary<Type, int> ores)
+        {
+            var closestDistance = ores.Count > 0 ? ores.Values.Min() : SCAN_RANGE + 1;
+            string proximityString = closestDistance switch
+            {
+                <= 1 => "Bouillant", //"In front of you"
+                <= 2 => "Très chaud", //"So close"
+                <= 4 => "Chaud", //"Getting close"
+                <= 7 => "Tiède", //"Lukewarm"
+                <= 10 => "Froid", //"Cold"
+                <= 15 => "Très froid", //"Colder"
+                <= SCAN_RANGE => "Glacial", //"Very cold"
+                > SCAN_RANGE => "Hors de portée", //"Out of range"
+            };
+
+            // Display info to player
+            LocStringBuilder text = new();
+            text.AppendLineLoc($"Or : {proximityString} (distance {closestDistance})");
+            player.MsgLocStr(text.ToLocString(), NotificationStyle.InfoBox);
+        }
     }
 }
