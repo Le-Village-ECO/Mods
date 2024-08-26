@@ -8,11 +8,11 @@ using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Village.Eco.Mods.Core;
-
+using System.Linq;
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
@@ -21,7 +21,7 @@ namespace Village.Eco.Mods.MiningSpecialty
     [Ecopedia("Items", "Tools", subPageName: "Gold Detector Item")]
     public partial class GoldDetectorRecipe : RecipeFamily
     {
-        public GoldDetectorRecipe() 
+        public GoldDetectorRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
@@ -30,27 +30,28 @@ namespace Village.Eco.Mods.MiningSpecialty
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(IronBarItem), 4, typeof(BlacksmithSkill)),
-                    new IngredientElement(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
-                    new IngredientElement("WoodBoard", 4, typeof(BlacksmithSkill)), //noloc
+                    new(typeof(IronBarItem), 4, typeof(BlacksmithSkill)),
+                    new(typeof(LeatherHideItem), 2, typeof(BlacksmithSkill)),
+                    new("WoodBoard", 4, typeof(BlacksmithSkill)), //noloc
                 },
 
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<GoldDetectorItem>()
                 });
-            this.Recipes = new List<Recipe> { recipe };
-            
-            this.ExperienceOnCraft = 0.5f;
-            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(GoldDetectorItem), start: 0.5f, skillType: typeof(BlacksmithSkill));
 
-            this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Gold Detector Item"), recipeType: typeof(IronRockDrillRecipe));
-            this.ModsPostInitialize();
+            Recipes = new List<Recipe> { recipe };
+            ExperienceOnCraft = 0.5f;
+            LaborInCalories = CreateLaborInCaloriesValue(250, typeof(BlacksmithSkill));
+            CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(GoldDetectorItem), start: 0.5f, skillType: typeof(BlacksmithSkill));
+
+            ModsPreInitialize();
+            Initialize(displayText: Localizer.DoStr("Gold Detector Item"), recipeType: typeof(IronRockDrillRecipe));
+            ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(GrindstoneObject), recipe: this);
         }
+
         partial void ModsPreInitialize();
         partial void ModsPostInitialize();
     }
@@ -60,19 +61,20 @@ namespace Village.Eco.Mods.MiningSpecialty
     [LocDescription("Indique la proximité de filon d'or (chaud-froid)")]
     [Category("Tools"), Tag("Tool"), Weight(1000)]
     [Tier(1)]
-    //[RequiresTalent(typeof(LoggingToolEfficiencyTalent))]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     public partial class GoldDetectorItem : OreDetectorItem, IInteractor
     {
+        private HashSet<Type> oreTypes = new() { typeof(GoldBarStacked1Block), typeof(GoldBarStacked2Block), typeof(GoldBarStacked3Block), typeof(GoldBarStacked4Block) };
+        public override HashSet<Type> OreTypes => oreTypes;
+
         //Calories
         private static IDynamicValue caloriesBurn = new MultiDynamicValue(
-            MultiDynamicOps.Multiply, 
-            new TalentModifiedValue(typeof(GoldDetectorItem), typeof(MiningToolEfficiencyTalent)), 
+            MultiDynamicOps.Multiply,
+            new TalentModifiedValue(typeof(GoldDetectorItem), typeof(MiningToolEfficiencyTalent)),
             CreateCalorieValue(15, typeof(MiningSkill), typeof(GoldDetectorItem)));
         public override IDynamicValue CaloriesBurn => caloriesBurn;
+
         //Tier
-        private static IDynamicValue tier = new ConstantValue(1);
-
-
+        public override IDynamicValue Tier => new ConstantValue(1);
     }
 }

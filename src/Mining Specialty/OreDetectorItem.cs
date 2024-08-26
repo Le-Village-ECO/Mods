@@ -23,21 +23,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using Eco.Shared.Services;
-using Eco.Gameplay.Systems.Messaging.Notifications;
 
 namespace Village.Eco.Mods.MiningSpecialty
 {
     [Serialized]
-	[LocDisplayName("Ore detector")]
-	[LocDescription("Detector tool which can spot ore proximity")]
+    [LocDisplayName("Ore detector")]
+    [LocDescription("Detector tool which can spot ore proximity")]
     [Weight(0)]
     [Ecopedia("Items", "Tools")]
     [Category("Hidden")]
-	public abstract partial class OreDetectorItem : ToolItem, IInteractor
-	{
-		public const int SCAN_RANGE = 30; //Max range for detection
-		//public override ItemCategory ItemCategory => ItemCategory.Drill;
-        //public abstract Block Block { get; }  //Get the Ore from item
+    public abstract partial class OreDetectorItem : ToolItem, IInteractor
+    {
+        public const int SCAN_RANGE = 30; //Max range for detection
+                                          //public override ItemCategory ItemCategory => ItemCategory.Drill;
+                                          //public abstract Block Block { get; }  //Get the Ore from item
+
+        public abstract HashSet<Type> OreTypes { get; }
 
         // Calories burn
         private static SkillModifiedValue caloriesBurn = CreateCalorieValue(20, typeof(MiningSkill), typeof(OreDetectorItem));
@@ -55,55 +56,43 @@ namespace Village.Eco.Mods.MiningSpecialty
         public override int FullRepairAmount { get { return 1; } }
 		*/
 
-        static OreDetectorItem() { }
-
         [Interaction(InteractionTrigger.InteractKey, overrideDescription: "Analyze area", animationDriven: false, interactionDistance: 3, authRequired: AccessType.ConsumerAccess)]
-		public void Analyze(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
-		{
+        public void Analyze(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
+        {
             // Controle du talent du joueur
-            bool hasTalent = player.User.Talentset.HasTalent(typeof(MiningGoldRusherTalent));
-            if (!hasTalent)
+            if (player.User.Talentset.HasTalent<MiningGoldRusherTalent>() is false)
             {
-                //NotificationManager.ServerMessageToAllLoc($"Has Talent? {hasTalent}");
                 player.MsgLocStr($"Talent {TextLoc.BoldLocStr("Chercheur d'or : Minage")} requis pour utiliser L'objet", NotificationStyle.Error);
                 return;
             }
 
-            if (target.IsBlock && this.Durability > 0f)
+            if (target.IsBlock && Durability > 0f)
             {
-				Vector3i? targetPos = target.BlockPosition.Value + (Vector3i)target.HitNormal;
-				WorldRange range = WorldRange.SurroundingSpace(targetPos.Value, SCAN_RANGE);
-				HashSet<Type> oreTypes = ItemUtils.GetItemsByTag("Ore");
-				Dictionary<Type, int> ores = new Dictionary<Type, int>();
-				foreach (Vector3i pos in range.XYZIterInc())
-				{
-					Block block = World.GetBlock(pos);
-					if (block is null or EmptyBlock) continue;
-					Type creatingItemType = block is IRepresentsItem representsItem ? representsItem.RepresentedItemType : BlockItem.CreatingItem(block.GetType())?.GetType();
-					if (creatingItemType is not null && oreTypes.Contains(creatingItemType))
-					{
-						int distanceToBlock = (int) Math.Round(Vector3.Distance(targetPos.Value, pos));
-						if (distanceToBlock > SCAN_RANGE) continue;
-						if (ores.TryGetValue(creatingItemType, out int dst))
-						{
-							if(distanceToBlock < dst)
-							{
-								ores[creatingItemType] = distanceToBlock;
-							}
-						}
-						else
-						{
-							ores.Add(creatingItemType, distanceToBlock);
-						}
-					}
-				}
+                Vector3i? targetPos = target.BlockPosition.Value + (Vector3i)target.HitNormal;
+                WorldRange range = WorldRange.SurroundingSpace(targetPos.Value, SCAN_RANGE);
+                Dictionary<Type, int> ores = new();
+                foreach (Vector3i pos in range.XYZIterInc())
+                {
+                    Block block = World.GetBlock(pos);
+                    if (block is null or EmptyBlock) continue;
 
-				//Now we have list of ore type at it's closest position and can display to player how we want
-				LocStringBuilder text = new LocStringBuilder();
+                    Type creatingItemType = block is IRepresentsItem representsItem
+                        ? representsItem.RepresentedItemType : BlockItem.CreatingItem(block.GetType())?.GetType();
+                    if (creatingItemType is not null && OreTypes.Contains(creatingItemType))
+                    {
+                        int distanceToBlock = (int)Math.Round(Vector3.Distance(targetPos.Value, pos));
+                        if (distanceToBlock > SCAN_RANGE) continue;
 
-				foreach(KeyValuePair<Type, int> oreAtDst in ores)
-				{
-					int dst = oreAtDst.Value;
+                        if (ores.TryGetValue(creatingItemType, out int dst) is false) ores.Add(creatingItemType, distanceToBlock);
+                        else if (distanceToBlock < dst) ores[creatingItemType] = distanceToBlock;
+                    }
+                }
+
+                //Now we have list of ore type at it's closest position and can display to player how we want
+                LocStringBuilder text = new();
+                foreach (KeyValuePair<Type, int> oreAtDst in ores)
+                {
+                    int dst = oreAtDst.Value;
                     string proximityString = dst switch
                     {
                         <= 1 => "Bouillant", //"In front of you"
@@ -115,26 +104,23 @@ namespace Village.Eco.Mods.MiningSpecialty
                         <= SCAN_RANGE => "Glacial", //"Very cold"
                         > SCAN_RANGE => "Hors de portée", //"Out of range"
                     };
-					text.AppendLineLoc($"{Get(oreAtDst.Key)?.MarkedUpName} : {proximityString} (distance {dst})");
+                    text.AppendLineLoc($"{Get(oreAtDst.Key)?.MarkedUpName} : {proximityString} (distance {dst})");
                 }
+
                 // Display info to player
                 //player.LargeInfoBox(Localizer.Do($"{DisplayName} {target.BlockPosition}"), text.ToLocString());
                 player.MsgLocStr(text.ToLocString(), NotificationStyle.InfoBox);
-                
-				//Calories consumption
-				//this.BurnCaloriesNow(player);
-
-                return;
-			}
-
-            if (this.Durability <= 0f) 
-			{ 
-				player.ErrorLoc($"L'outil est cassé. Il faut le réparer.");
 
                 //Calories consumption
                 //this.BurnCaloriesNow(player);
 
-				return;
+                return;
+            }
+
+            if (Durability <= 0f)
+            {
+                player.ErrorLoc($"L'outil est cassé. Il faut le réparer.");
+                return;
             }
         }
     }
