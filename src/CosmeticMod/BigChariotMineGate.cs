@@ -53,7 +53,7 @@
     public partial class BigChariotMineGateObject : WorldObject, IRepresentsItem
     {
 
-        public virtual Type RepresentedItemType => typeof(AdornedAshlarShaleTableItem);
+        public virtual Type RepresentedItemType => typeof(BigChariotMineGateItem);
         public override LocString DisplayName => Localizer.DoStr("Grande entrée de mine pour chariot");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 

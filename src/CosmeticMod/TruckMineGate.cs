@@ -53,7 +53,7 @@
     public partial class TruckMineGateObject : WorldObject, IRepresentsItem
     {
 
-        public virtual Type RepresentedItemType => typeof(AdornedAshlarShaleTableItem);
+        public virtual Type RepresentedItemType => typeof(TruckMineGateItem);
         public override LocString DisplayName => Localizer.DoStr("Entrée de mine pour camion");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 

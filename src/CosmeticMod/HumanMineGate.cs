@@ -53,7 +53,7 @@
     public partial class HumanMineGateObject : WorldObject, IRepresentsItem
     {
 
-    public virtual Type RepresentedItemType => typeof(AdornedAshlarShaleTableItem);
+    public virtual Type RepresentedItemType => typeof(HumanMineGateItem);
         public override LocString DisplayName => Localizer.DoStr("Entrée de mine pour humain");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 
