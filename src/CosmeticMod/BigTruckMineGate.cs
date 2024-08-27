@@ -60,7 +60,10 @@
         static BigTruckMineGateObject()
 
         {
-            WorldObject.AddOccupancy<BigTruckMineGateObject>(new List<BlockOccupancy>(){
+            var BlockOccupancyList = new List<BlockOccupancy>
+
+            {
+
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
             new BlockOccupancy(new Vector3i(0, 2, 0)),
@@ -73,7 +76,9 @@
             new BlockOccupancy(new Vector3i(2, 1, 0)),
             new BlockOccupancy(new Vector3i(2, 2, 0)),
             new BlockOccupancy(new Vector3i(2, 3, 0)),
-            });
+
+            };
+            AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
 
 
         }

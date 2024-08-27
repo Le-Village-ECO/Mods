@@ -60,11 +60,16 @@
         static HumanMineGateObject()
 
         {
-            WorldObject.AddOccupancy<HumanMineGateObject>(new List<BlockOccupancy>(){
-            new BlockOccupancy(new Vector3i(0, 0, 0)),
-            new BlockOccupancy(new Vector3i(0, 1, 0)),
-            });
+            var BlockOccupancyList = new List<BlockOccupancy>
+
+            {
+                new BlockOccupancy(new Vector3i(0, 0, 0)),
+                new BlockOccupancy(new Vector3i(0, 1, 0)),
+            };
+
+            AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
         }
+
 
 
 

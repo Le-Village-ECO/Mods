@@ -58,16 +58,20 @@
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 
         static TruckMineGateObject()
-
         {
-            WorldObject.AddOccupancy<TruckMineGateObject>(new List<BlockOccupancy>(){
+            var BlockOccupancyList = new List<BlockOccupancy>
+
+            {
+            
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
             new BlockOccupancy(new Vector3i(0, 2, 0)),
             new BlockOccupancy(new Vector3i(1, 0, 0)),
             new BlockOccupancy(new Vector3i(1, 1, 0)),
             new BlockOccupancy(new Vector3i(1, 2, 0)),
-            });
+
+            };
+                        AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
 
 
         }
