@@ -42,6 +42,7 @@
     using Eco.Gameplay.Components.Storage;
     using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
     using Eco.Gameplay.Items.Recipes;
+    using System.Reflection;
 
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
@@ -67,7 +68,7 @@
                 new BlockOccupancy(new Vector3i(0, 1, 0)),
             };
 
-            AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
+            AddOccupancy(MethodBase.GetCurrentMethod().DeclaringType, BlockOccupancyList);
         }
 
 

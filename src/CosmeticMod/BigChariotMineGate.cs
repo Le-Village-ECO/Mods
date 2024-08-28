@@ -70,7 +70,7 @@
 
             };
 
-            AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
+            AddOccupancy<BigChariotMineGateObject>(BlockOccupancyList);
 
         }
 

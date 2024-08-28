@@ -59,19 +59,15 @@
 
         static TruckMineGateObject()
         {
-            var BlockOccupancyList = new List<BlockOccupancy>
+            AddOccupancy<TruckMineGateObject>(new List<BlockOccupancy>(){
+            new (new Vector3i(0, 0, 0)),
+            new (new Vector3i(0, 1, 0)),
+            new (new Vector3i(0, 2, 0)),
+            new (new Vector3i(1, 0, 0)),
+            new (new Vector3i(1, 1, 0)),
+            new (new Vector3i(1, 2, 0)),
+            });
 
-            {
-            
-            new BlockOccupancy(new Vector3i(0, 0, 0)),
-            new BlockOccupancy(new Vector3i(0, 1, 0)),
-            new BlockOccupancy(new Vector3i(0, 2, 0)),
-            new BlockOccupancy(new Vector3i(1, 0, 0)),
-            new BlockOccupancy(new Vector3i(1, 1, 0)),
-            new BlockOccupancy(new Vector3i(1, 2, 0)),
-
-            };
-                        AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
 
 
         }

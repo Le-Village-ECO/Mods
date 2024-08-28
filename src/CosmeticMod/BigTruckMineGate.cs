@@ -78,7 +78,7 @@
             new BlockOccupancy(new Vector3i(2, 3, 0)),
 
             };
-            AddOccupancy<HumanMineGateObject>(BlockOccupancyList);
+            AddOccupancy<BigTruckMineGateObject>(BlockOccupancyList);
 
 
         }
