@@ -23,17 +23,7 @@ namespace Equilibrage
 
         public void Initialize(TimedTask timer)
         {
-            //Logger.Write($"[Equilibrage] - {RecipeManager.AllRecipes.Length} recipes in Manager");
-            //Logger.Write($"[Equilibrage] - {RecipeManager.AllRecipeFamilies.Length} recipe families in Manager");
-            //Logger.Write($"[Equilibrage] - {RecipeManager.AllRecipeFamilies.SelectMany(rf => rf.Recipes).Count()} recipes in families in Manager");
-            //Logger.Write($"[Equilibrage] - {CraftingComponent.AllRecipes.Count()} recipes in Component.");
-
-            ReplaceRecipes();
-
-            ////Différentes façon d'obtenir une ou des recettes/familles
-            //var byRecipe = RecipeManager.GetRecipeByRecipeType(typeof(MortaredGraniteRecipe));
-            //var byItem = RecipeManager.GetRecipeFamiliesForItem(typeof(MeatyStewItem));
-            //var byFamily = RecipeManager.GetRecipeFamily<FishStewRecipe>();
+            ReplaceIngredients();
 
             ////Pour logguer toutes les recettes d'une catégorie
             //foreach (var recipe in RecipeManager.AllRecipes) Logger.Write($"[Equilibrage] - {recipe.Name}");
@@ -82,7 +72,7 @@ namespace Equilibrage
                 ingredients.RemoveAll(ingre => ingre.InnerName == ingredientName);
             }
         }
-        
+
         public static void ReplicateIngredients<T>(params Type[] recipes)
         {
             var oldIngredients = GetIngredients(typeof(T));
@@ -94,10 +84,10 @@ namespace Equilibrage
             }
         }
 
-        public static void ReplaceRecipes()
+        public static void ReplaceIngredients()
         {
             var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent));
-            
+
             // On remplace tous les ingredients d'une recette
             ReplaceAllIngredients<FishStewRecipe>(
                 new IngredientElement(typeof(CharredFishItem), 4, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent)),
@@ -116,7 +106,7 @@ namespace Equilibrage
                 typeof(MeatyStewRecipe), typeof(FieldCampfireStewRecipe), typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe));
 
             // On peut aussi appliquer les ingredients d'une recette vers plusieurs autres recettes
-            //ReplicateIngredients<FishStewRecipe>(typeof(yyyRecipe), typeof(zzzRecipe));
+            //ReplicateIngredients<xxxRecipe>(typeof(yyyRecipe), typeof(zzzRecipe));
         }
     }
 }
