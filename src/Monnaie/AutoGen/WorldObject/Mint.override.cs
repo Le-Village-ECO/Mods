@@ -53,10 +53,10 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [RequireComponent(typeof(PaintableComponent))] //TODO: Fix not all the object have this component
-    [RequireComponent(typeof(JurisdictionComponent))]
+    [RequireComponent(typeof(JurisdictionComponent))] // Ajout LV pour necessiter une ville
     [RequireRoomContainment]
     [RequireRoomVolume(18)]
-    [RequireRoomMaterialTier(2)]
+    [RequireRoomMaterialTier(2)] // Modification LV pour demander seulement du T2
     [Tag("Usable")]
     [Ecopedia("Work Stations", "Economic", subPageName: "Mint Item")]
     public partial class MintObject : WorldObject, IRepresentsItem
@@ -114,6 +114,7 @@ namespace Eco.Mods.TechTree
                 // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
+                    //Modification LV pour simplification de la recette
                     new IngredientElement("HewnLog", 15,typeof(Skill)),
                     new IngredientElement("MortaredStone", 15,typeof(Skill)),
                 },
@@ -129,10 +130,10 @@ namespace Eco.Mods.TechTree
             this.ExperienceOnCraft = 20; // Defines how much experience is gained when crafted.
 
             // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(900, typeof(BlacksmithSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(900); // Modification LV pour ne pas demander Forgeron
 
             // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(5);
+            this.CraftMinutes = CreateCraftTimeValue(5); // Modification LV pour ne pas demander Forgeron
 
             // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Mint"
             this.ModsPreInitialize();
@@ -140,7 +141,7 @@ namespace Eco.Mods.TechTree
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(SettlementCraftingTableObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(SettlementCraftingTableObject), recipe: this); // Modification LV pour ne pas demander la Table de Forgeron
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
