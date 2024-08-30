@@ -1058,12 +1058,12 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(RoomRequirementsComponent))]
     [Tag("Usable")]
-    [Ecopedia("Housing Objects", "Smiley", subPageName: "CalmePlat")]
+    [Ecopedia("Housing Objects", "Smiley", subPageName: "Tête-Bêche")]
     [Tag(nameof(SurfaceTags.HasTableSurface))]
     public partial class Smiley13Object : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(Smiley13Item);
-        public override LocString DisplayName => Localizer.DoStr("CalmePlat");
+        public override LocString DisplayName => Localizer.DoStr("Tête-Bêche");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
         protected override void Initialize()
@@ -1077,8 +1077,8 @@ namespace Eco.Mods.TechTree
     }
 
     [Serialized]
-    [LocDisplayName("CalmePlat")]
-    [LocDescription("Le visage d'un pro du zen, même face à une montagne de boulot.")]
+    [LocDisplayName("Tête-Bêche")]
+    [LocDescription("Le smiley qui voit le monde à l'envers... ou est-ce toi qui l'as retourné ?")]
     [Ecopedia("Housing Objects", "Smiley", createAsSubPage: true)]
     [Tag("Housing")]
     [Weight(150)]
@@ -1091,15 +1091,15 @@ namespace Eco.Mods.TechTree
     }
 
 
-    [Ecopedia("Housing Objects", "Smiley", subPageName: "CalmePlat")]
+    [Ecopedia("Housing Objects", "Smiley", subPageName: "Tête-Bêche")]
     public partial class Smiley13Recipe : RecipeFamily
     {
         public Smiley13Recipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "CalmePlat",
-                displayName: Localizer.DoStr("CalmePlat"),
+                name: "Tête-Bêche",
+                displayName: Localizer.DoStr("Tête-Bêche"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -1118,7 +1118,7 @@ namespace Eco.Mods.TechTree
             this.CraftMinutes = CreateCraftTimeValue(0.5f);
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("CalmePlat"), recipeType: typeof(Smiley13Recipe));
+            this.Initialize(displayText: Localizer.DoStr("Tête-Bêche"), recipeType: typeof(Smiley13Recipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(SmileyTableObject), recipe: this);
@@ -2110,9 +2110,7 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("HewnLog", 15,typeof(Skill)), 
-                    new IngredientElement(typeof(IronBarItem), 2, typeof(Skill)), 
-                    new IngredientElement(typeof (NailItem), 20, typeof(Skill)), 
+                    new IngredientElement("HewnLog", 20,typeof(Skill)), 
                 },
 
                 items: new List<CraftingElement>
