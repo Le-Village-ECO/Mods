@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enseigne", "Enseigne\Enseig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacteurMod", "FacteurMod\FacteurMod.csproj", "{A58427DC-A46D-4C36-8BAE-5BCE37C2AD31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiseasesMod", "DiseasesMod\DiseasesMod.csproj", "{7268D806-4F13-4F27-9ACF-EA5F1897BA86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diseases", "DiseasesMod\Diseases.csproj", "{7268D806-4F13-4F27-9ACF-EA5F1897BA86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleTestMod", "VehicleTestMod\VehicleTestMod.csproj", "{4AF958C6-39A4-4BDC-A098-51C0E2470683}"
 EndProject
@@ -72,7 +72,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Equilibrage", "Equilibrage\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cooking", "Cooking\Cooking.csproj", "{E44DF55D-97C7-4B5E-864E-75CB6CE43659}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmeticMod", "CosmeticMod\CosmeticMod.csproj", "{51396A45-1BDC-4DFE-AD90-4675F22321DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmeticMod", "CosmeticMod\CosmeticMod.csproj", "{51396A45-1BDC-4DFE-AD90-4675F22321DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

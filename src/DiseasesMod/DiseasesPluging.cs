@@ -1,24 +1,29 @@
 ﻿using Eco.Core.Plugins.Interfaces;
+using Eco.Core.Utils;
 using Eco.Gameplay.Players;
+using Eco.Shared.Localization;
 
-namespace Village.Eco.Mods.HousingMod
+namespace Village.Eco.Mods.Diseases
 {
-    public class HousingPlugin : IModInit
+    public class DiseasesPlugin : IInitializablePlugin, IModKitPlugin
     {
-        public static void PostInitialize()
+        public void Initialize(TimedTask timer)
         {
             UserManager.NewUserJoinedEvent.Add(user =>
             {
-                user.Stomach.ChangedEvent.Add();
+                user.Stomach.ChangedEvent.Add(Disease);
             });
         }
 
-        public HousingPlugin() { }
+        public DiseasesPlugin() { }
 
         public static void Disease(User user) 
         {
 
         }
 
+        public string GetCategory() => "LeVillageMods";
+        public override string ToString() => Localizer.DoStr("Diseases Plugin");
+        public string GetStatus() => "Active";
     }
 }
