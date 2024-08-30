@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
+// Le Village - Ajout talent qui augmente la taille de la pelle
 
 namespace Eco.Mods.TechTree
 {
@@ -52,11 +53,11 @@ namespace Eco.Mods.TechTree
             // Fallback if not enough room in carrying stack
             var carry = player.User.Carrying;
 
-            //Apply talent to MaxTake
+            // Le village - Apply talent to MaxTake
             int modifiedMaxTake = MaxTake;
             if (player.User.Talentset.HasTalent<DietAddWeightTalent>() && MaxTake < 8) modifiedMaxTake += 2;
 
-            if (modifiedMaxTake > 0 && carry.Quantity >= modifiedMaxTake)
+            if (modifiedMaxTake > 0 && carry.Quantity >= modifiedMaxTake) // Le Village - modification du IF pour intégrer le talent Diet
             {
                 player.ErrorLoc($"Can't dig while carrying {player.User.Carrying.UILink()}.");
                 return false;
