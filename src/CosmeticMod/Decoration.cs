@@ -53,5 +53,7 @@
         public override LocString DisplayNamePlural => Localizer.DoStr("Decoration");
     }
 
+}
+
 
 
