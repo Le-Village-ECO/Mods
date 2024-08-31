@@ -47,7 +47,7 @@
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
-    [RequireComponent(typeof(PaintableComponent))] //TODO: Fix not all the object have this component
+    [RequireComponent(typeof(PaintableComponent))] 
     [Tag("Decoration")]
     [Ecopedia("Decoration", "Décoration standart", subPageName: "Niche pour chien")]
     public partial class DogKennelObject : WorldObject, IRepresentsItem
@@ -76,9 +76,7 @@
 
 
 
-        /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
-        /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
         partial void ModsPostInitialize();
     }
 
@@ -87,7 +85,7 @@
     [LocDescription("Une petite niche pour chien ... ou pour celui qui veut.")]
     [Ecopedia("Decoration", "Décoration standart", createAsSubPage: true)]
     [Tag("Decoration")]
-    [Weight(2000)] // Defines how heavy AdornedAshlarShaleTable is.
+    [Weight(2000)] 
     public partial class DogKennelItem : WorldObjectItem<DogKennelObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
@@ -95,15 +93,6 @@
 
 
     }
-
-    /// <summary>
-    /// <para>Server side recipe definition for "AdornedAshlarShaleTable".</para>
-    /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
-    /// </summary>
-    /// <remarks>
-    /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
-    /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
-    /// </remarks>
     [RequiresSkill(typeof(CarpentrySkill), 2)]
     [ForceCreateView]
     [Ecopedia("Decoration", "Décoration standart", subPageName: "Niche pour chien")]
@@ -114,28 +103,20 @@
             this.Init(
                 name: "Niche pour chien",  //noloc
                 displayName: Localizer.DoStr("Niche pour chien"),
-
-                // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
-                // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
                     new IngredientElement("Wood", 6, typeof(CarpenterSkill), typeof(CarpentryLavishResourcesTalent)),
                 },
 
-                // Define our recipe output items.
-                // For every output item there needs to be one CraftingElement entry with the type of the final item and the amount
-                // to create.
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<DogKennelItem>()
                 });
-            // Perform post initialization steps for user mods and initialize our recipe instance as a tag product with the crafting system
             this.ModsPostInitialize();
             CraftingComponent.AddTagProduct(typeof(CarpentryTableObject), typeof(DogKennelRecipe), this);
         }
 
 
-        /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
         partial void ModsPostInitialize();
     }
 }

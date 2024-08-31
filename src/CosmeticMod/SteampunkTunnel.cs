@@ -117,9 +117,7 @@
             this.ModsPostInitialize();
         }
 
-        /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
-        /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
         partial void ModsPostInitialize();
     }
 
@@ -148,45 +146,32 @@
             recipe.Init(
                 name: "TunnelSteamPunk",  //noloc
                 displayName: Localizer.DoStr("Tunnel SteamPunk"),
-
-                // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
-                // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
                     new IngredientElement(typeof(IronBarItem), 12, typeof(MechanicsSkill), typeof(MechanicsLavishResourcesTalent)),
                     new IngredientElement(typeof(CopperWiringItem), 2, typeof(MechanicsSkill), typeof(MechanicsLavishResourcesTalent)),
                     new IngredientElement(typeof(IronPlateItem), 4, typeof(MechanicsSkill), typeof(MechanicsLavishResourcesTalent)),
                 },
-
-                // Define our recipe output items.
-                // For every output item there needs to be one CraftingElement entry with the type of the final item and the amount
-                // to create.
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<TunnelSteamPunkItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 4; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 4;
 
-            // Defines the amount of labor required and the required skill to add labor
             this.LaborInCalories = CreateLaborInCaloriesValue(480, typeof(MechanicsSkill));
 
-            // Defines our crafting time for the recipe
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(TunnelSteamPunkRecipe), start: 5, skillType: typeof(MechanicsSkill), typeof(MechanicsFocusedSpeedTalent), typeof(MechanicsParallelSpeedTalent));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Lighthouse Lamp"
             this.ModsPreInitialize();
             this.Initialize(displayText: Localizer.DoStr("Tunnel SteamPunk"), recipeType: typeof(TunnelSteamPunkRecipe));
             this.ModsPostInitialize();
 
-            // Register our RecipeFamily instance with the crafting system so it can be crafted.
             CraftingComponent.AddRecipe(tableType: typeof(MachinistTableObject), recipe: this);
         }
 
-        /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
         partial void ModsPreInitialize();
 
-        /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
         partial void ModsPostInitialize();
     }
 }
