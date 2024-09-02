@@ -24,8 +24,8 @@
             base.PostInitialize();
             
             var storage = this.GetComponent<PublicStorageComponent>();
-            storage.Initialize(DefaultDim.x * DefaultDim.z);
-            storage.Storage.AddInvRestriction(new StockpileStackRestriction(DefaultDim.y)); // limit stack sizes to the y-height of the stockpile
+            storage.Initialize(20);
+            //storage.Storage.AddInvRestriction(new StockpileStackRestriction(DefaultDim.y)); // limit stack sizes to the y-height of the stockpile
         }
     }
 }
