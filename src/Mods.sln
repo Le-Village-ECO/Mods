@@ -35,12 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Industrial Generator", "Ind
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server Config", "Server Config", "{8BBA4972-0A53-444B-A76E-EB97EBB718B2}"
 	ProjectSection(SolutionItems) = preProject
-		Config\Balance.eco = Config\Balance.eco
 		Config\Civics.eco = Config\Civics.eco
 		Config\Difficulty.eco = Config\Difficulty.eco
 		Config\Disasters.eco = Config\Disasters.eco
 		Config\EcoSim.eco = Config\EcoSim.eco
-		Config\Features.eco = Config\Features.eco
 		Config\Localization.eco = Config\Localization.eco
 		Config\Network.eco = Config\Network.eco
 		Config\Rooms.eco = Config\Rooms.eco

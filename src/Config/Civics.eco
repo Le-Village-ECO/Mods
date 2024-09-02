@@ -11,7 +11,6 @@
   "AllowInvalidCivicContainerTimeInMinutes": 60.0,
   "RecurringTransferFrequencyInMinutes": 30.0,
   "AllowLawsToPreventLoginOrPlay": false,
-  "EnableAdminUI": false,
   "BasicElectionSettings": {
     "MaximumElectionHours": 24.0,
     "MinimumPercentOfEligibleVotersRequired": 10.0,
@@ -20,7 +19,10 @@
     "PercentOfAllVotersToInstantWin": 51.0,
     "PercentOfAllVotersToInstantLose": 51.0,
     "AnonymousVoting": true,
-    "TwitchVoteWeight": 0.1,
+    "TwitchSubscriberVoteWeight": 0.2,
+    "TwitchNonSubscriberVoteWeight": 0.1,
     "MaxPercentTwitchVotes": 50.0
-  }
+  },
+  "EnableAdminUI": false,
+  "HoursAfterDeedOverburdenedBeforeRemovingPlots": 24.0
 }

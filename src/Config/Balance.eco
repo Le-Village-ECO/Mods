@@ -1,9 +1,0 @@
-{
-  "MaxActivePlayers": 100,
-  "ShelfLifeMultiplier": 1.0,
-  "ExhaustionAfterHours": 3.0,
-  "RolloverDailyPlaytime": true,
-  "MaximumPlaytimeBeforeExhausted": 15.0,
-  "CalorieMultiplierOnMove": 5,
-  "CraftingQueueQuantity": 5
-}
