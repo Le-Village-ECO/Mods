@@ -6,6 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Include="C:\Users\Plex\Desktop\PaletteObject-Slot.cs" Link="PaletteObject-Slot.cs" />
+	  <Compile Include="C:\Users\Plex\Desktop\PaletteObject.cs" Link="PaletteObject.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Reference Include="Eco.Core">
 			<HintPath>..\..\dep\Eco.Core.dll</HintPath>
 		</Reference>
