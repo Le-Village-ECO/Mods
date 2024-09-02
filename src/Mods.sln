@@ -34,6 +34,19 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Industrial Generator", "Industrial Generator\Industrial Generator.csproj", "{8F6A6581-BB00-45E7-8E26-8E4F4E3E29AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server Config", "Server Config", "{8BBA4972-0A53-444B-A76E-EB97EBB718B2}"
+	ProjectSection(SolutionItems) = preProject
+		Config\Balance.eco = Config\Balance.eco
+		Config\Civics.eco = Config\Civics.eco
+		Config\Difficulty.eco = Config\Difficulty.eco
+		Config\Disasters.eco = Config\Disasters.eco
+		Config\EcoSim.eco = Config\EcoSim.eco
+		Config\Features.eco = Config\Features.eco
+		Config\Localization.eco = Config\Localization.eco
+		Config\Network.eco = Config\Network.eco
+		Config\Rooms.eco = Config\Rooms.eco
+		Config\Settlements.eco = Config\Settlements.eco
+		Config\Users.eco = Config\Users.eco
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traps", "Traps\Traps.csproj", "{07F6B5EF-3B44-4733-81E3-18859F95085C}"
 EndProject
@@ -76,7 +89,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CosmeticMod", "CosmeticMod\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smiley", "Smiley\Smiley.csproj", "{E6712FEC-4EB8-4B4F-9C73-BC90E122C306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeTest", "PipeTest\PipeTest.csproj", "{C34E38D0-B908-407F-9236-2024BAF03E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipeTest", "PipeTest\PipeTest.csproj", "{C34E38D0-B908-407F-9236-2024BAF03E4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
