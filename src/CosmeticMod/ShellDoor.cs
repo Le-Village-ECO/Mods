@@ -52,13 +52,13 @@
     [Tag("Usable")]
     [Tag("LargeDoor")]
     [Ecopedia("Housing Objects", "Doors", subPageName: "Porte de Grange Large")]
-    public partial class SheldDoorObject : WorldObject, IRepresentsItem
+    public partial class ShedDoorObject : WorldObject, IRepresentsItem
     {
-        public virtual Type RepresentedItemType => typeof(SheldDoorItem);
+        public virtual Type RepresentedItemType => typeof(ShedDoorItem);
         public override LocString DisplayName => Localizer.DoStr("Large Corrugated Steel Door");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
         public override bool HasTier => true;
-        public override int Tier => 4;
+        public override int Tier => 3;
 
 
 
@@ -83,62 +83,48 @@
     [IconGroup("World Object Minimap")]
     [Tier(4)]
     [Ecopedia("Housing Objects", "Doors", createAsSubPage: true)]
-    [Weight(2000)] // Defines how heavy SheldDoor is.
-    public partial class SheldDoorItem : WorldObjectItem<SheldDoorObject>
+    [Weight(2000)]
+    public partial class ShedDoorItem : WorldObjectItem<ShedDoorObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
 
     }
 
-    /// <summary>
-    /// <para>Server side recipe definition for "SheldDoor".</para>
-    /// <para>More information about RecipeFamily objects can be found at https://docs.play.eco/api/server/eco.gameplay/Eco.Gameplay.Items.RecipeFamily.html</para>
-    /// </summary>
-    /// <remarks>
-    /// This is an auto-generated class. Don't modify it! All your changes will be wiped with next update! Use Mods* partial methods instead for customization. 
-    /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
-    /// </remarks>
-    [RequiresSkill(typeof(AdvancedSmeltingSkill), 5)]
+    [RequiresSkill(typeof(CarpentrySkill), 3)]
     [Ecopedia("Housing Objects", "Doors", subPageName: "Porte de Grange Large item")]
-    public partial class SheldDoorRecipe : RecipeFamily
+    public partial class ShedDoorRecipe : RecipeFamily
     {
-        public SheldDoorRecipe()
+        public ShedDoorRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "SheldDoor",  //noloc
+                name: "ShedDoor",  //noloc
                 displayName: Localizer.DoStr("Porte de Grange Large"),
 
-                // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
-                // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement(typeof(CorrugatedSteelItem), 20, true),
+                    new IngredientElement("Lumber", 10, true), //noloc
+                    new IngredientElement("WoodBoard", 4, true), //noloc
+                    new IngredientElement(typeof(NailItem),8 , true),
                 },
 
-                // Define our recipe output items.
-                // For every output item there needs to be one CraftingElement entry with the type of the final item and the amount
-                // to create.
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<SheldDoorItem>()
+                    new CraftingElement<ShedDoorItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
-            this.ExperienceOnCraft = 2.5f; // Defines how much experience is gained when crafted.
+            this.ExperienceOnCraft = 2.5f; 
 
-            // Defines the amount of labor required and the required skill to add labor
-            this.LaborInCalories = CreateLaborInCaloriesValue(480, typeof(AdvancedSmeltingSkill));
+            this.LaborInCalories = CreateLaborInCaloriesValue(480, typeof(CarpentrySkill));
 
-            // Defines our crafting time for the recipe
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SheldDoorRecipe), start: 10, skillType: typeof(AdvancedSmeltingSkill), typeof(AdvancedSmeltingFocusedSpeedTalent), typeof(AdvancedSmeltingParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ShedDoorRecipe), start: 8, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
-            // Perform pre/post initialization for user mods and initialize our recipe instance with the display name "Large Corrugated Steel Door"
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Porte de Grange Large"), recipeType: typeof(SheldDoorRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Porte de Grange Large"), recipeType: typeof(ShedDoorRecipe));
             this.ModsPostInitialize();
 
             // Register our RecipeFamily instance with the crafting system so it can be crafted.
-            CraftingComponent.AddRecipe(tableType: typeof(RollingMillObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(SawmillObject), recipe: this);
         }
 
         /// <summary>Hook for mods to customize RecipeFamily before initialization. You can change recipes, xp, labor, time here.</summary>
