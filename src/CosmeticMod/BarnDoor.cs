@@ -23,7 +23,6 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(MinimapComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
-    [RequireComponent(typeof(LargeDoorUtils))]
     [Tag("Usable")]
     [Tag("LargeDoor")]
     [Ecopedia("Housing Objects", "Doors", subPageName: "Porte de Grange Large")]
@@ -35,6 +34,56 @@ namespace Eco.Mods.TechTree
         public override bool HasTier => true;
         public override int Tier => 3;
         protected override void PostInitialize() => LargeDoorUtils.InitializeDoor(this);
+
+        static BarnDoorObject()
+
+        {
+            var BlockOccupancyList = new List<BlockOccupancy>
+            {
+            // ShedDoorObject
+            new BlockOccupancy(new Vector3i(0, 0, 0), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 0, 1), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 0, 2), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 0, 3), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 1, 3), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 1, 2), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 1, 1), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 1, 0), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 2, 0), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 2, 1), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 2, 2), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(0, 2, 3), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
+            new BlockOccupancy(new Vector3i(1, 0, 0)),
+            new BlockOccupancy(new Vector3i(1, 0, 1)),
+            new BlockOccupancy(new Vector3i(1, 0, 2)),
+            new BlockOccupancy(new Vector3i(1, 0, 3)),
+            new BlockOccupancy(new Vector3i(1, 1, 0)),
+            new BlockOccupancy(new Vector3i(1, 1, 1)),
+            new BlockOccupancy(new Vector3i(1, 1, 2)),
+            new BlockOccupancy(new Vector3i(1, 1, 3)),
+            new BlockOccupancy(new Vector3i(1, 2, 0)),
+            new BlockOccupancy(new Vector3i(1, 2, 1)),
+            new BlockOccupancy(new Vector3i(1, 2, 2)),
+            new BlockOccupancy(new Vector3i(1, 2, 3)),
+            new BlockOccupancy(new Vector3i(2, 0, 0)),
+            new BlockOccupancy(new Vector3i(2, 0, 1)),
+            new BlockOccupancy(new Vector3i(2, 0, 2)),
+            new BlockOccupancy(new Vector3i(2, 0, 3)),
+            new BlockOccupancy(new Vector3i(2, 1, 0)),
+            new BlockOccupancy(new Vector3i(2, 1, 1)),
+            new BlockOccupancy(new Vector3i(2, 1, 2)),
+            new BlockOccupancy(new Vector3i(2, 1, 3)),
+            new BlockOccupancy(new Vector3i(2, 2, 0)),
+            new BlockOccupancy(new Vector3i(2, 2, 1)),
+            new BlockOccupancy(new Vector3i(2, 2, 2)),
+            new BlockOccupancy(new Vector3i(2, 2, 3)),
+
+            };
+
+            AddOccupancy<BarnDoorObject>(BlockOccupancyList);
+
+        }
+
 
         protected override void Initialize()
         {
