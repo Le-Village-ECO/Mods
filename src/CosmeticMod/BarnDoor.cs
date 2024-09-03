@@ -30,7 +30,7 @@ namespace Eco.Mods.TechTree
     {
         public virtual Type RepresentedItemType => typeof(BarnDoorItem);
         public override LocString DisplayName => Localizer.DoStr("Large Corrugated Steel Door");
-        public override TableTextureMode TableTexture => TableTextureMode.Metal;
+        public override TableTextureMode TableTexture => TableTextureMode.Wood;
         public override bool HasTier => true;
         public override int Tier => 3;
         protected override void PostInitialize() => LargeDoorUtils.InitializeDoor(this);
