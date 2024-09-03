@@ -1,0 +1,130 @@
+{
+  "Reputations": {
+    "Eco.Gameplay.Economy.Reputation.Internal.ReputationTitle": {
+      "$type": "System.Collections.Generic.List`1[[Eco.Gameplay.Economy.Reputation.Internal.ReputationTitle, Eco.Gameplay]], System.Private.CoreLib",
+      "$values": [
+        {
+          "MaxReputation": -500.0,
+          "UserTitle": "Reprehensible",
+          "ObjectTitle": "Abomination",
+          "Color": "FF4623"
+        },
+        {
+          "MaxReputation": -200.0,
+          "UserTitle": "Abhorred",
+          "ObjectTitle": "Awful",
+          "Color": "FF5A24"
+        },
+        {
+          "MaxReputation": -100.0,
+          "UserTitle": "Nefarious",
+          "ObjectTitle": "Ugly",
+          "Color": "FF7025"
+        },
+        {
+          "MaxReputation": -50.0,
+          "UserTitle": "Shunned",
+          "ObjectTitle": "Cringe",
+          "Color": "FFA028"
+        },
+        {
+          "MaxReputation": -20.0,
+          "UserTitle": "Ill-Regarded",
+          "ObjectTitle": "Bad",
+          "Color": "FFC32A"
+        },
+        {
+          "MaxReputation": -10.0,
+          "UserTitle": "Unfavorable",
+          "ObjectTitle": "Forgettable",
+          "Color": "FFF62D"
+        },
+        {
+          "MaxReputation": -5.0,
+          "UserTitle": "Questionable",
+          "ObjectTitle": "Uninspiring",
+          "Color": "E8EB43"
+        },
+        {
+          "MaxReputation": -2.0,
+          "UserTitle": "Uncertain",
+          "ObjectTitle": "Interesting",
+          "Color": "B2CE76"
+        },
+        {
+          "MaxReputation": -1.0,
+          "UserTitle": "Unknown",
+          "ObjectTitle": "Unknown",
+          "Color": "2581FE"
+        },
+        {
+          "MaxReputation": 1.0,
+          "UserTitle": "Unknown",
+          "ObjectTitle": "Unknown",
+          "Color": "2581FE"
+        },
+        {
+          "MaxReputation": 2.0,
+          "UserTitle": "Helpful",
+          "ObjectTitle": "Acceptable",
+          "Color": "2899FE"
+        },
+        {
+          "MaxReputation": 5.0,
+          "UserTitle": "Respected",
+          "ObjectTitle": "Good",
+          "Color": "2EB6FC"
+        },
+        {
+          "MaxReputation": 10.0,
+          "UserTitle": "Friendly",
+          "ObjectTitle": "Great",
+          "Color": "34D4FA"
+        },
+        {
+          "MaxReputation": 20.0,
+          "UserTitle": "Well-Regarded",
+          "ObjectTitle": "Lovely",
+          "Color": "3DFFF8"
+        },
+        {
+          "MaxReputation": 50.0,
+          "UserTitle": "Esteemed",
+          "ObjectTitle": "Superb",
+          "Color": "51FFB7"
+        },
+        {
+          "MaxReputation": 100.0,
+          "UserTitle": "Celebrated",
+          "ObjectTitle": "Beautiful",
+          "Color": "61FF82"
+        },
+        {
+          "MaxReputation": 200.0,
+          "UserTitle": "Honored",
+          "ObjectTitle": "Stunning",
+          "Color": "70FF4F"
+        },
+        {
+          "MaxReputation": 500.0,
+          "UserTitle": "Revered",
+          "ObjectTitle": "A Classic",
+          "Color": "77FF37"
+        },
+        {
+          "MaxReputation": 1000.0,
+          "UserTitle": "Exalted",
+          "ObjectTitle": "Masterpiece!",
+          "Color": "7BFF29"
+        }
+      ]
+    }
+  },
+  "MaxRepFromOnePerson": 30.0,
+  "MinRepFromOnePerson": -10.0,
+  "ReviewSizeLimit": 300,
+  "MaxGivableRepPerDay": 5.0,
+  "MaxGivableRepPerDayPerTarget": 1.0,
+  "AmountOfPositiveReputationToGiveInOrderToEarnReputationReward": 6.0,
+  "SpeakingWellOfOthersReward": 3.0
+}

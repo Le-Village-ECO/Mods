@@ -1,10 +1,7 @@
 {
-  "ConfigVersion": 1,
   "UseWaste": false,
-  "APIAuthToken": "",
-  "APIAdminAuthToken": "",
+  "ConfigVersion": 1,
   "AllowDebugCalls": false,
-  "MovementHackDetection": false,
   "UnStuckDisableTime": 60.0,
   "AdminCommandsLoggingLevel": "LogFileAndNotifyAdmins",
   "DelayNearbyFoodCheckMinutes": 4.0,
@@ -12,13 +9,14 @@
   "NearbyFoodSpawnCount": 5,
   "UseExactSpawnLocation": false,
   "SpawnLocation": {
-    "x": 609,
-    "y": 63,
-    "z": 698
+    "x": 161,
+    "y": 0,
+    "z": 510
   },
   "SpawnSearchRange": 600,
-  "RequiredOccupancyBeforeAFKKick": 0,
-  "TimeRequiredForAFKMinutes": 0,
+  "MovementHackDetection": false,
+  "RequiredOccupancyBeforeAFKKick": 0.0,
+  "TimeRequiredForAFKMinutes": 0.0,
   "UserPermission": {
     "WhiteList": {
       "UserIDAddedEvent": {},
@@ -57,11 +55,11 @@
         "System.String": {
           "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
           "$values": [
-             "76561197994256422",
-             "slg199437",
-             "76561198452073663",
-             "76561198176039603",
-             "76561199049733719"
+            "76561197994256422",
+            "25687648-62b3-42de-60a3-08dc8d11157e",
+            "76561198452073663",
+            "76561198176039603",
+            "76561199049733719"
           ]
         }
       }
@@ -70,22 +68,22 @@
       "Eco.Gameplay.Players.QueuePriority": {
         "$type": "System.Collections.Generic.List`1[[Eco.Gameplay.Players.QueuePriority, Eco.Gameplay]], System.Private.CoreLib",
         "$values": [
-		    {
-			  "Priority" : 0,
-			  "Title": "Default Priority",
-			  "Users": ""
-		    },
-		    {
-			  "Priority" : 1,
-			  "Title": "Priority 1",
-			  "Users": ""			  
-		    },
-		    {
-			  "Priority" : 2,
-			  "Title": "Priority 2",
-			  "Users": ""
-		    }	  
-		  ]
+          {
+            "Priority": 0,
+            "Title": "Default Priority",
+            "Users": ""
+          },
+          {
+            "Priority": 1,
+            "Title": "Priority 1",
+            "Users": ""
+          },
+          {
+            "Priority": 2,
+            "Title": "Priority 2",
+            "Users": ""
+          }
+        ]
       }
     },
     "UsersWithReservedSlotsAtQueue": {

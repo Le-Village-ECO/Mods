@@ -1,0 +1,114 @@
+{
+  "RefreshLocalHours": 18,
+  "RefreshLocalMinutes": 0,
+  "MondayExhaustionRefreshHours": 3.0,
+  "TuesdayExhaustionRefreshHours": 3.0,
+  "WednesdayExhaustionRefreshHours": 3.0,
+  "ThursdayExhaustionRefreshHours": 3.0,
+  "FridayExhaustionRefreshHours": 6.0,
+  "SaturdayExhaustionRefreshHours": 6.0,
+  "SundayExhaustionRefreshHours": 3.0,
+  "AllowPlaytimeSaving": true,
+  "MaxSavedHours": 300.0,
+  "AllowExhaustionPauseOnRest": true,
+  "BonusHoursOnExhaustionEnabled": 3.0,
+  "BonusRetroactiveHoursAfterStart": true,
+  "Vehicles": [
+    {
+      "Name": "Wood Shop Cart",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Crane",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Excavator",
+      "IsExhaustable": true
+    },
+    {
+      "Name": "Hand Plow",
+      "IsExhaustable": true
+    },
+    {
+      "Name": "Industrial Elevator",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Small Wood Cart",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Large Canoe",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Truck",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Medium Fishing Trawler",
+      "IsExhaustable": true
+    },
+    {
+      "Name": "Small Wooden Boat",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Industrial Barge",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Wheelbarrow",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Powered Cart",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Steam Tractor",
+      "IsExhaustable": true
+    },
+    {
+      "Name": "Wood Cart",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Skid Steer",
+      "IsExhaustable": true
+    },
+    {
+      "Name": "Steam Truck",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Wooden Barge",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Small Canoe",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Wooden Elevator",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Trailer Truck",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Wooden Transport Ship",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Egyptian Canoe",
+      "IsExhaustable": false
+    },
+    {
+      "Name": "Norse Canoe",
+      "IsExhaustable": false
+    }
+  ]
+}

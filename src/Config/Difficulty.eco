@@ -1,22 +1,34 @@
 {
-  "CollaborationPreset": "HighCollaboration",
-  "DifficultyModifiers": {
-    "SpecialtyCostMultiplier": 2.0,
-    "SkillGainMultiplier": 1.0,
-    "SpecialtyExperiencePerLevel": 25.0,
-    "CraftResourceModifier": 1.0,
-    "CraftTimeModifier": 1.0,
-    "ClaimStakesGrantedUponSkillscrollConsumedAndSettlementsDisabled": 1.0,
-    "ClaimPapersGrantedUponSkillscrollConsumedAndSettlementsDisabled": 5.0,
-    "ClaimStakesGrantedUponSkillscrollConsumedAndSettlementsEnabled": 0.0,
-    "ClaimPapersGrantedUponSkillscrollConsumedAndSettlementsEnabled": 0.0,
-    "SpecialtyRefundPercentage": 0.1,
-    "PlayerExperiencePerSpecialtyExperience": 0.0,
-    "StackSizeModifier": 1.0,
-    "WeightModifier": 1.0,
-    "FuelModifier": 1.0,
-    "GrowthRateModifier": 1.0,
-    "ConnectionRangeModifier": 1.0
+  "GameSettings": {
+    "DesiredNumberOfPlayers": 50,
+    "HoursPlayedPerDay": 3.0,
+    "CollaborationLevel": "HighCollaboration",
+    "GameSpeed": "Normal",
+    "SimulationLevel": "Normal",
+    "ExhaustionEnabled": true,
+    "HasMeteor": true,
+    "AllowFriendsToJoin": true,
+    "GenerateRandomWorld": false,
+    "AdvancedGameSettings": {
+      "MeteorImpactInDays": 30.0,
+      "MaxProfessionsPerCitizen": 8.0,
+      "MaxSpecialtiesPerCitizen": 24.0,
+      "SkillCostMultiplier": 1.5,
+      "CraftResourceMultiplier": 0.7,
+      "CraftTimeMultiplier": 1.5,
+      "ClaimStakesGrantedUponSkillscrollConsumed": 0.0,
+      "ClaimPapersGrantedUponSkillscrollConsumed": 0.0,
+      "CanAbandonSpecialties": true,
+      "SpecialtyRefundPercentage": 0.0,
+      "GainCharacterExperienceWithSpecialtyExperience": 0.0,
+      "StackSizeMultiplier": 1.0,
+      "WeightMultiplier": 1.0,
+      "FuelMultiplier": 1.0,
+      "GrowthRateMultiplier": 1.0,
+      "ConnectionRangeMultiplier": 1.0,
+      "ShelfLifeMultiplier": 1.0,
+      "AllowDeepOceanBuilding": false
+    }
   },
   "EndgameCraftCost": "Expensive",
   "SkillbookCraftCost": "Normal",
@@ -28,6 +40,5 @@
     "Ocean": 2.0,
     "DeepOcean": 30.0
   },
-  "AllowDeepOceanBuilding": false,
   "PlayerCanDrownWhenSwimming": true
 }

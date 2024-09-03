@@ -1,4 +1,22 @@
 {
+  "PlayerReputationToCultureFormula": {
+    "InputMin": 0.0,
+    "InputHalflife": 5000.0,
+    "OutputAtMin": 0.0,
+    "OutputLimit": 13334.0
+  },
+  "ArtworkReputationToCultureFormula": {
+    "InputMin": 0.0,
+    "InputHalflife": 5000.0,
+    "OutputAtMin": 0.0,
+    "OutputLimit": 13334.0
+  },
+  "CultureValueOnResidentialPropertyToHousingValueMultiplierFormula": {
+    "InputMin": 0.0,
+    "InputHalflife": 500.0,
+    "OutputAtMin": 1.0,
+    "OutputLimit": 2.0
+  },
   "SettlementClaimsPerCitizen": [
     10.0,
     20.0,
@@ -46,6 +64,7 @@
     24.0
   ],
   "AllowOptionToPreventSettlementsFromSeceding": false,
+  "CultureDeedLinkPercentRequirement": 30.0,
   "SettlementFoundationBaseInfluence": [
     45.0,
     150.0,
@@ -57,7 +76,9 @@
     1.0
   ],
   "ScaleInfluenceBasedOnWorldSize": true,
-  "MinRequiredPlotCoveragePercentage": 0.5,
+  "BaseInfluenceRadiusFoundationMovementAllowedAfterFounding": 50,
+  "SettlementMinRequiredPlotCoveragePercentage": 0.2,
+  "HomesteadMinRequiredPlotCoveragePercentage": 0.5,
   "MinSubSettlementsToFoundSettlement": [
     2,
     2
@@ -89,21 +110,21 @@
   "CultureToInfluenceMappingPerSettlementType": [
     {
       "InputMin": 0.0,
-      "InputHalflife": 10.0,
-      "OutputAtMin": 0.0,
-      "OutputLimit": 60.0
-    },
-    {
-      "InputMin": 0.0,
-      "InputHalflife": 60.0,
-      "OutputAtMin": 0.0,
-      "OutputLimit": 300.0
-    },
-    {
-      "InputMin": 0.0,
       "InputHalflife": 100.0,
       "OutputAtMin": 0.0,
-      "OutputLimit": 800.0
+      "OutputLimit": 150.0
+    },
+    {
+      "InputMin": 0.0,
+      "InputHalflife": 140.0,
+      "OutputAtMin": 0.0,
+      "OutputLimit": 350.0
+    },
+    {
+      "InputMin": 0.0,
+      "InputHalflife": 420.0,
+      "OutputAtMin": 0.0,
+      "OutputLimit": 1000.0
     }
   ],
   "MaxGivableReputationThroughLaws": [
@@ -136,6 +157,7 @@
     5,
     12
   ],
+  "HoursBeforeInvalidatingCultureDeed": 2.0,
   "MayAnnexSameLevel": false,
   "MayAnnexSubSettlements": true,
   "CultureAdvantagePercentRequiredToAnnexChildSettlement": [

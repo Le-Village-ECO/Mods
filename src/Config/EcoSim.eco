@@ -1,6 +1,6 @@
 {
-  "ConfigVersion": 1,
   "$id": "1",
+  "ConfigVersion": 1,
   "ClimateSettings": {
     "$id": "2",
     "InitialOxygenPercent": 0.0,
@@ -9,7 +9,8 @@
     "AirPressure": 0.006,
     "AtmosphereVolume": 1000000.0,
     "AtmosphereDisplayEnabled": false,
-    "AtmosphereSizeInTons": 1000000.0,
+    "PPMPerTon": 1.2860082,
+    "AtmospherePressureKgPerM2": 1.5,
     "PollutionMultiplier": 1.0,
     "MinCO2ppm": 325.0,
     "SeaLevelSimEnabled": true,
@@ -25,13 +26,13 @@
     "MaxCO2PerDayFromAnimals": 2500.0,
     "MinCO2PerDayFromPlants": -50000.0,
     "PollutionPerTailingPerTick": 0.016,
-    "TailingsPollutionUndergroundHalvingDistance": 5,
+    "TailingsPollutionUndergroundHalvingDistance": 5.0,
     "MaxDebrisBlocks": 1.0
   },
   "Interactions": {
     "$id": "3",
     "Eco.Simulation.WorldLayers.IWorldLayerInteraction": {
-      "$type": "System.Collections.Generic.List`1[[Eco.Simulation.WorldLayers.IWorldLayerInteraction, Eco.Simulation]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Eco.Simulation.WorldLayers.IWorldLayerInteraction, Eco.Simulation]], System.Private.CoreLib",
       "$values": [
         {
           "$id": "4",
@@ -68,7 +69,7 @@
           }
         },
         {
-          "$id": "7",
+          "$id": "6",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "GrasslandBiome",
           "MoistureRange": {
@@ -85,7 +86,7 @@
           }
         },
         {
-          "$id": "8",
+          "$id": "7",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "WetlandBiome",
           "MoistureRange": {
@@ -102,7 +103,7 @@
           }
         },
         {
-          "$id": "9",
+          "$id": "8",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "ColdForestBiome",
           "MoistureRange": {
@@ -119,7 +120,7 @@
           }
         },
         {
-          "$id": "10",
+          "$id": "9",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "WarmForestBiome",
           "MoistureRange": {
@@ -136,7 +137,7 @@
           }
         },
         {
-          "$id": "11",
+          "$id": "10",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "TaigaBiome",
           "MoistureRange": {
@@ -153,7 +154,7 @@
           }
         },
         {
-          "$id": "12",
+          "$id": "11",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "RainforestBiome",
           "MoistureRange": {
@@ -170,7 +171,7 @@
           }
         },
         {
-          "$id": "13",
+          "$id": "12",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "IceBiome",
           "MoistureRange": {
@@ -187,7 +188,7 @@
           }
         },
         {
-          "$id": "14",
+          "$id": "13",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "OceanBiome",
           "MoistureRange": {
@@ -204,7 +205,7 @@
           }
         },
         {
-          "$id": "15",
+          "$id": "14",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.BiomeRater, Eco.Simulation",
           "BiomeLayerName": "DeepOceanBiome",
           "MoistureRange": {
@@ -221,22 +222,23 @@
           }
         },
         {
-          "$id": "16",
+          "$id": "15",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.SpreadInteraction, Eco.Simulation",
           "ModifiedLayerName": "SoilMoisture",
           "SpreadRatio": 0.6,
           "HeightBias": 0.0,
-          "PostWorldgenTicks": 30
+          "PostWorldgenTicks": 30,
+          "IncreaseOnly": false
         },
         {
-          "$id": "17",
+          "$id": "16",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.ExponentialGrowthOrDecay, Eco.Simulation",
           "ModifiedLayerName": "SoilMoisture",
           "Rate": 0.94,
           "Action": "evaporates"
         },
         {
-          "$id": "18",
+          "$id": "17",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.ProportionalInteraction, Eco.Simulation",
           "InputLayerName": "Rainfall",
           "TargetLayerName": "SoilMoisture",
@@ -245,7 +247,7 @@
           "ProportionAtInitialization": 0.8
         },
         {
-          "$id": "19",
+          "$id": "18",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.ProportionalInteraction, Eco.Simulation",
           "InputLayerName": "FreshWater",
           "TargetLayerName": "SoilMoisture",
@@ -254,22 +256,23 @@
           "ProportionAtInitialization": 0.7
         },
         {
-          "$id": "20",
+          "$id": "19",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.SpreadInteraction, Eco.Simulation",
           "ModifiedLayerName": "AirPollutionSpread",
           "SpreadRatio": 0.97,
           "HeightBias": 0.0,
-          "PostWorldgenTicks": 0
+          "PostWorldgenTicks": 0,
+          "IncreaseOnly": false
         },
         {
-          "$id": "21",
+          "$id": "20",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.ExponentialGrowthOrDecay, Eco.Simulation",
           "ModifiedLayerName": "AirPollutionSpread",
           "Rate": 0.95,
           "Action": "evaporates"
         },
         {
-          "$id": "22",
+          "$id": "21",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.SecondOrderReaction, Eco.Simulation",
           "ReactantOneLayerName": "AirPollutionSpread",
           "ReactantTwoLayerName": "Rainfall",
@@ -278,29 +281,28 @@
           "ActivePostWorldgen": true
         },
         {
-          "$id": "23",
+          "$id": "22",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.ExponentialGrowthOrDecay, Eco.Simulation",
           "ModifiedLayerName": "GroundPollutionSpread",
           "Rate": 0.98,
           "Action": "evaporates"
         },
         {
-          "$id": "24",
+          "$id": "23",
           "$type": "Eco.Simulation.WorldLayers.LayerInteractions.SpreadInteraction, Eco.Simulation",
           "ModifiedLayerName": "GroundPollutionSpread",
           "SpreadRatio": 0.2,
           "HeightBias": 0.75,
-          "PostWorldgenTicks": 0
+          "PostWorldgenTicks": 0,
+          "IncreaseOnly": false
         }
       ]
     }
   },
-  "TickContinuously": true,
   "PushToWorld": true,
   "PullFromWorld": true,
+  "AnimalBehaviorLodding": true,
   "TimeMult": 1.0,
-  "PlantScarcity": 0.0,
-  "PlantDensity": 1.0,
   "MinTreeSpawnDistance": 4,
   "BaseSkillGainRate": 12.0,
   "SkillDamageMultiplier": 0.0,

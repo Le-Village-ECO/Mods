@@ -1,35 +1,30 @@
 {
  "PublicServer": true,
- "Playtime": "222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
- "Password": "chocolatine",
+ "Playtime": "110000000000001222222221110000000000001222222221110000000000001222222221110000000000001222222221110000000000001222222222221111112222222222222222221111112222222222222221",
  "DiscordAddress": "xk2RDsM8ru",
- "Description": "[FR] <color=#0AC215>Le Village</color> - Cycle 10 - <color=#F4A73F>Débutants bienvenus</color>",
- "DetailedDescription": "
- Serveur activement administré et orienté 'casual'/débutant avec un certain nombre de modifications qui respectent les concepts 'vanille' du jeu voulus par les developpeurs. 
+ "Password": "DreamTeam",
+ "Name": "[FR] <color=#0AC215>Le Village</color> - Cycle 12 - <color=#F4A73F>Débutants bienvenus</color>",
+ "DetailedDescription": "Communauté Discord dynamique et serveur activement administré avec des modifications qui respectent les concepts 'vanille' du jeu voulus par les developpeurs.
  
- Epuisement (Exhaustion) : 3h/jour cumulable 9h + bonus 1ère connexion et connexion tardive (voir Mods)
- 
- Modifications principales :
- - DiscordLink
- - ECO Price calculator
- - Mods exclusifs Le Village
- 
- Tous les details sur le Discord
- ",
+Lancement d'un cycle environ tous les mois (voir le planning sur le Discord) en alternant avec épuisement (plus orienté joueurs occasionnels) et sans épuisement (tous les types de joueurs)
+
+Liste complète des modifications disponibles sur le Discord, la majorité étant développé par notre propre équipe de modder.",
  "ServerCategory": "Beginner",
- "IPAddress": "51.178.1.67",
- "RemoteAddress": "serveur.levillage-eco.fr:20020/",
- "WebServerUrl": "http://serveur.levillage-eco.fr:30011/",
- "GameServerPort": "20020",
- "WebServerPort": "30011",
- "RconServerPort": "5016",
- "RconIPAddress": "51.178.1.67",
- "RconPassword": "4k48rf26q",
+ "IPAddress": "57.128.4.234",
+ "RemoteAddress": "57.128.4.234:20010",
+ "WebServerUrl": "http://serveur.levillage-eco.fr:30006/",
+ "GameServerPort": "20010",
+ "WebServerPort": "30006",
+ "RconServerPort": "5012",
+ "SteamServerPort": 3003,
+ "RconIPAddress": "57.128.4.234",
+ "RconPassword": "rh8qxax4k",
  "Rate": 20,
  "DefaultSlots": -1,
  "ReservedSlots": 5,
- "ID": "e3a31847-0733-4dbc-850f-c35d9fce52d9",
- "Passport": "a1b9e558-399e-415d-809c-4c4ebf513f94",
+ "MaxUsersLoadingAtSameTime": 20,
+ "ID": "bff77bae-de28-498c-8d07-f0dfad0d78ad",
+ "Passport": "50f14594-bcfa-4936-9f9c-05e5dc56be3e",
  "UPnPEnabled": false,
  "RelayServerAddress": "",
  "MaxSlots": "250"
