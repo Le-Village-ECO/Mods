@@ -9,6 +9,7 @@ using Eco.Gameplay.Skills;
 using Eco.Mods.TechTree;
 using Eco.Shared.Localization;
 using Eco.Shared.Serialization;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,13 @@ namespace Village.Eco.Mods.Cooking
     [Weight(50)]
     public partial class WoodenBowlItem : Item
     {
+        public static void GiveTo(User user)
+        {
+            // 75% chance de rendre un bol
+            if (new Random().Next(100) > 75) return;
 
+            var result = user.Inventory.TryAddItemNonUnique(typeof(WoodenBowlItem));
+            if (result.Success) user.InfoBoxLocStr("Chanceux ! Tu as récupéré un bol.");
+        }
     }
 }

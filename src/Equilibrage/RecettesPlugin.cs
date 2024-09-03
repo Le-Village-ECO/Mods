@@ -23,12 +23,12 @@ namespace Equilibrage
 
         public void Initialize(TimedTask timer)
         {
-            ReplaceIngredients();
+            ReplaceFlour();
 
             ////Pour logguer toutes les recettes d'une catégorie
             //foreach (var recipe in RecipeManager.AllRecipes) Logger.Write($"[Equilibrage] - {recipe.Name}");
 
-            //Pour déclencher une action après le chargement complet du serveur
+            ////Pour déclencher une action après le chargement complet du serveur
             //PluginManager.Controller.RunIfOrWhenInited(delegate);
         }
 
@@ -84,9 +84,9 @@ namespace Equilibrage
             }
         }
 
-        public static void ReplaceIngredients()
+        public static void ReplaceFlour()
         {
-            var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, typeof(CampfireCookingSkill), typeof(CampfireCookingLavishResourcesTalent));
+            var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, true);
 
             // On remplace tous les ingredients d'une recette
             ReplaceAllIngredients<FishStewRecipe>(
@@ -101,7 +101,8 @@ namespace Equilibrage
             AddIngredients<WildStewRecipe>(bowlIngredient);
 
             // On remplace la farine par un bol sur plusieurs recettes à la fois
-            RemoveIngredient(typeof(FlourItem).Name, typeof(MeatyStewRecipe), typeof(WildStewRecipe));
+            RemoveIngredient(typeof(FlourItem).Name,
+                typeof(MeatyStewRecipe), typeof(FieldCampfireStewRecipe), typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe));
             AddIngredient(bowlIngredient,
                 typeof(MeatyStewRecipe), typeof(FieldCampfireStewRecipe), typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe));
 
