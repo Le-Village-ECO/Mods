@@ -29,7 +29,7 @@ namespace Eco.Mods.TechTree
     public partial class BarnDoorObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(BarnDoorItem);
-        public override LocString DisplayName => Localizer.DoStr("Large Corrugated Steel Door");
+        public override LocString DisplayName => Localizer.DoStr("Porte de Grange Large"); //Maj du bon nom quand elle est posé
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         public override bool HasTier => true;
         public override int Tier => 3;
@@ -40,7 +40,7 @@ namespace Eco.Mods.TechTree
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-            // ShedDoorObject
+            // BarnDoorObject
             new BlockOccupancy(new Vector3i(0, 0, 0), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
             new BlockOccupancy(new Vector3i(0, 0, 1), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
             new BlockOccupancy(new Vector3i(0, 0, 2), typeof(BuildingWorldObjectBlock), new Quaternion(0f, 0f, 0f, 1f), BlockOccupancyType.None),
@@ -97,11 +97,11 @@ namespace Eco.Mods.TechTree
 
     [Serialized]
     [LocDisplayName("Porte de Grange Large")]
-    [LocDescription("Une porte de Grange Large.")]
+    [LocDescription("Une porte de Grange large qui mesure 4 de large pour 3 de haut")] //Mise à jour de la description en indiquant la hauteur et la largeur
     [IconGroup("World Object Minimap")]
-    [Tier(4)]
+    [Tier(3)] // Affichage du Tier 3 (comme le lumber )
     [Ecopedia("Housing Objects", "Doors", createAsSubPage: true)]
-    [Weight(2000)]
+    [Weight(2000)] // Defini le poids de cet objet
     public partial class BarnDoorItem : WorldObjectItem<BarnDoorObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));

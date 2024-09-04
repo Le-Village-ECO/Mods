@@ -50,7 +50,7 @@ namespace Eco.Mods.TechTree
     [LocDescription("Une petite niche pour chien... ou pour celui qui veut.")]
     [Ecopedia("Decoration", "Décoration standart", createAsSubPage: true)]
     [Tag("Decoration")]
-    [Weight(2000)] 
+    [Weight(2000)]  
     public partial class DogKennelItem : WorldObjectItem<DogKennelObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));

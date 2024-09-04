@@ -1,4 +1,7 @@
-﻿namespace Eco.Mods.TechTree
+﻿// Le Village - Tunnel SteamPunk de 3 de large, 4 de long et 3 de haut
+
+namespace Eco.Mods.TechTree
+
 {
     using System;
     using System.Collections.Generic;
@@ -123,7 +126,7 @@
 
     [Serialized]
     [LocDisplayName("Tunnel SteamPunk")]
-    [LocDescription("Un tunnel qui semble abandonné dans le style SteamPunk.")]
+    [LocDescription("Un tunnel qui semble abandonné dans le style SteamPunk. Ce tunnel mesure 3 de large, 4 de long et 3 de haut")]
     [Ecopedia("Decoration", "SteamPunk", createAsSubPage: true)]
     [Tag("Decoration")]
     [Weight(7000)] 
