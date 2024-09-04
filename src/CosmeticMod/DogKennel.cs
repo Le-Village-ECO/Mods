@@ -23,7 +23,7 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(PaintableComponent))]
     [Tag("Decoration")]
-    [Ecopedia("Decoration", "Décoration standart", subPageName: "Niche pour chien")]
+    [Ecopedia("Decoration", "Décoration standard", subPageName: "Niche pour chien")]
     public partial class DogKennelObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(DogKennelItem);
