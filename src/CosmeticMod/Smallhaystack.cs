@@ -53,7 +53,7 @@ namespace Eco.Mods.TechTree
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
     }
 
-    [RequiresSkill(typeof(CarpentrySkill), 2)]
+    [RequiresSkill(typeof(FarmingSkill), 1)]
     [Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Petit tas de paille")]
     public partial class SmallhaystackRecipe : RecipeFamily
     {
