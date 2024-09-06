@@ -6,8 +6,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Include="C:\Users\Plex\Desktop\PaletteObject-Slot.cs" Link="PaletteObject-Slot.cs" />
-	  <Compile Include="C:\Users\Plex\Desktop\PaletteObject.cs" Link="PaletteObject.cs" />
+	  <Compile Remove="Tools\**" />
+	  <Compile Remove="Unity\**" />
+	  <EmbeddedResource Remove="Tools\**" />
+	  <EmbeddedResource Remove="Unity\**" />
+	  <None Remove="Tools\**" />
+	  <None Remove="Unity\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,11 +54,6 @@
 		<Reference Include="EcoServer">
 			<HintPath>..\..\dep\EcoServer.dll</HintPath>
 		</Reference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Tools\" />
-		<Folder Include="Unity\" />
 	</ItemGroup>
 
 	<ItemGroup>

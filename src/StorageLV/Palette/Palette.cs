@@ -47,6 +47,8 @@
     [RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(ModularStockpileComponent))]
+    [RequireComponent(typeof(PublicStorageComponent))] 
     [Tag("Usable")]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Palette item")]
     public partial class PaletteObject : WorldObject, IRepresentsItem
@@ -55,7 +57,9 @@
         public override LocString DisplayName => Localizer.DoStr("Palette");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
-  		static PaletteObject()
+        public override bool PlacesBlocks => false; 
+
+        static PaletteObject()
 
         {
             var BlockOccupancyList = new List<BlockOccupancy>
@@ -87,14 +91,22 @@
 
             AddOccupancy<PaletteObject>(BlockOccupancyList);
 
-        }
+        
 
+
+        }
+			
 
 
 
         protected override void Initialize()
         {
             this.ModsPreInitialize();
+            var storage = this.GetComponent<PublicStorageComponent>();
+            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 4, 2));
+            this.GetComponent<PublicStorageComponent>().Initialize(8, 5000000);
+            storage.Storage.AddInvRestriction(new StackLimitRestriction(100));
+            storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(StoneRoadItem) }));
             this.ModsPostInitialize();
         }
 
