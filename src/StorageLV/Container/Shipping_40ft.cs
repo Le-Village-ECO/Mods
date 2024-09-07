@@ -34,12 +34,14 @@ namespace Village.Eco.Mods.Templates
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Stockage Template Item")]
     public partial class Shipping_40ftObject : WorldObject, IRepresentsItem
     {
-        public static readonly Vector3i DefaultDim = new Vector3i(2, 3, 2); // Taille du stockage dans le monde
+        public static readonly Vector3i DefaultDim = new Vector3i(3, 3, 10); // Taille du stockage dans le monde
+        public override InteractionTargetPriority TargetPriority => InteractionTargetPriority.Medium;
+
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         protected override void OnCreatePostInitialize()
         {
             base.OnCreatePostInitialize();
-            StockpileComponent.ClearPlacementArea(this.Creator, this.Position3i, DefaultDim, this.Rotation);
+            StockpileComponent.ClearPlacementArea(this.Creator, this.Position3i, DefaultDim, this.Rotation, 1);
         }
         protected override void PostInitialize()
         {
@@ -52,8 +54,8 @@ namespace Village.Eco.Mods.Templates
             storage.Storage.AddInvRestriction(new StockpileStackRestriction(DefaultDim.y)); // limit stack sizes to the y-height of the stockpile
         }
 
-        public override InteractionTargetPriority TargetPriority => InteractionTargetPriority.Medium;
-        public virtual Type RepresentedItemType => typeof(TinyStockpileItem);
+
+        public virtual Type RepresentedItemType => typeof(Shipping_40ftItem);
         public override LocString DisplayName => Localizer.DoStr("Stockage Template");
         protected override void Initialize()
         {
