@@ -265,13 +265,7 @@ namespace Eco.Mods.Organisms
                         if (!carried.IsEmpty) // Early tests: neeed to check type mismatch and max quantity.
                         { 
                             if      (carried.Stacks.First().Item.Type != resourceType)                    { player.Error(Localizer.Format("You are already carrying {0:items} and cannot pick up {1:items}.", carried.Stacks.First().Item.UILink(LinkConfig.ShowPlural), resource.UILink(LinkConfig.ShowPlural)));  return; }
-                            //else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize)  { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize));                        return; } //Le Village
-                            else //Le village - réécriture du ELSE - inspiration du mod XP Benefit
-                            {
-                                //Let the carry inventory decide how many logs it can hold, instead of using the default log stack size
-                                int maxStackSize = carried.GetMaxAcceptedVal(resource, carried.Stacks.First().Quantity);
-                                if (carried.Stacks.First().Quantity + numItems > maxStackSize) { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), maxStackSize)); return; }
-                            }
+                            else if (carried.Stacks.First().Quantity + numItems > resource.MaxStackSize)  { player.Error(Localizer.Format("You can't carry {0:n0} more {1:items} ({2} max).", numItems, resource.UILink(numItems != 1 ? LinkConfig.ShowPlural : 0), resource.MaxStackSize));                        return; }
                         }
 
                         // Prepare a game action pack.

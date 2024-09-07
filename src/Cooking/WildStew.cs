@@ -13,11 +13,8 @@ namespace Eco.Mods.TechTree
         {
             var message = base.OnUsed(player, itemStack);
 
-            if (message != "")
-            {
-                var result = player.User.Inventory.TryAddItemNonUnique(typeof(WoodenBowlItem));
-                if (result.Success) player.User.InfoBoxLocStr("Chanceux ! Tu as récupéré un bol.");
-            }
+            if (message != "") WoodenBowlItem.GiveTo(player.User);
+
             return message;
         }
 

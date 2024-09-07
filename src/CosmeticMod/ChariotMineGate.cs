@@ -1,4 +1,6 @@
-﻿namespace Eco.Mods.TechTree
+﻿// Le Village - Entrée de mine pour chariot 2 de large 2 de haut
+
+namespace Eco.Mods.TechTree
 {
     using System;
     using System.Collections.Generic;
@@ -48,7 +50,7 @@
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(PaintableComponent))] //TODO: Fix not all the object have this component
-    [Tag("Décoration")]
+    [Tag("Decoration")] // Mise à jour du Tag
     [Ecopedia("Decoration", "Décoration de mine", subPageName: "Entrée de mine pour chariot")]
     public partial class ChariotMineGateObject : WorldObject, IRepresentsItem
     {
@@ -83,10 +85,10 @@
 
     [Serialized]
     [LocDisplayName("Entrée de mine pour chariot")]
-    [LocDescription("Entrée de mine pour chariot taille 2 de large et 2 de haut.")]
+    [LocDescription("Entrée de mine pour chariot. Taille : 2 de large et 2 de haut.")]
     [Ecopedia("Decoration", "Décoration de mine", createAsSubPage: true)]
-    [Tag("Décoration")]
-    [Weight(2000)] // Defines how heavy AdornedAshlarShaleTable is.
+    [Tag("Decoration")] //Mise à jour du tag
+    [Weight(2000)] // Defini le poids de cet objet
     public partial class ChariotMineGateItem : WorldObjectItem<ChariotMineGateObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));

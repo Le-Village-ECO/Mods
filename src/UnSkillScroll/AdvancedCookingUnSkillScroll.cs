@@ -43,7 +43,7 @@ namespace Village.Eco.Mods.UnSkillScroll
 
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Butchery UnSkill Scroll"), recipeType: typeof(AdvancedCookingUnSkillScrollRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Advanced Cooking UnSkill Scroll"), recipeType: typeof(AdvancedCookingUnSkillScrollRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(ResearchTableObject), recipe: this);

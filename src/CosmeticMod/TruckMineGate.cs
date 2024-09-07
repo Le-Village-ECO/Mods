@@ -1,4 +1,6 @@
-﻿namespace Eco.Mods.TechTree
+﻿// Le Village - Entrée de mine pour camion 3 de large 3 de haut
+
+namespace Eco.Mods.TechTree
 {
     using System;
     using System.Collections.Generic;
@@ -48,7 +50,7 @@
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(PaintableComponent))] //TODO: Fix not all the object have this component
-    [Tag("Décoration")]
+    [Tag("Decoration")] //Mise à jour du Tag
     [Ecopedia("Decoration", "Décoration de mine", subPageName: "Entrée de mine pour camion")]
     public partial class TruckMineGateObject : WorldObject, IRepresentsItem
     {
@@ -82,10 +84,10 @@
 
     [Serialized]
     [LocDisplayName("Entrée de mine pour camion")]
-    [LocDescription("Entrée de mine pour camion taille 3 de large et 3 de haut.")]
+    [LocDescription("Entrée de mine pour camion. Taille : 3 de large et 3 de haut.")]
     [Ecopedia("Decoration", "Décoration de mine", createAsSubPage: true)]
-    [Tag("Décoration")]
-    [Weight(2000)] // Defines how heavy AdornedAshlarShaleTable is.
+    [Tag("Decoration")] //Mise à jour du Tag
+    [Weight(2000)] // Defini le poids de cet objet
     public partial class TruckMineGateItem : WorldObjectItem<TruckMineGateObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));

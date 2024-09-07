@@ -28,23 +28,22 @@
     using Eco.World.Color;
 
 
+
     [RequiresSkill(typeof(SmeltingSkill), 1)]
-    [Ecopedia("Blocks", "Pipes", subPageName: "BlockPipe Item")]
+    [Ecopedia("Blocks", "Pipes", subPageName: "Iron Pipe Item")]
     public partial class BlockPipeRecipe : RecipeFamily
     {
         public BlockPipeRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "BlockPipe", 
-                displayName: Localizer.DoStr("BlockPipe"),
-
+                name: "BlockPipe",  //noloc
+                displayName: Localizer.DoStr("Iron Pipe"),
 
                 ingredients: new List<IngredientElement>
                 {
                     new IngredientElement(typeof(IronBarItem), 1, typeof(SmeltingSkill), typeof(SmeltingLavishResourcesTalent)),
                 },
-
 
                 items: new List<CraftingElement>
                 {
@@ -52,16 +51,15 @@
                 });
             this.Recipes = new List<Recipe> { recipe };
             this.ExperienceOnCraft = 0.5f; 
-            
+
 
             this.LaborInCalories = CreateLaborInCaloriesValue(15, typeof(SmeltingSkill));
-
 
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(BlockPipeRecipe), start: 0.8f, skillType: typeof(SmeltingSkill), typeof(SmeltingFocusedSpeedTalent), typeof(SmeltingParallelSpeedTalent));
 
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("BlockPipe"), recipeType: typeof(BlockPipeRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Iron Pipe"), recipeType: typeof(BlockPipeRecipe));
             this.ModsPostInitialize();
 
 
@@ -80,7 +78,7 @@
     [BlockTier(3)]
     [DoesntEncase]
     [RequiresSkill(typeof(SmeltingSkill), 1)]
-        public partial class BlockPipeBlock :
+    public partial class BlockPipeBlock :
         PipeBlock
         , IRepresentsItem
     {
@@ -88,14 +86,14 @@
     }
 
     [Serialized]
-    [LocDisplayName("BlockPipe")]
+    [LocDisplayName("Iron Pipe")]
     [LocDescription("A pipe for transporting liquids.")]
     [MaxStackSize(10)]
     [Weight(2000)]
     [Ecopedia("Blocks", "Pipes", createAsSubPage: true)]
     [Tier(3)]
     public partial class BlockPipeItem :
- 
+
     PipeItem<BlockPipeBlock>
     {
 
