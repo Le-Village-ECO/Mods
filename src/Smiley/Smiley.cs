@@ -45,6 +45,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Components.Storage;
     using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
     using Eco.Gameplay.Items.Recipes;
+    using Eco.Core.Plugins.Interfaces; // Registered Mods_____________
 
 
 
@@ -59,6 +60,26 @@ namespace Eco.Mods.TechTree
     [Tag("Usable")]
     [Ecopedia("Housing Objects", "Smiley", subPageName: "Grinche-Molle")]
     [Tag(nameof(SurfaceTags.HasTableSurface))]
+
+
+
+
+    // Registered Mods_____________
+    public class Mod_Smiley : IModInit
+    {
+        public static ModRegistration Register() => new()
+        {
+            ModName = "Mod_Smiley",
+            ModDescription = "Le Mod Smiley ajoute de nouveaux éléments de décoration au jeu. Vous pouvez créer des smileys à accrocher au mur en utilisant une nouvelle table de fabrication.",
+            ModDisplayName = "Smiley",
+        };
+    }
+    // Registered Mods  FIN_____________
+
+
+
+
+
     public partial class Smiley01Object : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(Smiley01Item);
