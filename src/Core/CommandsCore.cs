@@ -135,6 +135,7 @@ namespace Village.Eco.Mods.Core
         public static void SwitchUserFly(User user)
         {
             LVConfigurePlugin.Config.AllowFlyAll = !LVConfigurePlugin.Config.AllowFlyAll;
+            LVConfigurePlugin.Save();
             user.Player.OkBoxLocStr($"L'activation de UserFly est à : {LVConfigurePlugin.Config.AllowFlyAll}");
         }
 
