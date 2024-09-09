@@ -1,6 +1,7 @@
 ﻿// Le Village - Paramètres des différents mods
 
 using Eco.Core.Controller;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using System.ComponentModel;
 
@@ -27,6 +28,11 @@ namespace Village.Eco.Mods.Core
         [LocDisplayName("Dévoiler champs pétroliers")]
         [LocDescription("Si vrai, les champs pétroliers seront révélés en découvrant la spécialité")]
         [SyncToView] public bool RevealOilField { get; set; } = true;
+
+        [Category("Admin")]
+        [LocDisplayName("Permettre aux joueurs de voler (Fly)")]
+        [LocDescription("Si vrai, les joueurs ont acces a une commande pour voler")]
+        [SyncToView] public bool AllowFlyAll { get; set; } = false;
 
         #region Monnaie
         [Category("Monnaie")]
