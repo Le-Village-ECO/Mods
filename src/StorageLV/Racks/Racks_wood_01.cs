@@ -50,12 +50,12 @@
     [RequireComponent(typeof(ModularStockpileComponent))]
     [RequireComponent(typeof(PublicStorageComponent))]
     [Tag("Usable")]
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Rack")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Grand rack à bois")]
     public partial class RackObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(RackItem);
-        public override LocString DisplayName => Localizer.DoStr("Rack");
-        public override TableTextureMode TableTexture => TableTextureMode.Wood;
+        public override LocString DisplayName => Localizer.DoStr("Grand rack à bois");
+        public override TableTextureMode TableTexture => TableTextureMode.Metal;
 
         public override bool PlacesBlocks => false;
 
@@ -177,7 +177,7 @@
             storage.Storage.AddInvRestriction(new StackLimitRestriction(30));
             storage.Inventory.AddInvRestriction(new TagRestriction(new string[]
             {
-                "Constructable",
+                "Wood",
             }));
             this.ModsPostInitialize();
         }
@@ -189,8 +189,8 @@
     }
 
     [Serialized]
-    [LocDisplayName("Rack")]
-    [LocDescription("Parfaite pour empiler tout ce qui construit, sauf vos rêves ! Compacte, carrée, et prête à accueillir vos briques, planches et béton... sans se plaindre !")]
+    [LocDisplayName("Grand rack à bois")]
+    [LocDescription("Parce que jeter des bûches partout, c'est bon pour les castors, mais pas pour toi. Range tes précieux bouts de forêt dans ce rack élégant, et impressionne tes amis bûcherons avec ta maîtrise de l'art du rangement !")]
     [Ecopedia("Crafted Objects", "Storage", createAsSubPage: true)]
     [Weight(1000)]
     [MaxStackSize(10)]
@@ -209,11 +209,12 @@
             var recipe = new Recipe();
             recipe.Init(
                 name: "Rack",
-                displayName: Localizer.DoStr("Rack"),
+                displayName: Localizer.DoStr("Grand rack à bois"),
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("WoodBoard", 15, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)),
+                    new IngredientElement(typeof(IronBarItem), 10, typeof(Skill)),
+                    new IngredientElement(typeof(BrickItem), 10, typeof(Skill)),
                 },
 
 
@@ -229,7 +230,7 @@
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(RackRecipe), start: 0.32f, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Rack"), recipeType: typeof(RackRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Grand rack à bois"), recipeType: typeof(RackRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
