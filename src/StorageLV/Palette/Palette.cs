@@ -50,7 +50,7 @@
     [RequireComponent(typeof(ModularStockpileComponent))]
     [RequireComponent(typeof(PublicStorageComponent))] 
     [Tag("Usable")]
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Palette item")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Palette")]
     public partial class PaletteObject : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(PaletteItem);
@@ -104,9 +104,12 @@
             this.ModsPreInitialize();
             var storage = this.GetComponent<PublicStorageComponent>();
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 4, 2));
-            this.GetComponent<PublicStorageComponent>().Initialize(8, 5000000);
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(100));
-            storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(StoneRoadItem) }));
+            this.GetComponent<PublicStorageComponent>().Initialize(5, 5000000);
+            storage.Storage.AddInvRestriction(new StackLimitRestriction(30));
+            storage.Inventory.AddInvRestriction(new TagRestriction(new string[]
+            {
+                "Constructable",
+            }));
             this.ModsPostInitialize();
         }
 
@@ -118,9 +121,10 @@
 
     [Serialized]
     [LocDisplayName("Palette")]
-    [LocDescription("Designates a 5x5x5 area as storage for large items.")]
+    [LocDescription("Parfaite pour empiler tout ce qui construit, sauf vos rêves ! Compacte, carrée, et prête à accueillir vos briques, planches et béton... sans se plaindre !")]
     [Ecopedia("Crafted Objects", "Storage", createAsSubPage: true)]
-    [Weight(1000)] 
+    [Weight(1000)]
+    [MaxStackSize(10)]
     public partial class PaletteItem : WorldObjectItem<PaletteObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
@@ -128,36 +132,38 @@
     }
 
 
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Palette Item")]
+    [RequiresSkill(typeof(CarpentrySkill), 1)]
     public partial class PaletteRecipe : RecipeFamily
     {
         public PaletteRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "Palette",  //noloc
+                name: "Palette", 
                 displayName: Localizer.DoStr("Palette"),
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("Wood", 10,typeof(Skill)), 
+                    new IngredientElement("WoodBoard", 15, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)),
                 },
+
 
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<PaletteItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
+            this.ExperienceOnCraft = 2;
 
-            this.LaborInCalories = CreateLaborInCaloriesValue(25);
+            this.LaborInCalories = CreateLaborInCaloriesValue(250, typeof(CarpentrySkill));
 
-            this.CraftMinutes = CreateCraftTimeValue(1);
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(PaletteRecipe), start: 0.32f, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
             this.ModsPreInitialize();
             this.Initialize(displayText: Localizer.DoStr("Palette"), recipeType: typeof(PaletteRecipe));
             this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(WorkbenchObject), recipe: this);
+            CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
 
         partial void ModsPreInitialize();
