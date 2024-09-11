@@ -56,9 +56,6 @@
         public virtual Type RepresentedItemType => typeof(PaletteItem);
         public override LocString DisplayName => Localizer.DoStr("Palette");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
-
-        public override bool PlacesBlocks => false; 
-
         static PaletteObject()
 
         {
