@@ -133,10 +133,10 @@ namespace Village.Eco.Mods.Nutrition
             title = "Informations concernant ta diététique";
 
             string message;
-            message = $"Voici les paramètres définis pour avoir le <b>niveau maximum en fonction du nombre d'étoiles gagnées</b> :\n";
+            message = $"Voici les paramètres définis pour avoir le <b>niveau maximum en fonction du nombre d'étoiles</b> :\n";
             for (int  i = 0; i < tiers.Length; i++) 
             {
-                message += $"Avec {i} étoile(s), il faut avoir {tiers[i]} en bonus de nourriture.\n";
+                message += $"Avec {i+1} étoile(s), il faut avoir {tiers[i]} en bonus de nourriture.\n";
             }
             message += $"Au delà, les autres étoiles ne demandent pas plus que {tiers.Last()}.\n\n";
             message += $"Tu as gagné <b>{stars} étoiles</b> depuis le début de la partie.\n";
