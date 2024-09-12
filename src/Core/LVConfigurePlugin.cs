@@ -13,14 +13,15 @@ namespace Village.Eco.Mods.Core
         private static readonly PluginConfig<LVConfigureConfig> config; 
         public IPluginConfig PluginConfig => config;
         public static LVConfigureConfig Config => config.Config;
-        static LVConfigurePlugin() => config = new PluginConfig<LVConfigureConfig>("LVConfigure");
         public ThreadSafeAction<object, string> ParamChanged { get; set; } = new ThreadSafeAction<object, string>();
+
+        static LVConfigurePlugin() => config = new PluginConfig<LVConfigureConfig>("LVConfigure");
         public object GetEditObject() => config.Config;
         public void OnEditObjectChanged(object o, string param) => this.SaveConfig();
+        public static void Save() => config.SaveAsync().Wait();
 
         public string GetCategory() => Localizer.DoStr("LeVillageMods");
         public override string ToString() => Localizer.DoStr("Configuration");
         public string GetStatus() => Localizer.DoStr("Active");
-
     }
 }

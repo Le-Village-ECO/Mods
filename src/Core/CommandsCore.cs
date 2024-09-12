@@ -3,6 +3,7 @@
 // TODO : Pouvoir modifier la valeur d'un paramètre d'un joueur
 // TODO : Afficher toutes les config
 // TODO : Afficher un message complet à partir d'un fichier déposé sur le serveur
+// TODO syr le Fly : Sauvegarder le changement de l'activation sur le fichier de config
 
 using Eco.Core;
 using Eco.Core.Utils;
@@ -119,5 +120,30 @@ namespace Village.Eco.Mods.Core
             EcopediaManager.Build(ModKitPlugin.ModDirectory);
             chatClient.MsgLocStr("The Ecopedia Has been Rebuilt and should be automatically update. Please check the console for any logged issues with rebuilding the ecopedia");
         }
+
+        #region Fly pour tous
+        [ChatSubCommand("LVCore","Fly pour tous", ChatAuthorizationLevel.User)]
+        public static void UserFly(User user)
+        {
+            if (LVConfigurePlugin.Config.AllowFlyAll)
+                user.Player.ClientRPC("ToggleFly");
+            else
+                user.Player.ErrorLocStr("Vous n'avez pas l'autorisation pour faire cette commande.");
+        }
+
+        [ChatSubCommand("LVCore", "Activer/Désactiver Fly pour tous", ChatAuthorizationLevel.Admin)]
+        public static void SwitchUserFly(User user)
+        {
+            LVConfigurePlugin.Config.AllowFlyAll = !LVConfigurePlugin.Config.AllowFlyAll;
+            LVConfigurePlugin.Save();
+            user.Player.OkBoxLocStr($"L'activation de UserFly est à : {LVConfigurePlugin.Config.AllowFlyAll}");
+        }
+
+        [ChatSubCommand("LVCore", "Vérifier statut Fly pour tous", ChatAuthorizationLevel.User)]
+        public static void CheckUserFly(User user)
+        {
+            user.Player.OkBoxLocStr($"L'activation de UserFly est à : {LVConfigurePlugin.Config.AllowFlyAll}");
+        }
+        #endregion
     }
 }

@@ -27,11 +27,11 @@ namespace Village.Eco.Mods.Nutrition
 
         public static MultiplicativeStrategy MultiplicativeStrategy =
             new(new float[] {
-                1 + 19f,        //niveau 0 - 2000%
-                1 + 19f,        //niveau 1 - 2000%
-                1 + 9f,         //niveau 2 - 1000%
-                1 + 7.5f,       //niveau 3 - 850%
-                1 + 2.5f,       //niveau 4 - 350%
+                1 + 19f,        //niveau 0 - 1900%+100%
+                1 + 19f,        //niveau 1 - 1900%+100%
+                1 + 9f,         //niveau 2 - 900%+100%
+                1 + 4f,         //niveau 3 - 400%+100%
+                1,              //niveau 4 - 100% (max)
                 1,              //niveau 5 - 100% (max)
             });
         public override MultiplicativeStrategy MultiStrategy => MultiplicativeStrategy;

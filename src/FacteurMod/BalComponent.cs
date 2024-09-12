@@ -20,8 +20,8 @@ namespace Village.Eco.Mods.FacteurMod
     {
         //Pour gerer le status et informer le joueur
         private StatusElement status;
-        private LocString FailedStatus => Localizer.DoStr("La boite est vide. Il n'y a pas de courrier.");
-        private LocString SuccessStatus => Localizer.DoStr("Il y a du courrier !");
+        private static readonly LocString FailedStatus = Localizer.DoStr("La boite est vide. Il n'y a pas de courrier.");
+        private static readonly LocString SuccessStatus = Localizer.DoStr("Il y a du courrier !");
 
         //Pour gérer le statut (enabled/disabled) du WorldObjectComponent
         public override bool Enabled => this.hasLetter;
@@ -44,12 +44,14 @@ namespace Village.Eco.Mods.FacteurMod
             storage.Initialize(20);
             storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(LettreItem) }));
             storage.Inventory.OnChanged.Add(CheckStorage);
+            CheckStorage();
         }
 
-        public void CheckStorage(User user)
+        public void CheckStorage(User user) => CheckStorage();
+        public void CheckStorage()
         {
-            status.SetStatusMessage(this.hasLetter = !storage.Inventory.IsEmpty, storage.Inventory.IsEmpty ? FailedStatus : SuccessStatus);
-            this.Parent.UpdateEnabledAndOperating(); //Force update object status (obligatoire pour les components qui n'ont pas de tick()
+            status.SetStatusMessage(hasLetter = !storage.Inventory.IsEmpty, storage.Inventory.IsEmpty ? FailedStatus : SuccessStatus);
+            Parent.UpdateEnabledAndOperating(); //Force update object status (obligatoire pour les components qui n'ont pas de tick()
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Equilibrage
         public static List<IngredientElement> GetIngredients(Type type)
         {
             if (typeof(RecipeFamily).IsAssignableFrom(type)) return RecipeManager.GetRecipeFamily(type).DefaultRecipe.Ingredients;
-            else if (typeof(Recipe).IsAssignableFrom(type)) return RecipeManager.GetRecipeByRecipeType(type).Ingredients;
+            //else if (typeof(Recipe).IsAssignableFrom(type)) return RecipeManager.GetRecipeByRecipeType(type).Ingredients;
             else throw new InvalidCastException($"[Equilibrage] - {type.Name} is not Recipe nor RecipeFamily");
         }
 
