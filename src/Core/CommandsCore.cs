@@ -3,7 +3,7 @@
 // TODO : Pouvoir modifier la valeur d'un paramètre d'un joueur
 // TODO : Afficher toutes les config
 // TODO : Afficher un message complet à partir d'un fichier déposé sur le serveur
-// TODO syr le Fly : Sauvegarder le changement de l'activation sur le fichier de config
+// TODO sur le Fly : Sauvegarder le changement de l'activation sur le fichier de config
 
 using Eco.Core;
 using Eco.Core.Utils;
