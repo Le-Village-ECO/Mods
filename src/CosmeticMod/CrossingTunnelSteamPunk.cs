@@ -1,4 +1,4 @@
-﻿// Le Village - Grande entrée de mine pour camion 3 de large 4 de haut
+﻿// Le Village - Croisement tunnel Steampunk
 
 using Eco.Core.Controller;
 using Eco.Core.Items;
@@ -23,31 +23,51 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(ForSaleComponent))]
     [RequireComponent(typeof(PaintableComponent))] //TODO: Fix not all the object have this component
     [Tag("Decoration")] //Mise à jour du Tag
-    [Ecopedia("Decoration", "Décoration de mine", subPageName: "Grande entrée de mine pour camion")]
-    public partial class BigTruckMineGateObject : WorldObject, IRepresentsItem
+    [Ecopedia("Decoration", "Décoration de mine", subPageName: "Croisement tunnel Steampunk")]
+    public partial class CrossingTunnelSteamPunkObject : WorldObject, IRepresentsItem
     {
-        public virtual Type RepresentedItemType => typeof(BigTruckMineGateItem);
-        public override LocString DisplayName => Localizer.DoStr("Grande entrée de mine pour camion");
+        public virtual Type RepresentedItemType => typeof(CrossingTunnelSteamPunkItem);
+        public override LocString DisplayName => Localizer.DoStr("Croisement tunnel Steampunk");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
-
-        static BigTruckMineGateObject()
+        static CrossingTunnelSteamPunkObject()
         {
-            var BlockOccupancyList = new List<BlockOccupancy>
+            AddOccupancy<CrossingTunnelSteamPunkObject>(new List<BlockOccupancy>()
             {
                 new BlockOccupancy(new Vector3i(0, 0, 0)),
+                new BlockOccupancy(new Vector3i(0, 0, 1)),
+                new BlockOccupancy(new Vector3i(0, 0, 2)),
                 new BlockOccupancy(new Vector3i(0, 1, 0)),
+                new BlockOccupancy(new Vector3i(0, 1, 1)),
+                new BlockOccupancy(new Vector3i(0, 1, 2)),
                 new BlockOccupancy(new Vector3i(0, 2, 0)),
-                new BlockOccupancy(new Vector3i(0, 3, 0)),
+                new BlockOccupancy(new Vector3i(0, 2, 1)),
+                new BlockOccupancy(new Vector3i(0, 2, 2)),
                 new BlockOccupancy(new Vector3i(1, 0, 0)),
+                new BlockOccupancy(new Vector3i(1, 0, 1)),
+                new BlockOccupancy(new Vector3i(1, 0, 2)),
                 new BlockOccupancy(new Vector3i(1, 1, 0)),
+                new BlockOccupancy(new Vector3i(1, 1, 1)),
+                new BlockOccupancy(new Vector3i(1, 1, 2)),
                 new BlockOccupancy(new Vector3i(1, 2, 0)),
-                new BlockOccupancy(new Vector3i(1, 3, 0)),
+                new BlockOccupancy(new Vector3i(1, 2, 1)),
+                new BlockOccupancy(new Vector3i(1, 2, 2)),
                 new BlockOccupancy(new Vector3i(2, 0, 0)),
+                new BlockOccupancy(new Vector3i(2, 0, 1)),
+                new BlockOccupancy(new Vector3i(2, 0, 2)),
                 new BlockOccupancy(new Vector3i(2, 1, 0)),
+                new BlockOccupancy(new Vector3i(2, 1, 1)),
+                new BlockOccupancy(new Vector3i(2, 1, 2)),
                 new BlockOccupancy(new Vector3i(2, 2, 0)),
-                new BlockOccupancy(new Vector3i(2, 3, 0)),
-            };
-            AddOccupancy<BigTruckMineGateObject>(BlockOccupancyList);
+                new BlockOccupancy(new Vector3i(2, 2, 1)),
+                new BlockOccupancy(new Vector3i(2, 2, 2)),
+            });
+        }
+        protected override void Initialize()
+        {
+            this.ModsPreInitialize();
+            this.GetComponent<PowerConsumptionComponent>().Initialize(50);
+            this.GetComponent<PowerGridComponent>().Initialize(10, new ElectricPower());
+            this.ModsPostInitialize();
         }
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
@@ -56,12 +76,12 @@ namespace Eco.Mods.TechTree
     }
 
     [Serialized]
-    [LocDisplayName("Grande entrée de mine pour camion")]
-    [LocDescription("Entrée de mine pour camion. Taille : 3 de large et 4 de haut.")] //Maj de la bonne hauteur
+    [LocDisplayName("Croisement tunnel Steampunk")]
+    [LocDescription("Croisement tunnel Steampunk. Taille 3x3x3.")]
     [Ecopedia("Decoration", "Décoration de mine", createAsSubPage: true)]
-    [Tag("Decoration")] //Maj Tag
+    [Tag("Decoration")] //Mise à jour du Tag
     [Weight(2000)] // Defini le poids de cet objet
-    public partial class BigTruckMineGateItem : WorldObjectItem<BigTruckMineGateObject>
+    public partial class CrossingTunnelSteamPunkItem : WorldObjectItem<CrossingTunnelSteamPunkObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
     }
@@ -75,34 +95,34 @@ namespace Eco.Mods.TechTree
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
     [RequiresSkill(typeof(CarpentrySkill), 2)]
-    [Ecopedia("Decoration", "Décoration de mine", subPageName: "Grande entrée de mine pour camion")]
-    public partial class BigTruckMineGateRecipe : RecipeFamily
+    [Ecopedia("Decoration", "Décoration de mine", subPageName: "Croisement tunnel Steampunk")]
+    public partial class CrossingTunnelSteamPunkRecipe : RecipeFamily
     {
-        public BigTruckMineGateRecipe()
+        public CrossingTunnelSteamPunkRecipe()
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "Grande entrée de mine pour camion",  //noloc
-                displayName: Localizer.DoStr("Grande entrée de mine pour camion"),
+                name: "Croisement tunnel Steampunk",  //noloc
+                displayName: Localizer.DoStr("Croisement tunnel Steampunk"),
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("Wood", 26, typeof(CarpenterSkill), typeof(CarpentryLavishResourcesTalent)),
+                    new IngredientElement("Wood", 16, typeof(CarpenterSkill), typeof(CarpentryLavishResourcesTalent)),
                 },
 
                 items: new List<CraftingElement>
                 {
-                    new CraftingElement<BigTruckMineGateItem>()
+                    new CraftingElement<CrossingTunnelSteamPunkItem>()
                 });
             this.Recipes = new List<Recipe> { recipe };
             this.ExperienceOnCraft = 2.5f;
 
             this.LaborInCalories = CreateLaborInCaloriesValue(480, typeof(CarpentrySkill));
 
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(BigTruckMineGateRecipe), start: 8, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(CrossingTunnelSteamPunkRecipe), start: 8, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Grande entrée de mine pour camion"), recipeType: typeof(BigTruckMineGateRecipe));
+            this.Initialize(displayText: Localizer.DoStr("Croisement tunnel Steampunk"), recipeType: typeof(CrossingTunnelSteamPunkRecipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);

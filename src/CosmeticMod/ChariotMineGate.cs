@@ -1,50 +1,22 @@
 ﻿// Le Village - Entrée de mine pour chariot 2 de large 2 de haut
 
+using Eco.Core.Controller;
+using Eco.Core.Items;
+using Eco.Gameplay.Components;
+using Eco.Gameplay.Components.Auth;
+using Eco.Gameplay.Items;
+using Eco.Gameplay.Items.Recipes;
+using Eco.Gameplay.Objects;
+using Eco.Gameplay.Occupancy;
+using Eco.Gameplay.Skills;
+using Eco.Shared.Items;
+using Eco.Shared.Localization;
+using Eco.Shared.Math;
+using Eco.Shared.Serialization;
+using System;
+using System.Collections.Generic;
 namespace Eco.Mods.TechTree
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using Eco.Core.Items;
-    using Eco.Gameplay.Blocks;
-    using Eco.Gameplay.Components;
-    using Eco.Gameplay.Components.Auth;
-    using Eco.Gameplay.DynamicValues;
-    using Eco.Gameplay.Economy;
-    using Eco.Gameplay.Housing;
-    using Eco.Gameplay.Interactions;
-    using Eco.Gameplay.Items;
-    using Eco.Gameplay.Modules;
-    using Eco.Gameplay.Minimap;
-    using Eco.Gameplay.Objects;
-    using Eco.Gameplay.Occupancy;
-    using Eco.Gameplay.Players;
-    using Eco.Gameplay.Property;
-    using Eco.Gameplay.Skills;
-    using Eco.Gameplay.Systems;
-    using Eco.Gameplay.Systems.TextLinks;
-    using Eco.Gameplay.Pipes.LiquidComponents;
-    using Eco.Gameplay.Pipes.Gases;
-    using Eco.Shared;
-    using Eco.Shared.Math;
-    using Eco.Shared.Localization;
-    using Eco.Shared.Serialization;
-    using Eco.Shared.Utils;
-    using Eco.Shared.View;
-    using Eco.Shared.Items;
-    using Eco.Shared.Networking;
-    using Eco.Gameplay.Pipes;
-    using Eco.World.Blocks;
-    using Eco.Gameplay.Housing.PropertyValues;
-    using Eco.Gameplay.Civics.Objects;
-    using Eco.Gameplay.Settlements;
-    using Eco.Gameplay.Systems.NewTooltip;
-    using Eco.Core.Controller;
-    using Eco.Core.Utils;
-    using Eco.Gameplay.Components.Storage;
-    using static Eco.Gameplay.Housing.PropertyValues.HomeFurnishingValue;
-    using Eco.Gameplay.Items.Recipes;
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
@@ -54,29 +26,21 @@ namespace Eco.Mods.TechTree
     [Ecopedia("Decoration", "Décoration de mine", subPageName: "Entrée de mine pour chariot")]
     public partial class ChariotMineGateObject : WorldObject, IRepresentsItem
     {
-
         public virtual Type RepresentedItemType => typeof(ChariotMineGateItem);
         public override LocString DisplayName => Localizer.DoStr("Entrée de mine pour chariot");
         public override TableTextureMode TableTexture => TableTextureMode.Stone;
 
         static ChariotMineGateObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-            new BlockOccupancy(new Vector3i(0, 0, 0)),
-            new BlockOccupancy(new Vector3i(0, 1, 0)),
-            new BlockOccupancy(new Vector3i(1, 0, 0)),
-            new BlockOccupancy(new Vector3i(1, 1, 0)),
-
+                new BlockOccupancy(new Vector3i(0, 0, 0)),
+                new BlockOccupancy(new Vector3i(0, 1, 0)),
+                new BlockOccupancy(new Vector3i(1, 0, 0)),
+                new BlockOccupancy(new Vector3i(1, 1, 0)),
             };
-
             AddOccupancy<ChariotMineGateObject>(BlockOccupancyList);
-
         }
-
-
-
         /// <summary>Hook for mods to customize WorldObject before initialization. You can change housing values here.</summary>
         partial void ModsPreInitialize();
         /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
@@ -92,9 +56,6 @@ namespace Eco.Mods.TechTree
     public partial class ChariotMineGateItem : WorldObjectItem<ChariotMineGateObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
-
-
     }
 
     /// <summary>
@@ -106,37 +67,39 @@ namespace Eco.Mods.TechTree
     /// If you wish to modify this class, please create a new partial class or follow the instructions in the "UserCode" folder to override the entire file.
     /// </remarks>
     [RequiresSkill(typeof(CarpentrySkill), 2)]
-    [ForceCreateView]
     [Ecopedia("Decoration", "Décoration de mine", subPageName: "Entrée de mine pour chariot")]
-    public partial class ChariotMineGateRecipe : Recipe
+    public partial class ChariotMineGateRecipe : RecipeFamily
     {
         public ChariotMineGateRecipe()
         {
-            this.Init(
+            var recipe = new Recipe();
+            recipe.Init(
                 name: "Entrée de mine pour chariot",  //noloc
                 displayName: Localizer.DoStr("Entrée de mine pour chariot"),
 
-                // Defines the ingredients needed to craft this recipe. An ingredient items takes the following inputs
-                // type of the item, the amount of the item, the skill required, and the talent used.
                 ingredients: new List<IngredientElement>
                 {
                     new IngredientElement("Wood", 4, typeof(CarpenterSkill), typeof(CarpentryLavishResourcesTalent)),
                 },
 
-                // Define our recipe output items.
-                // For every output item there needs to be one CraftingElement entry with the type of the final item and the amount
-                // to create.
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<ChariotMineGateItem>()
                 });
-            // Perform post initialization steps for user mods and initialize our recipe instance as a tag product with the crafting system
+            this.Recipes = new List<Recipe> { recipe };
+            this.ExperienceOnCraft = 2.5f;
+
+            this.LaborInCalories = CreateLaborInCaloriesValue(480, typeof(CarpentrySkill));
+
+            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(ChariotMineGateRecipe), start: 8, skillType: typeof(CarpentrySkill), typeof(CarpentryFocusedSpeedTalent), typeof(CarpentryParallelSpeedTalent));
+
+            this.ModsPreInitialize();
+            this.Initialize(displayText: Localizer.DoStr("Entrée de mine pour chariot"), recipeType: typeof(ChariotMineGateRecipe));
             this.ModsPostInitialize();
-            CraftingComponent.AddTagProduct(typeof(CarpentryTableObject), typeof(ChariotMineGateRecipe), this);
+
+            CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
-
-
-        /// <summary>Hook for mods to customize RecipeFamily after initialization, but before registration. You can change skill requirements here.</summary>
+        partial void ModsPreInitialize();
         partial void ModsPostInitialize();
     }
 }
