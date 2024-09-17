@@ -18,6 +18,9 @@ using System.Collections.Generic;
 namespace Eco.Mods.TechTree
 {
     [Serialized]
+    [RequireComponent(typeof(OnOffComponent))]
+    [RequireComponent(typeof(PowerGridComponent))]
+    [RequireComponent(typeof(PowerConsumptionComponent))]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
