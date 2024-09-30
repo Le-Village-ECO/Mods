@@ -1,4 +1,6 @@
 ﻿// Le Village - Ajout des WorldObjects pour la définition des pièges pour animaux
+// TODO - Ajouter OnOff et/ou activation via un appât.
+// Note le test du OnOff sur le FoxTrap n'a pas été concluant car on ne peut activer (passer On) un objet qui a des messages de statut KO (piège ne fonctionne pas car en Off)
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ using Eco.World.Blocks;
 namespace Village.Eco.Mods.Traps
 {
     [RequireComponent(typeof(AnimalTrapComponent))]
+    //[RequireComponent(typeof(OnOffComponent))]  //Test d'activation du OnOff
     public partial class FoxTrapObject : WorldObject
     {
         protected override void PostInitialize()
@@ -26,10 +29,17 @@ namespace Village.Eco.Mods.Traps
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(FoxCarcassItem) }));
             this.GetComponent<PublicStorageComponent>().Inventory.AddInvRestriction(new StackLimitRestriction(1));
             this.GetComponent<AnimalTrapComponent>().Initialize(new List<string>() { "Fox" });
+            //this.GetComponent<AnimalTrapComponent>().EnabledTest = this.Test;  //Test d'activation du OnOff
             this.GetComponent<AnimalTrapComponent>().UpdateEnabled();
 
             SpeciesLayeredCatchPlugin.Obj.AddLayeredCatcher(this, new FoxCatcher(null, this));
         }
+
+        //Test d'activation du OnOff
+        /*public bool Test(Vector3i pos)
+        {
+            return this.GetComponent<OnOffComponent>().On;
+        }*/
     }
 
     [RequireComponent(typeof(AnimalTrapComponent))]

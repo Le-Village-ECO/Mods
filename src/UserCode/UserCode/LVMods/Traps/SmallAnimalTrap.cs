@@ -21,7 +21,7 @@ namespace Village.Eco.Mods.Traps
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(MinimapComponent))]
-    [RequireComponent(typeof(LinkComponent))]
+    //[RequireComponent(typeof(LinkComponent))]
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [Tag("Usable")]
