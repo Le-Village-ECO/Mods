@@ -1,5 +1,5 @@
 ﻿// MOD créé par Plex : Modèle 3D et Code.
-// Dernière mise à jour du mod : 28/09/24
+// Dernière mise à jour du mod : 30/09/24
 
 // Merci de ne pas retirer la section "Registered Mod" du code, car elle permet de recevoir une rémunération de la part de Strange Loop Games lors de son utilisation sur un serveur en ligne.
 
@@ -49,7 +49,7 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items.Recipes;
     using Eco.Core.Plugins.Interfaces;
 
-    public class MyMod : IModInit
+    public class DrapeauxMod : IModInit
     {
         public static ModRegistration Register() => new()
         {
@@ -2065,90 +2065,6 @@ namespace Eco.Mods.TechTree
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<Drapeau_LeVillageItem>()
-                });
-
-            this.ModsPostInitialize();
-            CraftingComponent.AddTagProduct(typeof(TailoringTableObject), typeof(DrapeauRecipe), this);
-        }
-
-        partial void ModsPostInitialize();
-    }
-
-
-    // ______________________________________________________ Drapeau_Anim ______________________________________________________ \\
-
-    [Serialized]
-    [RequireComponent(typeof(PropertyAuthComponent))]
-    [RequireComponent(typeof(HousingComponent))]
-    [RequireComponent(typeof(OccupancyRequirementComponent))]
-    [RequireComponent(typeof(ForSaleComponent))]
-    [RequireComponent(typeof(RoomRequirementsComponent))]
-    [RequireComponent(typeof(PaintableComponent))]
-    [RequireRoomVolume(30)]
-    [Tag("Usable")]
-    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau_Anim")]
-    public partial class Drapeau_AnimObject : WorldObject, IRepresentsItem
-    {
-        public virtual Type RepresentedItemType => typeof(Drapeau_AnimItem);
-        public override LocString DisplayName => Localizer.DoStr("Drapeau_Anim");
-        public override TableTextureMode TableTexture => TableTextureMode.Wood;
-
-
-        protected override void Initialize()
-        {
-            this.ModsPreInitialize();
-            this.GetComponent<HousingComponent>().HomeValue = Drapeau_AnimItem.homeValue;
-            this.ModsPostInitialize();
-        }
-
-        partial void ModsPreInitialize();
-        partial void ModsPostInitialize();
-    }
-
-    [Serialized]
-    [LocDisplayName("Drapeau_Anim")]
-    [LocDescription("Drapeau TEST")]
-    [Ecopedia("Housing Objects", "Drapeau", createAsSubPage: true)]
-    [Tag("Housing")]
-    [Weight(5000)]
-    [Tag(nameof(SurfaceTags.CanBeOnRug))]
-    public partial class Drapeau_AnimItem : WorldObjectItem<Drapeau_AnimObject>
-    {
-        protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-        public override HomeFurnishingValue HomeValue => homeValue;
-        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
-        {
-            ObjectName = typeof(Drapeau_AnimObject).UILink(),
-            Category = HousingConfig.GetRoomCategory("Outdoor"),
-            BaseValue = 6,
-            TypeForRoomLimit = Localizer.DoStr("Statue"),
-            DiminishingReturnMultiplier = 0.3f
-
-        };
-
-    }
-
-    [RequiresSkill(typeof(TailoringSkill), 1)]
-    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau_Anim")]
-    public partial class Drapeau_AnimRecipe : Recipe
-    {
-        public Drapeau_AnimRecipe()
-        {
-            this.Init(
-                name: "Drapeau_Anim",
-                displayName: Localizer.DoStr("Drapeau_Anim"),
-
-
-                ingredients: new List<IngredientElement>
-                {
-                    new IngredientElement(typeof(IronBarItem), 3, typeof(TailoringSkill)),
-                    new IngredientElement(typeof(LinenFabricItem), 10, typeof(TailoringSkill)),
-                },
-
-
-                items: new List<CraftingElement>
-                {
-                    new CraftingElement<Drapeau_AnimItem>()
                 });
 
             this.ModsPostInitialize();
