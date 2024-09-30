@@ -23,7 +23,8 @@ namespace Equilibrage
 
         public void Initialize(TimedTask timer)
         {
-            ReplaceFlour();
+            //ReplaceFlour();  //Suite cycle 12, retour arrière sur le retrait de la farine - Recettes étaient trop peu chère par rapport au début de la cuisine
+            AddBowls();
 
             ////Pour logguer toutes les recettes d'une catégorie
             //foreach (var recipe in RecipeManager.AllRecipes) Logger.Write($"[Equilibrage] - {recipe.Name}");
@@ -86,6 +87,7 @@ namespace Equilibrage
 
         public static void ReplaceFlour()
         {
+            // List de nouveaux ingrédients (voir mod correspondant)
             var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, true);
 
             // On remplace tous les ingredients d'une recette
@@ -108,6 +110,17 @@ namespace Equilibrage
 
             // On peut aussi appliquer les ingredients d'une recette vers plusieurs autres recettes
             //ReplicateIngredients<xxxRecipe>(typeof(yyyRecipe), typeof(zzzRecipe));
+        }
+
+        public static void AddBowls() 
+        {
+            // List de nouveaux ingrédients (voir mod correspondant)
+            var bowlIngredient = new IngredientElement(typeof(WoodenBowlItem), 1, true);
+
+            //Ajout d'un bol sur plusieurs recettes de ragout à la fois
+            AddIngredient(bowlIngredient,
+                typeof(MeatyStewRecipe), typeof(FieldCampfireStewRecipe), typeof(RootCampfireStewRecipe), typeof(JungleCampfireStewRecipe),
+                typeof(WildStewRecipe), typeof(FishStewRecipe));
         }
     }
 }
