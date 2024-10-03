@@ -82,7 +82,8 @@ public static class PlayerDefaults
                     CreateSmv(0f,  new BonusUnitsDecoratorStrategy(SelfImprovementSkill.AdditiveStrategy, "cal", (float val) => val/2f), typeof(SelfImprovementSkill), Localizer.DoStr("stomach capacity"), DynamicValueType.Misc),
                     new ConstantValue(0.5f)),
                     new TalentModifiedValue(typeof(UserStatType), typeof(SelfImprovementGluttonTalent), 0),
-                new ConstantValue(3000))
+                new ConstantValue(3000),
+                new TalentModifiedValue(typeof(UserStatType), typeof(DiseasesDigestTalent), 0))  //Le Village)
         },
         {
             UserStatType.MaxCarryWeight, new MultiDynamicValue(MultiDynamicOps.Sum,
@@ -93,7 +94,8 @@ public static class PlayerDefaults
         {
             UserStatType.CalorieRate, new MultiDynamicValue(MultiDynamicOps.Sum,
                 //CreateSmv(1f, SelfImprovementSkill.MultiplicativeStrategy, typeof(SelfImprovementSkill), Localizer.DoStr("calorie cost"), typeof(Calorie)),
-                new ConstantValue(1))
+                new ConstantValue(1),
+                new TalentModifiedValue(typeof(UserStatType), typeof(DiseasesHardLaborTalent), 0))  //Le Village
         },
         {
             UserStatType.DetectionRange, new MultiDynamicValue(MultiDynamicOps.Sum,

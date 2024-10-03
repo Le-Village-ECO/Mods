@@ -1,11 +1,12 @@
 ﻿using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
-using Eco.Gameplay.Civics.GameValues.Values.Stats;
-using Eco.Gameplay.Minimap;
 using Eco.Gameplay.Players;
+using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.Messaging.Chat.Commands;
+using Eco.Gameplay.Systems.Messaging.Notifications;
 using Eco.Shared.Localization;
 using Eco.Shared.States;
+using System;
 
 namespace Village.Eco.Mods.Diseases
 {
@@ -81,44 +82,67 @@ namespace Village.Eco.Mods.Diseases
         public static void Diseases() { }
 
         [ChatSubCommand("Diseases", "Recupere les stats d'un joueur", ChatAuthorizationLevel.Admin)]
-        public static void UserStats(User user, int type, User target)
+        public static void UserStats(User user, int type, User target = null)
         {
+            target ??= user;
+
             var UserStat = target.ModifiedStats.GetStat((UserStatType)type);
-            user.OkBoxLocStr($"Stat {(UserStatType)type}: {UserStat.GetValue(target)}");
+            target.OkBoxLocStr($"Stat {(UserStatType)type}: {UserStat.GetValue(target)}");
         }
 
-        [ChatSubCommand("Diseases", "Recupere les stats d'un joueur", ChatAuthorizationLevel.Admin)]
-        public static void Plague(User user, User target)
+        [ChatSubCommand("Diseases", "Attrape la peste", ChatAuthorizationLevel.Admin)]
+        public static void Plague(User user, User target = null)
         {
+            target ??= user;
 
-            user.Talentset.UnLearnTalent(typeof(Healthy2Talent));
-            user.Talentset.UnLearnTalent(typeof(Healthy3Talent));
+            RemoveTalent(target, typeof(Healthy2Talent));
+            RemoveTalent(target, typeof(Healthy3Talent));
 
-            user.Talentset.LearnTalent(typeof(SlowMvtTalent));
-            user.Talentset.LearnTalent(typeof(VomitTalent));
+            AddTalent(target, typeof(SlowMvtTalent));
+            AddTalent(target, typeof(VomitTalent));
 
-            user.OkBoxLocStr($"Vous avez la peste ! :-(");
+            target.OkBoxLocStr($"Vous avez la peste ! :-(");
         }
 
-        [ChatSubCommand("Diseases", "Recupere les stats d'un joueur", ChatAuthorizationLevel.Admin)]
-        public static void HealPlague(User user, User target)
+        [ChatSubCommand("Diseases", "Soigne la peste", ChatAuthorizationLevel.Admin)]
+        public static void HealPlague(User user, User target = null)
         {
-            user.Talentset.UnLearnTalent(typeof(SlowMvtTalent));
-            user.Talentset.UnLearnTalent(typeof(VomitTalent));
+            target ??= user;
 
-            user.Talentset.LearnTalent(typeof(Healthy2Talent));
-            user.Talentset.LearnTalent(typeof(Healthy3Talent));
+            RemoveTalent(target, typeof(SlowMvtTalent));
+            RemoveTalent(target, typeof(VomitTalent));
 
-            user.OkBoxLocStr($"Vous avez été soigné de la peste ;-)");
+            AddTalent(target, typeof(Healthy2Talent));
+            AddTalent(target, typeof(Healthy3Talent));
+
+            target.OkBoxLocStr($"Vous avez été soigné de la peste ;-)");
+        }
+
+        public static void RemoveTalent(User target, Type talentType)
+        {
+            if (target.Talentset.HasTalent(talentType)) 
+            {
+                target.Talentset.UnLearnTalent(talentType);
+                NotificationManager.ServerMessageToAllLoc($"Remove {talentType}");
+            }
+        }
+
+        public static void AddTalent(User target, Type talentType)
+        {
+            if (!target.Talentset.HasTalent(talentType))
+            {
+                target.Talentset.LearnTalent(talentType);
+                NotificationManager.ServerMessageToAllLoc($"Add {talentType}");
+            }
         }
 
         [ChatSubCommand("Diseases", "Emote dodo", ChatAuthorizationLevel.Admin)]
         public static void Dodo(User user, User target) => DiseasesPlugin.SleepEmote(target);
 
-        [ChatSubCommand("Diseases", "Emote dodo", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("Diseases", "Vomit", ChatAuthorizationLevel.Admin)]
         public static void Vomit(User user, User target) => DiseasesPlugin.Vomit(target);
 
-        [ChatSubCommand("Diseases", "Emote dodo", ChatAuthorizationLevel.Admin)]
+        [ChatSubCommand("Diseases", "Exhaust", ChatAuthorizationLevel.Admin)]
         public static void Exhaust(User user, int cal, User target) => DiseasesPlugin.Exhaust(target, cal);
 
     }

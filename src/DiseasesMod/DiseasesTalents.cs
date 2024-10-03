@@ -25,8 +25,14 @@ namespace Village.Eco.Mods.Diseases
         public override void OnLearned(User user) => base.OnLearned(user);
         public override void OnUnLearned(User user) => base.OnUnLearned(user);
     }
+    public partial class Healthy4Talent : Talent
+    {
+        public override bool Base => true;
+        public override void OnLearned(User user) => base.OnLearned(user);
+        public override void OnUnLearned(User user) => base.OnUnLearned(user);
+    }
 
-    [Serialized,LocDisplayName("Bonne santé"),LocDescription("Aucun symptôme, tout va bien !")]
+    [Serialized,LocDisplayName("Bonne santé : Pas de maux de tête."),LocDescription("Aucun symptôme, tout va bien !")]
     public partial class DiseasesHealthy1TalentGroup : TalentGroup
     {
         public DiseasesHealthy1TalentGroup()
@@ -39,7 +45,7 @@ namespace Village.Eco.Mods.Diseases
             this.Level = 1;
         }
     }
-    [Serialized, LocDisplayName("Bonne santé"), LocDescription("Aucun symptôme, tout va bien !")]
+    [Serialized, LocDisplayName("Bonne santé : Articulations OK."), LocDescription("Aucun symptôme, tout va bien !")]
     public partial class DiseasesHealthy2TalentGroup : TalentGroup
     {
         public DiseasesHealthy2TalentGroup()
@@ -52,7 +58,7 @@ namespace Village.Eco.Mods.Diseases
             this.Level = 2;
         }
     }
-    [Serialized, LocDisplayName("Bonne santé"), LocDescription("Aucun symptôme, tout va bien !")]
+    [Serialized, LocDisplayName("Bonne santé : Estomac OK"), LocDescription("Aucun symptôme, tout va bien !")]
     public partial class DiseasesHealthy3TalentGroup : TalentGroup
     {
         public DiseasesHealthy3TalentGroup()
@@ -63,6 +69,19 @@ namespace Village.Eco.Mods.Diseases
             };
             this.OwningSkill = typeof(DiseasesSkill);
             this.Level = 3;
+        }
+    }
+    [Serialized, LocDisplayName("Bonne santé : Digestion OK"), LocDescription("Aucun symptôme, tout va bien !")]
+    public partial class DiseasesHealthy4TalentGroup : TalentGroup
+    {
+        public DiseasesHealthy4TalentGroup()
+        {
+            Talents = new Type[]
+            {
+                typeof(Healthy4Talent),
+            };
+            this.OwningSkill = typeof(DiseasesSkill);
+            this.Level = 4;
         }
     }
 
@@ -76,7 +95,6 @@ namespace Village.Eco.Mods.Diseases
             this.Value = 1;  //useless
         }
     }
-
     [Serialized]
     public partial class DiseasesHealthy2Talent : Healthy2Talent
     {
@@ -87,7 +105,6 @@ namespace Village.Eco.Mods.Diseases
             this.Value = 1;  //useless
         }
     }
-
     [Serialized]
     public partial class DiseasesHealthy3Talent : Healthy3Talent
     {
@@ -98,15 +115,26 @@ namespace Village.Eco.Mods.Diseases
             this.Value = 1;  //useless
         }
     }
+    [Serialized]
+    public partial class DiseasesHealthy4Talent : Healthy4Talent
+    {
+        public override bool Base { get { return false; } }
+        public override Type TalentGroupType { get { return typeof(DiseasesHealthy4TalentGroup); } }
+        public DiseasesHealthy4Talent()
+        {
+            this.Value = 1;  //useless
+        }
+    }
     #endregion
 
     #region HardLabor
     public partial class HardLaborTalent : Talent
     {
-        public override bool Base => true;
+        //public override bool Base => true;
         public override void OnLearned(User user)
         {
             base.OnLearned(user);
+            //user.CalorieRateMultiplier = 2;
         }
         public override void OnUnLearned(User user)
         {
@@ -115,7 +143,7 @@ namespace Village.Eco.Mods.Diseases
     }
 
     [Serialized]
-    [LocDisplayName("Symptôme : Fatigue au travail")]
+    [LocDisplayName("Symptôme : Fièvre")]
     [LocDescription("+10% calories fabrication")]
     public partial class DiseasesHardLaborTalentGroup : TalentGroup
     {
@@ -145,7 +173,7 @@ namespace Village.Eco.Mods.Diseases
     #region SlowMvt
     public partial class SlowMvtTalent : Talent
     {
-        public override bool Base => true;
+        //public override bool Base => true;
         public override void OnLearned(User user)
         {
             base.OnLearned(user);
@@ -224,6 +252,48 @@ namespace Village.Eco.Mods.Diseases
         public DiseasesVomitTalent()
         {
             this.Value = 1;  //useless
+        }
+    }
+    #endregion
+
+    #region Digestion
+    public partial class DigestTalent : Talent
+    {
+        public override bool Base => true;
+        public override void OnLearned(User user)
+        {
+            base.OnLearned(user);
+        }
+        public override void OnUnLearned(User user)
+        {
+            base.OnUnLearned(user);
+        }
+    }
+
+    [Serialized]
+    [LocDisplayName("Symptôme : Mal au coeur")]
+    [LocDescription("Je ne me sens pas bien")]
+    public partial class DiseasesDigestTalentGroup : TalentGroup
+    {
+        public DiseasesDigestTalentGroup()
+        {
+            Talents = new Type[]
+            {
+                typeof(DiseasesDigestTalent),
+            };
+            this.OwningSkill = typeof(DiseasesSkill);
+            this.Level = 4;
+        }
+    }
+
+    [Serialized]
+    public partial class DiseasesDigestTalent : VomitTalent
+    {
+        public override bool Base { get { return false; } }
+        public override Type TalentGroupType { get { return typeof(DiseasesDigestTalentGroup); } }
+        public DiseasesDigestTalent()
+        {
+            this.Value = 500;  //useless
         }
     }
     #endregion

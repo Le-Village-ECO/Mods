@@ -26,8 +26,10 @@ namespace Village.Eco.Mods.Diseases
         public static MultiplicativeStrategy MultiplicativeStrategy =
             new(new float[] {
                 1,
-                1,
-                1,
+                2,
+                3,
+                4,
+                5,
             });
         public override MultiplicativeStrategy MultiStrategy => MultiplicativeStrategy;
 
@@ -36,9 +38,11 @@ namespace Village.Eco.Mods.Diseases
                 0,
                 10,
                 20,
+                30,
+                40,
             });
         public override AdditiveStrategy AddStrategy => AdditiveStrategy;
-        public override int MaxLevel { get { return 3; } }
+        public override int MaxLevel { get { return 5; } }
         public override int Tier { get { return 1; } }
     }
 }
