@@ -1,3 +1,4 @@
 files:
   - source: /src/Alcohol/*.cs
-    translation: /folder/%two_letters_code%/%original_file_name%
+    translation: /folder/multi.csv
+    multilingual: 1
