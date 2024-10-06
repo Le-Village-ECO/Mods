@@ -51,6 +51,10 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Components.Storage;
     using Eco.Gameplay.Items.Recipes;
     using Eco.Core.Plugins.Interfaces;
+    using Eco.Mods.Organisms;
+    using Eco.Mods.TechTree;
+    using System.Diagnostics;
+    using System.Linq;
 
     public class StockageMod : IModInit
     {
@@ -107,18 +111,52 @@ namespace Eco.Mods.TechTree
         protected override void Initialize()
         {
             this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 1, 2));
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            this.GetComponent<PublicStorageComponent>().Initialize(10, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "10" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(50)); // La quantité maximale d'articles empilables dans un emplacement. 
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
+            PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+            this.GetComponent<LinkComponent>().Initialize(12);
+            component.Initialize(8);
+            component.Storage.AddInvRestriction(new BigBagObject.InventoryMultiply());
+            component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
             {
                 "Silica",
                 "Excavatable",
                 "CrushedRock",
             }));
             this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 4;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -233,23 +271,53 @@ namespace Eco.Mods.TechTree
 
         }
 
-
-
-
         protected override void Initialize()
         {
             this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 4, 2));
-            this.GetComponent<PublicStorageComponent>().Initialize(8, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "8" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(30)); // La quantité maximale d'articles empilables dans un emplacement. 
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Constructable" à être utilisées dans le stockage.
+            PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+            this.GetComponent<LinkComponent>().Initialize(12);
+            component.Initialize(8);
+            component.Storage.AddInvRestriction(new PaletteObject.InventoryMultiply());
+            component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
             {
                 "Constructable",
                 "Metal",
             }));
             this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 4;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -330,18 +398,52 @@ namespace Eco.Mods.TechTree
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
 
 
-        protected override void Initialize()
-        {
+            protected override void Initialize()
+            {
             this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(6, 3, 2));
-            this.GetComponent<PublicStorageComponent>().Initialize(24, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "24" autorisé dans le stockage. 
-            this.GetComponent<LinkComponent>().Initialize(6); // Distance maximale de connexion avec les autres stockages à proximité : 6 mètres.
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Tool" à être utilisées dans le stockage.
+            PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+            this.GetComponent<LinkComponent>().Initialize(12);
+            component.Initialize(32);
+            component.Storage.AddInvRestriction(new StockageOutilsObject.InventoryMultiply());
+            component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
             {
                 "Tool",
             }));
             this.ModsPostInitialize();
+            }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 3;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -441,15 +543,48 @@ namespace Eco.Mods.TechTree
         }
 
 
-
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(8, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "8" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new NotCarriedRestriction());
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        this.GetComponent<LinkComponent>().Initialize(12);
+        component.Initialize(8); // Le nombre d'emplacement "8" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Petite_Simple_EtagereObject.InventoryMultiply());
+        component.Storage.AddInvRestriction(new NotCarriedRestriction());
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 2;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -551,14 +686,48 @@ namespace Eco.Mods.TechTree
 
 
 
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(16, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "16" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new NotCarriedRestriction());
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        this.GetComponent<LinkComponent>().Initialize(12);
+        component.Initialize(16); // Le nombre d'emplacement "16" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Petite_Double_EtagereObject.InventoryMultiply());
+        component.Storage.AddInvRestriction(new NotCarriedRestriction());
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 2;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -674,11 +843,46 @@ namespace Eco.Mods.TechTree
 
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(32, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "32" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new NotCarriedRestriction());
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        this.GetComponent<LinkComponent>().Initialize(12);
+        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Grande_Simple_EtagereObject.InventoryMultiply());
+        component.Storage.AddInvRestriction(new NotCarriedRestriction());
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 2;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -807,14 +1011,48 @@ namespace Eco.Mods.TechTree
 
 
 
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(64, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "64" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new NotCarriedRestriction());
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        this.GetComponent<LinkComponent>().Initialize(12);
+        component.Initialize(64); // Le nombre d'emplacement "64" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Grande_Double_EtagereObject.InventoryMultiply());
+        component.Storage.AddInvRestriction(new NotCarriedRestriction());
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 2;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -889,11 +1127,11 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [Tag("Usable")]
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Blue Container 5m")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Container Bleu 5m")]
     public partial class Shipping_01Object : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(Shipping_01Item);
-        public override LocString DisplayName => Localizer.DoStr("Blue Container 5m");
+        public override LocString DisplayName => Localizer.DoStr("Container Bleu 5m");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
 
 
@@ -932,23 +1170,61 @@ namespace Eco.Mods.TechTree
         }
 
 
+
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(32, 10000000); // The maximum weight is "10000000", with "32" allowed storage slots.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(16)); // The maximum quantity of stackable items per slot is "16".
-            this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
-            this.GetComponent<CustomTextComponent>().Initialize(700);
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        this.GetComponent<CustomTextComponent>().Initialize(700);
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Shipping_01Object.InventoryMultiply());
+
+        this.ModsPostInitialize();
         }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 3;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
+        }
+
+
         partial void ModsPreInitialize();
+
         partial void ModsPostInitialize();
     }
 
     [Serialized]
-    [LocDisplayName("Blue Container 5m")]
-    [LocDescription("Big enough to store all your items... or simply all the clutter you no longer know where to put! Durable, spacious, and in blue so you'll never lose sight of it.")]
+    [LocDisplayName("Container Bleu 5m")]
+    [LocDescription("Assez grand pour ranger tous vos objets... ou simplement tout le bazar que vous ne savez plus où mettre ! Résistant, spacieux et de couleur bleue pour ne jamais le perdre de vue.")]
     [Ecopedia("Crafted Objects", "Storage", createAsSubPage: true)]
     [Weight(20000)]
     [MaxStackSize(10)]
@@ -957,7 +1233,7 @@ namespace Eco.Mods.TechTree
 
     }
 
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Blue Container 5m")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Container Bleu 5m")]
     [RequiresSkill(typeof(MechanicsSkill), 5)]
     public partial class Shipping_01Recipe : RecipeFamily
     {
@@ -965,8 +1241,8 @@ namespace Eco.Mods.TechTree
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "Blue Container 5m",  //noloc
-                displayName: Localizer.DoStr("Blue Container 5m"),
+                name: "Container Bleu 5m",  //noloc
+                displayName: Localizer.DoStr("Container Bleu 5m"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -987,7 +1263,7 @@ namespace Eco.Mods.TechTree
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(Shipping_01Recipe), start: 10, skillType: typeof(MechanicsSkill), typeof(MechanicsFocusedSpeedTalent), typeof(MechanicsParallelSpeedTalent)); // Durée de fabrication de l'objet : 10 minutes.
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Blue Container 5m"), recipeType: typeof(Shipping_01Recipe));
+            this.Initialize(displayText: Localizer.DoStr("Container Bleu 5m"), recipeType: typeof(Shipping_01Recipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(MachinistTableObject), recipe: this);
@@ -1006,11 +1282,11 @@ namespace Eco.Mods.TechTree
     [RequireComponent(typeof(PublicStorageComponent))]
     [RequireComponent(typeof(ForSaleComponent))]
     [Tag("Usable")]
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Green Container 10m")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Container Vert 10m")]
     public partial class Shipping_02Object : WorldObject, IRepresentsItem
     {
         public virtual Type RepresentedItemType => typeof(Shipping_02Item);
-        public override LocString DisplayName => Localizer.DoStr("Green Container 10m");
+        public override LocString DisplayName => Localizer.DoStr("Container Vert 10m");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
 
 
@@ -1071,21 +1347,58 @@ namespace Eco.Mods.TechTree
 
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(64, 10000000); // The maximum weight is "10000000", with "64" allowed storage slots.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(32)); // The maximum quantity of stackable items per slot is "32".
-            this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
-            this.GetComponent<CustomTextComponent>().Initialize(700);
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        this.GetComponent<CustomTextComponent>().Initialize(700);
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(64); // Le nombre d'emplacement "64" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Shipping_02Object.InventoryMultiply());
+
+        this.ModsPostInitialize();
         }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 3;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
+        }
+
+
         partial void ModsPreInitialize();
+
         partial void ModsPostInitialize();
     }
 
     [Serialized]
-    [LocDisplayName("Green Container 10m")]
-    [LocDescription("Big enough to hide a forest... or just everything you no longer know where to put. In green, for that eco-friendly touch, of course !")]
+    [LocDisplayName("Container Vert 10m")]
+    [LocDescription("Assez grand pour cacher une forêt... ou tout simplement tout ce que vous ne savez plus où mettre. En vert, pour la touche écolo, bien sûr !")]
     [Ecopedia("Crafted Objects", "Storage", createAsSubPage: true)]
     [Weight(20000)]
     [MaxStackSize(10)]
@@ -1094,7 +1407,7 @@ namespace Eco.Mods.TechTree
 
     }
 
-    [Ecopedia("Crafted Objects", "Storage", subPageName: "Green Container 10m")]
+    [Ecopedia("Crafted Objects", "Storage", subPageName: "Container Vert 10m")]
     [RequiresSkill(typeof(MechanicsSkill), 6)]
     public partial class Shipping_02Recipe : RecipeFamily
     {
@@ -1102,8 +1415,8 @@ namespace Eco.Mods.TechTree
         {
             var recipe = new Recipe();
             recipe.Init(
-                name: "Green Container 10m",  //noloc
-                displayName: Localizer.DoStr("Green Container 10m"),
+                name: "Container Vert 10m",  //noloc
+                displayName: Localizer.DoStr("Container Vert 10m"),
 
                 ingredients: new List<IngredientElement>
                 {
@@ -1124,7 +1437,7 @@ namespace Eco.Mods.TechTree
             this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(Shipping_02Recipe), start: 15, skillType: typeof(MechanicsSkill), typeof(MechanicsFocusedSpeedTalent), typeof(MechanicsParallelSpeedTalent)); // Durée de fabrication de l'objet : 15 minutes.
 
             this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Green Container 10m"), recipeType: typeof(Shipping_02Recipe));
+            this.Initialize(displayText: Localizer.DoStr("Container Vert 10m"), recipeType: typeof(Shipping_02Recipe));
             this.ModsPostInitialize();
 
             CraftingComponent.AddRecipe(tableType: typeof(MachinistTableObject), recipe: this);
@@ -1276,15 +1589,52 @@ namespace Eco.Mods.TechTree
 
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<PublicStorageComponent>().Initialize(128, 10000000); // Le poids maximal "10000000", Le nombre d'emplacement "128" autorisé dans le stockage.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(64)); // La quantité "64" maximale d'articles empilables dans un emplacement.
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            this.GetComponent<CustomTextComponent>().Initialize(700);
-            this.ModsPostInitialize();
+        this.ModsPreInitialize();
+        this.GetComponent<CustomTextComponent>().Initialize(700);
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(128); // Le nombre d'emplacement "128" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new Shipping_03Object.InventoryMultiply());
+
+        this.ModsPostInitialize();
         }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 3;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
+        }
+
+
         partial void ModsPreInitialize();
+
         partial void ModsPostInitialize();
     }
 
@@ -1418,20 +1768,52 @@ namespace Eco.Mods.TechTree
 
 
 
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(4, 2, 2));
-            this.GetComponent<PublicStorageComponent>().Initialize(18, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "18" autorisé dans le stockage.
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(30)); // La quantité maximale "30" d'articles empilables dans un emplacement.
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
-            {
+        this.ModsPreInitialize();
+        this.GetComponent<StockpileComponent>().Initialize(new Vector3i(4, 2, 2));
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(18); // Le nombre d'emplacement "18" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new PetitStockageWoodObject.InventoryMultiply());
+        component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
+        {
                 "Wood",
-            }));
-            this.ModsPostInitialize();
+        }));
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 2;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -1439,6 +1821,9 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+
+
+
 
     [Serialized]
     [LocDisplayName("Petit Stockage à bois")]
@@ -1610,22 +1995,52 @@ namespace Eco.Mods.TechTree
 
         }
 
-
-
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(6, 3, 2));
-            this.GetComponent<PublicStorageComponent>().Initialize(24, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "24" autorisé dans le stockage.
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(40)); // La quantité maximale "40" d'articles empilables dans un emplacement.
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
-            {
+        this.ModsPreInitialize();
+        this.GetComponent<StockpileComponent>().Initialize(new Vector3i(6, 3, 2));
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(24); // Le nombre d'emplacement "24" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new MoyenStockageWoodObject.InventoryMultiply());
+        component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
+        {
                 "Wood",
-            }));
-            this.ModsPostInitialize();
+        }));
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 3;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -1633,6 +2048,8 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+
+
 
     [Serialized]
     [LocDisplayName("Moyen stockage à bois")]
@@ -1659,9 +2076,9 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("HewnLog", 10, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "10" HewnLog.
-                    new IngredientElement(typeof(IronBarItem), 12, typeof(BlacksmithSkill)), // Recette personnalisable : "12" IronBar.
-                    new IngredientElement(typeof(BrickItem), 10, typeof(BlacksmithSkill)), // Recette personnalisable : "10" Brick.
+                    new IngredientElement("HewnLog", 40, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "30" HewnLog.
+                    new IngredientElement("WoodBoard", 30, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" WoodBoard.
+                    new IngredientElement("Wood", 30, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" Wood.
                 },
 
 
@@ -1846,22 +2263,52 @@ namespace Eco.Mods.TechTree
 
         }
 
-
-
-
         protected override void Initialize()
         {
-            this.ModsPreInitialize();
-            var storage = this.GetComponent<PublicStorageComponent>();
-            this.GetComponent<StockpileComponent>().Initialize(new Vector3i(3, 3, 3));
-            this.GetComponent<PublicStorageComponent>().Initialize(32, 5000000); // Le poids maximal "5000000", Le nombre d'emplacement "32" autorisé dans le stockage.
-            this.GetComponent<LinkComponent>().Initialize(12); // Distance maximale de connexion avec les autres stockages à proximité : 12 mètres.
-            storage.Storage.AddInvRestriction(new StackLimitRestriction(50)); // La quantité maximale "50" d'articles empilables dans un emplacement.
-            storage.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
-            {
+        this.ModsPreInitialize();
+        this.GetComponent<StockpileComponent>().Initialize(new Vector3i(3, 3, 3));
+        this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
+        PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
+        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Storage.AddInvRestriction(new GrandStockageWoodObject.InventoryMultiply());
+        component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
+        {
                 "Wood",
-            }));
-            this.ModsPostInitialize();
+        }));
+        this.ModsPostInitialize();
+        }
+
+
+        public class InventoryMultiply : InventoryRestriction
+        {
+            public override LocString Message
+            {
+                get
+                {
+                    return Localizer.DoStr("Inventory Full");
+                }
+            }
+
+            public override int MaxAccepted(Item item, int currentQuantity)
+            {
+                if (item.MaxStackSize > 1)
+                {
+                    return item.MaxStackSize * 4;
+                }
+                if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
+                {
+                    return 20;
+                }
+                return 1;
+            }
+
+            public override bool SurpassStackSize
+            {
+                get
+                {
+                    return true;
+                }
+            }
         }
 
 
@@ -1895,9 +2342,9 @@ namespace Eco.Mods.TechTree
 
                 ingredients: new List<IngredientElement>
                 {
-                    new IngredientElement("HewnLog", 30, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "30" HewnLog.
-                    new IngredientElement("WoodBoard", 20, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" WoodBoard.
-                    new IngredientElement("Wood", 20, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" Wood.
+                    new IngredientElement("Lumber", 60, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "50" Lumber.
+                    new IngredientElement("WoodBoard", 40, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" WoodBoard.
+                    new IngredientElement("Wood", 40, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "20" Wood.
                 },
 
 
@@ -1922,6 +2369,53 @@ namespace Eco.Mods.TechTree
         partial void ModsPreInitialize();
 
         partial void ModsPostInitialize();
+    }
+
+
+
+
+
+
+    // Icon Tag CrushedRock
+    [Serialized]
+        [Category("Blocks")]
+        [LocDisplayName("CrushedRock")]
+        public partial class CrushedRockItem : Item
+        {
+            public override LocString DisplayName => Localizer.DoStr("CrushedRock");
+
+        }
+
+
+    // Icon Tag Silica
+
+    [Serialized]
+    [LocDisplayName("Silica")]
+    public partial class SilicaItem : Item
+    {
+        public override LocString DisplayName => Localizer.DoStr("Silica");
+    }
+
+
+    // Icon Tag Excavatable
+
+    [Serialized]
+    [Category("Blocks")]
+    [LocDisplayName("Excavatable")]
+    public partial class ExcavatableItem : Item
+    {
+        public override LocString DisplayName => Localizer.DoStr("Excavatable");
+    }
+
+
+    // Icon Tag Excavatable
+
+    [Serialized]
+    [Category("Blocks")]
+    [LocDisplayName("Constructable")]
+    public partial class ConstructableItem : Item
+    {
+        public override LocString DisplayName => Localizer.DoStr("Constructable");
     }
 
 
