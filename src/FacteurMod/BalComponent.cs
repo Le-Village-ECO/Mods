@@ -40,9 +40,9 @@ namespace Village.Eco.Mods.FacteurMod
             status.SetStatusMessage(false, FailedStatus);
 
             //Gestion du stockage - emplacements et restrictions
-            storage = Parent.GetComponent<PublicStorageComponent>();
-            storage.Initialize(20);
-            storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(LettreItem) }));
+            //storage = Parent.GetComponent<PublicStorageComponent>();
+            //storage.Initialize(20);
+            //storage.Inventory.AddInvRestriction(new SpecificItemTypesRestriction(new System.Type[] { typeof(LettreItem) }));
             storage.Inventory.OnChanged.Add(CheckStorage);
             CheckStorage();
         }
