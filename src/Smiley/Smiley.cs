@@ -1,5 +1,5 @@
 ﻿// MOD Smiley par Plex 
-// Mise à jour le 30/08/2024
+// Mise à jour le 19/09/2024
 
 namespace Eco.Mods.TechTree
 {
@@ -47,23 +47,6 @@ namespace Eco.Mods.TechTree
     using Eco.Gameplay.Items.Recipes;
     using Eco.Core.Plugins.Interfaces; // Registered Mods_____________
 
-
-
-    // ______________________________________________________ Smiley01 ______________________________________________________ \\
-
-    [Serialized]
-    [RequireComponent(typeof(PropertyAuthComponent))]
-    [RequireComponent(typeof(HousingComponent))]
-    [RequireComponent(typeof(OccupancyRequirementComponent))]
-    [RequireComponent(typeof(ForSaleComponent))]
-    [RequireComponent(typeof(RoomRequirementsComponent))]
-    [Tag("Usable")]
-    [Ecopedia("Housing Objects", "Smiley", subPageName: "Grinche-Molle")]
-    [Tag(nameof(SurfaceTags.HasTableSurface))]
-
-
-
-
     // Registered Mods_____________
     public class Mod_Smiley : IModInit
     {
@@ -78,6 +61,17 @@ namespace Eco.Mods.TechTree
 
 
 
+    // ______________________________________________________ Smiley01 ______________________________________________________ \\
+
+    [Serialized]
+    [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(OccupancyRequirementComponent))]
+    [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(RoomRequirementsComponent))]
+    [Tag("Usable")]
+    [Ecopedia("Housing Objects", "Smiley", subPageName: "Grinche-Molle")]
+    [Tag(nameof(SurfaceTags.HasTableSurface))]
 
 
     public partial class Smiley01Object : WorldObject, IRepresentsItem
