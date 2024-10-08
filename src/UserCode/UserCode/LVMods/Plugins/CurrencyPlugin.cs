@@ -6,7 +6,6 @@ using Eco.Core.Utils;
 using Eco.Gameplay.Economy;
 using Eco.Gameplay.Players;
 using Eco.Shared.Localization;
-
 using Village.Eco.Mods.Core;
 
 namespace Village.Eco.Mods.Monnaie
