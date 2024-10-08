@@ -3,6 +3,7 @@
 using Eco.Core.Controller;
 using Eco.Core.Items;
 using Eco.Gameplay.Components;
+using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
 using Eco.Gameplay.Players;
@@ -19,14 +20,22 @@ namespace Eco.Mods.TechTree
     [LocDescription("Un petit bout de papier aux possibilitées infinies. Clic-droit pour écrire.")]
     [Ecopedia("Crafted Objects", "Signs", createAsSubPage: true)]
     [Weight(1000)]
-    public partial class LettreItem : Item
+    public partial class LettreItem : RepairableItem
     {
+        // Implémentation du RepairableItem
+        public override IDynamicValue SkilledRepairCost => skilledRepairCost;
+        private static IDynamicValue skilledRepairCost = new ConstantValue(1);
+        public override LocString BrokenDescription => Localizer.Do($"Trop d'utilisation l'a rendu fragile et inutilisable.");
+
         [Serialized, Notify, SyncToView(Flags = Shared.View.SyncFlags.MustRequest)]
         public string Text { get; set; }
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            Task.Run(() => OnUsedAsync(player, itemStack));
+            //Gestion durabilité
+            var item = itemStack.Item as RepairableItem;
+            if (item.Durability == 0) player.InfoBoxLocStr($"La {itemStack.Item.DisplayName} est trop abimée pour être utilisable.");
+            else Task.Run(() => OnUsedAsync(player, itemStack));
             return base.OnUsed(player, itemStack);
         }
 
@@ -37,6 +46,10 @@ namespace Eco.Mods.TechTree
             var text = await player.InputLargeString(title, localizedText);
 
             if (string.IsNullOrEmpty(text) is false) Text = text;
+
+            //Gestion durabilité
+            var item = itemStack.Item as RepairableItem;
+            item.Durability -= 10;  //Réduction de 10%
         }
     }
 
