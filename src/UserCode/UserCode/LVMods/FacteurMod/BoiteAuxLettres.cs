@@ -3,6 +3,7 @@
 using Eco.Core.Items;
 using Eco.Gameplay.Components;
 using Eco.Gameplay.Components.Auth;
+using Eco.Gameplay.Components.Storage;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Items.Recipes;
 using Eco.Gameplay.Objects;
@@ -21,6 +22,7 @@ namespace Village.Eco.Mods.FacteurMod
     [RequireComponent(typeof(OccupancyRequirementComponent))]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(BalComponent))]
+    [RequireComponent(typeof(PublicStorageComponent))]
 
     [Tag("Usable")]
     [Ecopedia("Crafted Objects", "Storage", subPageName: "Boite aux lettres Item")]
@@ -38,6 +40,14 @@ namespace Village.Eco.Mods.FacteurMod
         partial void ModsPreInitialize();
         /// <summary>Hook for mods to customize WorldObject after initialization.</summary>
         partial void ModsPostInitialize();
+
+        protected override void PostInitialize()
+        {
+            base.PostInitialize();
+
+            var storage = this.GetComponent<PublicStorageComponent>();
+            storage.Initialize(5);  //Nombre d'emplacement de lettres dans la boite
+        }
     }
 
     [Serialized]
