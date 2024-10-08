@@ -78,9 +78,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipeTest", "PipeTest\PipeTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LVShared", "UserCode\LVShared.csproj", "{DE2F8611-3D6B-4706-B290-8965FCAC859E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrapeauxMod", "DrapeauxMod\DrapeauxMod.csproj", "{CE342751-85F1-442E-81BB-EABEB089DA5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrapeauxMod", "DrapeauxMod\DrapeauxMod.csproj", "{CE342751-85F1-442E-81BB-EABEB089DA5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageMore", "StorageMore\StorageMore.csproj", "{8DB9E32D-03DC-427E-922B-EEE5C7252737}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageMore", "StorageMore\StorageMore.csproj", "{8DB9E32D-03DC-427E-922B-EEE5C7252737}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component_UI", "Component_UI\Component_UI.csproj", "{55F9E68F-21A4-4731-BB7B-21EE76C63D8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +210,10 @@ Global
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F9E68F-21A4-4731-BB7B-21EE76C63D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F9E68F-21A4-4731-BB7B-21EE76C63D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F9E68F-21A4-4731-BB7B-21EE76C63D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F9E68F-21A4-4731-BB7B-21EE76C63D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
