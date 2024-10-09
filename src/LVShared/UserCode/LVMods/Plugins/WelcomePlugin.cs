@@ -59,6 +59,7 @@ namespace LVShared.UserCode.LVMods.Plugins
             //https://www.w3schools.com/tags/tag_a.asp
             //string DiscordURL = @"<a href=""https://www.play.eco"">Visit W3Schools.com!</a>";
             //text.AppendLine(Localizer.DoStr(DiscordURL));
+            text.AppendLine(Localizer.DoStr("Lien du discord : <u>https://discord.gg/xk2RDsM8ru</u>"));
 
             //Affichage du bouton de la popup
             button.Append($"Lu et approuvé.");
