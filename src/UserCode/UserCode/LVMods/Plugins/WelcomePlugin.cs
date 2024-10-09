@@ -1,4 +1,5 @@
 ﻿// Le Village - Génération d'une fenêtre d'accueil pour les joueurs arrivant sur le serveur
+// TODO - Pouvoir alimenter les news à partir d'un fichier déposé directement sur le serveur
 
 using Eco.Core.Plugins.Interfaces;
 using Eco.Core.Utils;
@@ -25,12 +26,15 @@ namespace LVShared.UserCode.LVMods.Plugins
 
         public static void NewUserJoinedEvent(User user)
         {
-            //Welcome(user);
+            //Note : L'utilisateur est créé mais pas encore connecté réellement donc pas possible d'envoyer des messages
         }
 
         public static void OnUserLoggedIn(User user)
         {
-            //LastNews(user);
+            Welcome(user);
+
+            //Voir pour enchainer plusieurs popup
+            //Task.Run(() => OnUsedAsync(player, itemStack)).continuewith();
         }
 
         public static void Welcome(User user)
@@ -50,6 +54,9 @@ namespace LVShared.UserCode.LVMods.Plugins
             text.AppendLine(Localizer.DoStr("Il est demandé à tous les joueurs d’avoir le même pseudo sur Discord et dans ECO. Cela peut se faire en changeant son pseudo spécifiquement sur le Discord du Village.")).AppendLine(1);
             text.AppendLine(Localizer.DoStr($"Rejoindre ce Discord implique que vous ayez lu et accepté les présentes règles. Pour rappel : {TextLoc.BoldLocStr("Dura lex sed lex")}")).AppendLine(1);
             text.AppendLine(Localizer.DoStr("Rejoindre le serveur de jeu ECO implique que vous ayez pris connaissance des paramétrages et modifications mises en place ainsi que leur fonctionnement. Ne pas hésiter à poser des questions dans les channels dédiés si besoin.")).AppendLine(1);
+
+            // Voir pour ajouter un lien vers Discord
+            //https://www.w3schools.com/tags/tag_a.asp
 
             //Affichage du bouton de la popup
             button.Append($"Lu et approuvé.");
