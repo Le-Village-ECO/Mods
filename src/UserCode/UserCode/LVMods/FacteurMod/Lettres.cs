@@ -1,4 +1,5 @@
 ﻿// Le Village - Lettre pour le mod facteur
+// TODO - Passer de RepairableItem à DurabilityItem pour simplifier
 
 using Eco.Core.Controller;
 using Eco.Core.Items;
@@ -32,13 +33,15 @@ namespace Eco.Mods.TechTree
 
         public override string OnUsed(Player player, ItemStack itemStack)
         {
-            //Gestion durabilité
+            //Vérification de la durabilité
             var item = itemStack.Item as RepairableItem;
-            if (item.Durability == 0) player.InfoBoxLocStr($"La {itemStack.Item.DisplayName} est trop abimée pour être utilisable.");
-            else Task.Run(() => OnUsedAsync(player, itemStack));
+            if (item.Durability == 0) DisplayLetter(player, itemStack); //Affichage de la lettre
+            else Task.Run(() => OnUsedAsync(player, itemStack));  //Modification de la lettre
+
             return base.OnUsed(player, itemStack);
         }
 
+        //Pour modifier la lettre
         public async Task OnUsedAsync(Player player, ItemStack itemStack)
         {
             var title = Localizer.Do($"Ecrivez votre lettre");
@@ -47,9 +50,19 @@ namespace Eco.Mods.TechTree
 
             if (string.IsNullOrEmpty(text) is false) Text = text;
 
-            //Gestion durabilité
+            //Mise à jour de la durabilité
             var item = itemStack.Item as RepairableItem;
-            item.Durability -= 10;  //Réduction de 10%
+            item.Durability -= 10f;  //Réduction en %
+            if (item.DurabilityPercent > 0f && item.DurabilityPercent <= 0.5f)
+                player.InfoBoxLocStr($"La {itemStack.Item.DisplayName} commence à s'abimée ({item.DurabilityPercent * 100}%).");
+        }
+
+        //Pour uniquement afficher le contenu de la lettre
+        public void DisplayLetter(Player player, ItemStack itemStack) 
+        {
+            var title = Localizer.Do($"Affichage du contenu (lettre trop abimée pour être modifiée)");
+            var text = Localizer.DoStr(Text);
+            player.LargeInfoBox(title,text);
         }
     }
 
