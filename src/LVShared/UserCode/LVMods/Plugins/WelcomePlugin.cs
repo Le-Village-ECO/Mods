@@ -55,8 +55,10 @@ namespace LVShared.UserCode.LVMods.Plugins
             text.AppendLine(Localizer.DoStr($"Rejoindre ce Discord implique que vous ayez lu et accepté les présentes règles. Pour rappel : {TextLoc.BoldLocStr("Dura lex sed lex")}")).AppendLine(1);
             text.AppendLine(Localizer.DoStr("Rejoindre le serveur de jeu ECO implique que vous ayez pris connaissance des paramétrages et modifications mises en place ainsi que leur fonctionnement. Ne pas hésiter à poser des questions dans les channels dédiés si besoin.")).AppendLine(1);
 
-            // Voir pour ajouter un lien vers Discord
+            // Voir pour ajouter un lien vers Discord - pour l'instant ça fait de la merde...
             //https://www.w3schools.com/tags/tag_a.asp
+            //string DiscordURL = @"<a href=""https://www.play.eco"">Visit W3Schools.com!</a>";
+            //text.AppendLine(Localizer.DoStr(DiscordURL));
 
             //Affichage du bouton de la popup
             button.Append($"Lu et approuvé.");
