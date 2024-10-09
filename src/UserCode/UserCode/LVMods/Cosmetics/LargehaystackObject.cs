@@ -56,37 +56,37 @@ namespace Eco.Mods.TechTree
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
     }
 
-    [RequiresSkill(typeof(FarmingSkill), 5)]
-    [Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Grand tas de paille")]
-    public partial class LargehaystackRecipe : RecipeFamily
-    {
-        public LargehaystackRecipe()
-        {
-            var recipe = new Recipe();
-            recipe.Init(
-                name: "Grand tas de paille",  //noloc
-                displayName: Localizer.DoStr("Grand tas de paille"),
-                ingredients: new List<IngredientElement>
-                {
-                    new IngredientElement(typeof(WheatItem), 24, typeof(FarmingSkill)),
-                },
+    //[RequiresSkill(typeof(FarmingSkill), 5)]
+    //[Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Grand tas de paille")]
+    //public partial class LargehaystackRecipe : RecipeFamily
+    //{
+    //    public LargehaystackRecipe()
+    //    {
+    //        var recipe = new Recipe();
+    //        recipe.Init(
+    //            name: "Grand tas de paille",  //noloc
+    //            displayName: Localizer.DoStr("Grand tas de paille"),
+    //            ingredients: new List<IngredientElement>
+    //            {
+    //                new IngredientElement(typeof(WheatItem), 24, typeof(FarmingSkill)),
+    //            },
 
-                items: new List<CraftingElement>
-                {
-                    new CraftingElement<LargehaystackItem>()
-                });
-            this.Recipes = new List<Recipe> { recipe };
+    //            items: new List<CraftingElement>
+    //            {
+    //                new CraftingElement<LargehaystackItem>()
+    //            });
+    //        this.Recipes = new List<Recipe> { recipe };
 
-            this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(LargehaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
+    //        this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
+    //        this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(LargehaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
 
-            this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Grand tas de paille"), recipeType: typeof(LargehaystackRecipe));
-            this.ModsPostInitialize();
+    //        this.ModsPreInitialize();
+    //        this.Initialize(displayText: Localizer.DoStr("Grand tas de paille"), recipeType: typeof(LargehaystackRecipe));
+    //        this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
-        }
-        partial void ModsPreInitialize();
-        partial void ModsPostInitialize();
-    }
+    //        CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
+    //    }
+    //    partial void ModsPreInitialize();
+    //    partial void ModsPostInitialize();
+    //}
 }

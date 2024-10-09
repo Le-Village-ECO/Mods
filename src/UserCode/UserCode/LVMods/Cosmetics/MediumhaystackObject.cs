@@ -56,37 +56,37 @@ namespace Eco.Mods.TechTree
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
     }
 
-    [RequiresSkill(typeof(FarmingSkill), 3)]
-    [Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Moyen tas de paille")]
-    public partial class MediumhaystackRecipe : RecipeFamily
-    {
-        public MediumhaystackRecipe()
-        {
-            var recipe = new Recipe();
-            recipe.Init(
-                name: "Moyen tas de paille",  //noloc
-                displayName: Localizer.DoStr("Moyen tas de paille"),
-                ingredients: new List<IngredientElement>
-                {
-                    new IngredientElement(typeof(WheatItem), 12, typeof(FarmingSkill)),
-                },
+    //[RequiresSkill(typeof(FarmingSkill), 3)]
+    //[Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Moyen tas de paille")]
+    //public partial class MediumhaystackRecipe : RecipeFamily
+    //{
+    //    public MediumhaystackRecipe()
+    //    {
+    //        var recipe = new Recipe();
+    //        recipe.Init(
+    //            name: "Moyen tas de paille",  //noloc
+    //            displayName: Localizer.DoStr("Moyen tas de paille"),
+    //            ingredients: new List<IngredientElement>
+    //            {
+    //                new IngredientElement(typeof(WheatItem), 12, typeof(FarmingSkill)),
+    //            },
 
-                items: new List<CraftingElement>
-                {
-                    new CraftingElement<MediumhaystackItem>()
-                });
-            this.Recipes = new List<Recipe> { recipe };
+    //            items: new List<CraftingElement>
+    //            {
+    //                new CraftingElement<MediumhaystackItem>()
+    //            });
+    //        this.Recipes = new List<Recipe> { recipe };
 
-            this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(MediumhaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
+    //        this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
+    //        this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(MediumhaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
 
-            this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Moyen tas de paille"), recipeType: typeof(MediumhaystackRecipe));
-            this.ModsPostInitialize();
+    //        this.ModsPreInitialize();
+    //        this.Initialize(displayText: Localizer.DoStr("Moyen tas de paille"), recipeType: typeof(MediumhaystackRecipe));
+    //        this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
-        }
-        partial void ModsPreInitialize();
-        partial void ModsPostInitialize();
-    }
+    //        CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
+    //    }
+    //    partial void ModsPreInitialize();
+    //    partial void ModsPostInitialize();
+    //}
 }

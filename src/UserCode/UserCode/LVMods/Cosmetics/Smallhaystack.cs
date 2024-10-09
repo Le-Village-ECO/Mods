@@ -16,6 +16,7 @@ namespace Eco.Mods.TechTree
     using Eco.Shared.Serialization;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
@@ -53,37 +54,37 @@ namespace Eco.Mods.TechTree
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
     }
 
-    [RequiresSkill(typeof(FarmingSkill), 1)]
-    [Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Petit tas de paille")]
-    public partial class SmallhaystackRecipe : RecipeFamily
-    {
-        public SmallhaystackRecipe()
-        {
-            var recipe = new Recipe();
-            recipe.Init(
-                name: "Petit tas de paille",  //noloc
-                displayName: Localizer.DoStr("Petit tas de paille"),
-                ingredients: new List<IngredientElement>
-                {
-                    new IngredientElement(typeof(WheatItem), 6, typeof(FarmingSkill)),
-                },
+    //[RequiresSkill(typeof(FarmingSkill), 1)]
+    //[Ecopedia("Decoration", "Décoration pour Ingals", subPageName: "Petit tas de paille")]
+    //public partial class SmallhaystackRecipe : RecipeFamily
+    //{
+    //    public SmallhaystackRecipe()
+    //    {
+    //        var recipe = new Recipe();
+    //        recipe.Init(
+    //            name: "Petit tas de paille",  //noloc
+    //            displayName: Localizer.DoStr("Petit tas de paille"),
+    //            ingredients: new List<IngredientElement>
+    //            {
+    //                new IngredientElement(typeof(WheatItem), 6, typeof(FarmingSkill)),
+    //            },
 
-                items: new List<CraftingElement>
-                {
-                    new CraftingElement<SmallhaystackItem>()
-                });
-            this.Recipes = new List<Recipe> { recipe };
+    //            items: new List<CraftingElement>
+    //            {
+    //                new CraftingElement<SmallhaystackItem>()
+    //            });
+    //        this.Recipes = new List<Recipe> { recipe };
 
-            this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
-            this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SmallhaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
+    //        this.LaborInCalories = CreateLaborInCaloriesValue(180, typeof(FarmingSkill));
+    //        this.CraftMinutes = CreateCraftTimeValue(beneficiary: typeof(SmallhaystackRecipe), start: 2, skillType: typeof(FarmingSkill), typeof(FarmingFocusedSpeedTalent));
 
-            this.ModsPreInitialize();
-            this.Initialize(displayText: Localizer.DoStr("Petit tas de paille"), recipeType: typeof(SmallhaystackRecipe));
-            this.ModsPostInitialize();
+    //        this.ModsPreInitialize();
+    //        this.Initialize(displayText: Localizer.DoStr("Petit tas de paille"), recipeType: typeof(SmallhaystackRecipe));
+    //        this.ModsPostInitialize();
 
-            CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
-        }
-        partial void ModsPreInitialize();
-        partial void ModsPostInitialize();
-    }
+    //        CraftingComponent.AddRecipe(tableType: typeof(FarmersTableObject), recipe: this);
+    //    }
+    //    partial void ModsPreInitialize();
+    //    partial void ModsPostInitialize();
+    //}
 }
