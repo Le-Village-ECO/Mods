@@ -76,7 +76,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smiley", "Smiley\Smiley.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipeTest", "PipeTest\PipeTest.csproj", "{C34E38D0-B908-407F-9236-2024BAF03E4C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LVShared", "UserCode\LVShared.csproj", "{DE2F8611-3D6B-4706-B290-8965FCAC859E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LVShared", "LVShared\LVShared.csproj", "{DE2F8611-3D6B-4706-B290-8965FCAC859E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrapeauxMod", "DrapeauxMod\DrapeauxMod.csproj", "{CE342751-85F1-442E-81BB-EABEB089DA5F}"
 EndProject
