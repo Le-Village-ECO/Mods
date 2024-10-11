@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>TradeAssistant1_FRANCAIS</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\TradeAssistant\v17\DocumentLayout.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\ProjectEvaluation\tradeassistant.metadata.v8.bin" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\ProjectEvaluation\tradeassistant.projects.v8.bin" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\ProjectEvaluation\tradeassistant.strings.v8.bin" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\TradeAssistant\DesignTimeBuild\.dtbcache.v2" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\TradeAssistant\FileContentIndex\d2954d25-8d52-4545-ab90-57f43eba0c24.vsidx" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\.vs\TradeAssistant\v17\.futdcache.v2" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\TradeAssistant.csproj" />
+    <None Include="TradeAssistant-0.1.9.0-FRANCAIS\TradeAssistant.sln" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TradeAssistant-0.1.9.0-FRANCAIS\bin\Debug\net7.0-windows\" />
+    <Folder Include="TradeAssistant-0.1.9.0-FRANCAIS\obj\Debug\net7.0-windows\refint\" />
+    <Folder Include="TradeAssistant-0.1.9.0-FRANCAIS\obj\Debug\net7.0-windows\ref\" />
+  </ItemGroup>
+
+</Project>

@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrapeauxMod", "DrapeauxMod\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageMore", "StorageMore\StorageMore.csproj", "{8DB9E32D-03DC-427E-922B-EEE5C7252737}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssistant1-FRANCAIS", "TradeAssistant1-FRANCAIS\TradeAssistant1-FRANCAIS.csproj", "{AB3C7B0F-6A99-4133-91B8-93332F86ED47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB9E32D-03DC-427E-922B-EEE5C7252737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB3C7B0F-6A99-4133-91B8-93332F86ED47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB3C7B0F-6A99-4133-91B8-93332F86ED47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB3C7B0F-6A99-4133-91B8-93332F86ED47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB3C7B0F-6A99-4133-91B8-93332F86ED47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
