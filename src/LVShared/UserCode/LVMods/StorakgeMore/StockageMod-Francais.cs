@@ -4,58 +4,30 @@
 // Certains paramètres de stockage peuvent être modifiés. Des annotations sont disponibles pour vous indiquer les modifications possibles.
 // Merci de ne pas retirer la section "Registered Mod" du code, car elle permet de recevoir une rémunération de la part de Strange Loop Games lors de son utilisation sur un serveur en ligne.
 
-
-
+using Eco.Core.Controller;
+using Eco.Core.Items;
+using Eco.Core.Plugins.Interfaces;
+using Eco.Gameplay.Components;
+using Eco.Gameplay.Components.Auth;
+using Eco.Gameplay.Components.Storage;
+using Eco.Gameplay.Items;
+using Eco.Gameplay.Items.Recipes;
+using Eco.Gameplay.Objects;
+using Eco.Gameplay.Occupancy;
+using Eco.Gameplay.Skills;
+using Eco.Gameplay.Systems.NewTooltip;
+using Eco.Shared.Items;
+using Eco.Shared.Localization;
+using Eco.Shared.Math;
+using Eco.Shared.Serialization;
+using Eco.Shared.Utils;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Eco.Mods.TechTree
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using Eco.Core.Items;
-    using Eco.Gameplay.Blocks;
-    using Eco.Gameplay.Components;
-    using Eco.Gameplay.Components.Auth;
-    using Eco.Gameplay.DynamicValues;
-    using Eco.Gameplay.Economy;
-    using Eco.Gameplay.Housing;
-    using Eco.Gameplay.Interactions;
-    using Eco.Gameplay.Items;
-    using Eco.Gameplay.Modules;
-    using Eco.Gameplay.Minimap;
-    using Eco.Gameplay.Objects;
-    using Eco.Gameplay.Occupancy;
-    using Eco.Gameplay.Players;
-    using Eco.Gameplay.Property;
-    using Eco.Gameplay.Skills;
-    using Eco.Gameplay.Systems;
-    using Eco.Gameplay.Systems.TextLinks;
-    using Eco.Gameplay.Pipes.LiquidComponents;
-    using Eco.Gameplay.Pipes.Gases;
-    using Eco.Shared;
-    using Eco.Shared.Math;
-    using Eco.Shared.Localization;
-    using Eco.Shared.Serialization;
-    using Eco.Shared.Utils;
-    using Eco.Shared.View;
-    using Eco.Shared.Items;
-    using Eco.Shared.Networking;
-    using Eco.Gameplay.Pipes;
-    using Eco.World.Blocks;
-    using Eco.Gameplay.Housing.PropertyValues;
-    using Eco.Gameplay.Civics.Objects;
-    using Eco.Gameplay.Settlements;
-    using Eco.Gameplay.Systems.NewTooltip;
-    using Eco.Core.Controller;
-    using Eco.Core.Utils;
-    using Eco.Gameplay.Components.Storage;
-    using Eco.Gameplay.Items.Recipes;
-    using Eco.Core.Plugins.Interfaces;
-    using Eco.Mods.Organisms;
-    using Eco.Mods.TechTree;
-    using System.Diagnostics;
-    using System.Linq;
-
     public class StockageMod : IModInit
     {
         public static ModRegistration Register() => new()
@@ -66,7 +38,7 @@ namespace Eco.Mods.TechTree
         };
     }
 
-
+    #region BigBag
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -82,12 +54,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Big Bag");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static BigBagObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
@@ -97,24 +66,15 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(1, 1, 0)),
             new BlockOccupancy(new Vector3i(1, 1, 1)),
             };
-
             AddOccupancy<BigBagObject>(BlockOccupancyList);
-
-
-
-
         }
-
-
-
-
         protected override void Initialize()
         {
             this.ModsPreInitialize();
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 1, 2));
             PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
             this.GetComponent<LinkComponent>().Initialize(12);
-            component.Initialize(8);
+            component.Initialize(4);  //SLB 8 à 4 slots
             component.Storage.AddInvRestriction(new BigBagObject.InventoryMultiply());
             component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
             {
@@ -124,11 +84,8 @@ namespace Eco.Mods.TechTree
             }));
             this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
-
             public override LocString Message
             {
                 get
@@ -136,18 +93,20 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
+                /*
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 4;
+                    //return item.MaxStackSize * 4;  //SLB
+                    return item.MaxStackSize;  //SLB
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
                     return 20;
                 }
-                return 1;
+                return 1;*/ //SLB
+                return 2;
             }
 
             public override bool SurpassStackSize
@@ -158,10 +117,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -215,11 +171,10 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
+    #region Palette
     // PaletteStockage_________________________________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -235,12 +190,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Palette");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static PaletteObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
@@ -261,14 +213,8 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(1, 3, 1)),
             new BlockOccupancy(new Vector3i(1, 4, 0)),
             new BlockOccupancy(new Vector3i(1, 4, 1)),
-
             };
-
             AddOccupancy<PaletteObject>(BlockOccupancyList);
-
-
-
-
         }
 
         protected override void Initialize()
@@ -277,7 +223,7 @@ namespace Eco.Mods.TechTree
             this.GetComponent<StockpileComponent>().Initialize(new Vector3i(2, 4, 2));
             PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
             this.GetComponent<LinkComponent>().Initialize(12);
-            component.Initialize(8);
+            component.Initialize(4);  //SLB 8 à 4
             component.Storage.AddInvRestriction(new PaletteObject.InventoryMultiply());
             component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées à être utilisées dans le stockage.
             {
@@ -297,12 +243,12 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 4;
+                    //return item.MaxStackSize * 4;  //SLB
+                    return item.MaxStackSize;  //SLB
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -319,10 +265,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -335,9 +278,7 @@ namespace Eco.Mods.TechTree
     public partial class PaletteItem : WorldObjectItem<PaletteObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
-
 
     [RequiresSkill(typeof(CarpentrySkill), 1)]
     public partial class PaletteRecipe : RecipeFamily
@@ -371,17 +312,13 @@ namespace Eco.Mods.TechTree
 
             CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
+    #region StockageOutils
     // StockageOutils_________________________________________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -396,8 +333,6 @@ namespace Eco.Mods.TechTree
         public virtual Type RepresentedItemType => typeof(StockageOutilsItem);
         public override LocString DisplayName => Localizer.DoStr("Support à Outils Mural");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
-
-
             protected override void Initialize()
             {
             this.ModsPreInitialize();
@@ -412,7 +347,6 @@ namespace Eco.Mods.TechTree
             }));
             this.ModsPostInitialize();
             }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -445,10 +379,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -461,10 +392,8 @@ namespace Eco.Mods.TechTree
     public partial class StockageOutilsItem : WorldObjectItem<StockageOutilsObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Backward, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
         [Serialized, SyncToView, NewTooltipChildren(CacheAs.Instance, flags: TTFlags.AllowNonControllerTypeForChildren)] public object PersistentData { get; set; }
     }
-
 
     [RequiresSkill(typeof(CarpentrySkill), 1)]
     public partial class StockageOutilsRecipe : RecipeFamily
@@ -481,7 +410,6 @@ namespace Eco.Mods.TechTree
                     new IngredientElement("HewnLog", 5, typeof(CarpentrySkill), typeof(CarpentryLavishResourcesTalent)), // Recette personnalisable : "5" Hewnlog.
                     new IngredientElement(typeof(IronBarItem), 10, typeof(BlacksmithSkill)), // Recette personnalisable : "10" IronBar.
                 },
-
 
                 items: new List<CraftingElement>
                 {
@@ -500,17 +428,13 @@ namespace Eco.Mods.TechTree
 
             CraftingComponent.AddRecipe(tableType: typeof(CarpentryTableObject), recipe: this);
         }
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
+    #region Petite_Simple_Etagere
     // Petite Etagère Simple
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -525,35 +449,25 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Petite Etagère Simple");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static Petite_Simple_EtagereObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
             };
-
             AddOccupancy<Petite_Simple_EtagereObject>(BlockOccupancyList);
-
-
-
-
         }
-
 
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
         this.GetComponent<LinkComponent>().Initialize(12);
-        component.Initialize(8); // Le nombre d'emplacement "8" autorisé dans le stockage.
+        component.Initialize(16); //SLB 8 à 16
         component.Storage.AddInvRestriction(new Petite_Simple_EtagereObject.InventoryMultiply());
         component.Storage.AddInvRestriction(new NotCarriedRestriction());
         this.ModsPostInitialize();
         }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -569,7 +483,7 @@ namespace Eco.Mods.TechTree
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 2;
+                    return item.MaxStackSize * 1;  //SLB 2 à 1
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -577,7 +491,6 @@ namespace Eco.Mods.TechTree
                 }
                 return 1;
             }
-
             public override bool SurpassStackSize
             {
                 get
@@ -586,10 +499,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -602,7 +512,6 @@ namespace Eco.Mods.TechTree
     public partial class Petite_Simple_EtagereItem : WorldObjectItem<Petite_Simple_EtagereObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
     [RequiresSkill(typeof(MechanicsSkill), 1)]
@@ -639,18 +548,13 @@ namespace Eco.Mods.TechTree
 
             CraftingComponent.AddRecipe(tableType: typeof(MachinistTableObject), recipe: this);
         }
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
-
+    #region Petite_Double_Etagere
     // ________________________________  Petite Etagère Double _______________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -665,38 +569,26 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Petite Etagère Double");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static Petite_Double_EtagereObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
             new BlockOccupancy(new Vector3i(1, 0, 0)),
             new BlockOccupancy(new Vector3i(1, 1, 0)),
             };
-
             AddOccupancy<Petite_Double_EtagereObject>(BlockOccupancyList);
-
-
-
-
         }
-
-
-
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
         this.GetComponent<LinkComponent>().Initialize(12);
-        component.Initialize(16); // Le nombre d'emplacement "16" autorisé dans le stockage.
+        component.Initialize(32); //SLB 16 à 32
         component.Storage.AddInvRestriction(new Petite_Double_EtagereObject.InventoryMultiply());
         component.Storage.AddInvRestriction(new NotCarriedRestriction());
         this.ModsPostInitialize();
         }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -707,12 +599,11 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 2;
+                    return item.MaxStackSize * 1;  //SLB 2 à 1
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -720,7 +611,6 @@ namespace Eco.Mods.TechTree
                 }
                 return 1;
             }
-
             public override bool SurpassStackSize
             {
                 get
@@ -729,10 +619,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -745,7 +632,6 @@ namespace Eco.Mods.TechTree
     public partial class Petite_Double_EtagereItem : WorldObjectItem<Petite_Double_EtagereObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
     [RequiresSkill(typeof(MechanicsSkill), 2)]
@@ -787,12 +673,10 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
+    #region Grande_Simple_Etagere
     // ________________________________  Grande Etagère Simple _______________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -807,12 +691,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Grande Etagère Simple");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static Grande_Simple_EtagereObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
@@ -830,28 +711,18 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(1, 3, 0)),
             new BlockOccupancy(new Vector3i(1, 3, 1)),
             };
-
             AddOccupancy<Grande_Simple_EtagereObject>(BlockOccupancyList);
-
-
-
-
         }
-
-
-
-
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
         this.GetComponent<LinkComponent>().Initialize(12);
-        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Initialize(64); //SLB 32 à 64
         component.Storage.AddInvRestriction(new Grande_Simple_EtagereObject.InventoryMultiply());
         component.Storage.AddInvRestriction(new NotCarriedRestriction());
         this.ModsPostInitialize();
         }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -867,7 +738,7 @@ namespace Eco.Mods.TechTree
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 2;
+                    return item.MaxStackSize * 1;  //SLB 2 à 1
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -875,7 +746,6 @@ namespace Eco.Mods.TechTree
                 }
                 return 1;
             }
-
             public override bool SurpassStackSize
             {
                 get
@@ -884,10 +754,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -900,7 +767,6 @@ namespace Eco.Mods.TechTree
     public partial class Grande_Simple_EtagereItem : WorldObjectItem<Grande_Simple_EtagereObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
     [RequiresSkill(typeof(MechanicsSkill), 3)]
@@ -942,12 +808,10 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
+    #region Grande_Double_Etagere
     // ________________________________  Grande Etagère Double _______________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -962,12 +826,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Grande Etagère Double");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static Grande_Double_EtagereObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 1, 0)),
@@ -1001,28 +862,19 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(3, 3, 0)),
             new BlockOccupancy(new Vector3i(3, 3, 1)),
             };
-
             AddOccupancy<Grande_Double_EtagereObject>(BlockOccupancyList);
-
-
-
-
         }
-
-
 
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
         this.GetComponent<LinkComponent>().Initialize(12);
-        component.Initialize(64); // Le nombre d'emplacement "64" autorisé dans le stockage.
+        component.Initialize(128); // SLB 64 à 128
         component.Storage.AddInvRestriction(new Grande_Double_EtagereObject.InventoryMultiply());
         component.Storage.AddInvRestriction(new NotCarriedRestriction());
         this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
             public override LocString Message
@@ -1032,12 +884,11 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 2;
+                    return item.MaxStackSize * 1;  //SLB 2 à 1
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -1054,10 +905,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -1070,7 +918,6 @@ namespace Eco.Mods.TechTree
     public partial class Grande_Double_EtagereItem : WorldObjectItem<Grande_Double_EtagereObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
     [RequiresSkill(typeof(MechanicsSkill), 4)]
@@ -1107,19 +954,13 @@ namespace Eco.Mods.TechTree
 
             CraftingComponent.AddRecipe(tableType: typeof(MachinistTableObject), recipe: this);
         }
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
-
+    #region Shipping_01
     // Shipping_01
-
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -1133,10 +974,7 @@ namespace Eco.Mods.TechTree
         public virtual Type RepresentedItemType => typeof(Shipping_01Item);
         public override LocString DisplayName => Localizer.DoStr("Container Bleu 5m");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
-
-
         static Shipping_01Object()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
@@ -1161,29 +999,18 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(1, 1, 3)),
             new BlockOccupancy(new Vector3i(1, 1, 4)),
             };
-
             AddOccupancy<Shipping_01Object>(BlockOccupancyList);
-
-
-
-
         }
-
-
-
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         this.GetComponent<CustomTextComponent>().Initialize(700);
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Initialize(10); //SLB 32 à 10
         component.Storage.AddInvRestriction(new Shipping_01Object.InventoryMultiply());
-
         this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
             public override LocString Message
@@ -1198,7 +1025,7 @@ namespace Eco.Mods.TechTree
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 3;
+                    return item.MaxStackSize * 2; //SLB 3 à 2
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -1215,10 +1042,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -1271,10 +1095,10 @@ namespace Eco.Mods.TechTree
         partial void ModsPreInitialize();
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
+    #region Shipping_02
     // Shipping_02 ________________________
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -1288,10 +1112,7 @@ namespace Eco.Mods.TechTree
         public virtual Type RepresentedItemType => typeof(Shipping_02Item);
         public override LocString DisplayName => Localizer.DoStr("Container Vert 10m");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
-
-
         static Shipping_02Object()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
@@ -1336,28 +1157,18 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(1, 1, 8)),
             new BlockOccupancy(new Vector3i(1, 1, 9)),
             };
-
             AddOccupancy<Shipping_02Object>(BlockOccupancyList);
-
-
-
-
         }
-
-
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         this.GetComponent<CustomTextComponent>().Initialize(700);
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(64); // Le nombre d'emplacement "64" autorisé dans le stockage.
+        component.Initialize(20); // SLB 64 à 20
         component.Storage.AddInvRestriction(new Shipping_02Object.InventoryMultiply());
-
         this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
             public override LocString Message
@@ -1367,12 +1178,11 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
                 if (item.MaxStackSize > 1)
                 {
-                    return item.MaxStackSize * 3;
+                    return item.MaxStackSize * 2;  //SLB 3 à 2
                 }
                 if (!TagUtils.Tags(item).Any((Tag x) => x.Name == "Tools"))
                 {
@@ -1380,7 +1190,6 @@ namespace Eco.Mods.TechTree
                 }
                 return 1;
             }
-
             public override bool SurpassStackSize
             {
                 get
@@ -1389,10 +1198,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -1445,10 +1251,10 @@ namespace Eco.Mods.TechTree
         partial void ModsPreInitialize();
         partial void ModsPostInitialize();
     }
+    #endregion
 
+    #region Shipping_03
     //Shipping_03____________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -1462,10 +1268,7 @@ namespace Eco.Mods.TechTree
         public virtual Type RepresentedItemType => typeof(Shipping_03Item);
         public override LocString DisplayName => Localizer.DoStr("Container Rouge 12m");
         public override TableTextureMode TableTexture => TableTextureMode.Metal;
-
-
         static Shipping_03Object()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
@@ -1578,27 +1381,18 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(2, 2, 10)),
             new BlockOccupancy(new Vector3i(2, 2, 11)),
             };
-
             AddOccupancy<Shipping_03Object>(BlockOccupancyList);
-
-
-
-
         }
-
-
         protected override void Initialize()
         {
         this.ModsPreInitialize();
         this.GetComponent<CustomTextComponent>().Initialize(700);
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(128); // Le nombre d'emplacement "128" autorisé dans le stockage.
+        component.Initialize(36); //SLB 128 à 36
         component.Storage.AddInvRestriction(new Shipping_03Object.InventoryMultiply());
-
         this.ModsPostInitialize();
         }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -1631,10 +1425,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -1687,10 +1478,10 @@ namespace Eco.Mods.TechTree
         partial void ModsPreInitialize();
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
+    #region PetitStockageWood
     // Petit Stockage Wood
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -1706,12 +1497,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Petit Stockage à bois");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static PetitStockageWoodObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 0, 2)),
@@ -1758,15 +1546,8 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(4, 2, 1)),
             new BlockOccupancy(new Vector3i(4, 2, 2)),
             };
-
             AddOccupancy<PetitStockageWoodObject>(BlockOccupancyList);
-
-
-
-
         }
-
-
 
         protected override void Initialize()
         {
@@ -1774,7 +1555,7 @@ namespace Eco.Mods.TechTree
         this.GetComponent<StockpileComponent>().Initialize(new Vector3i(4, 2, 2));
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(18); // Le nombre d'emplacement "18" autorisé dans le stockage.
+        component.Initialize(8); // SLB 18 à 8
         component.Storage.AddInvRestriction(new PetitStockageWoodObject.InventoryMultiply());
         component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
         {
@@ -1782,8 +1563,6 @@ namespace Eco.Mods.TechTree
         }));
         this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
             public override LocString Message
@@ -1796,7 +1575,7 @@ namespace Eco.Mods.TechTree
 
             public override int MaxAccepted(Item item, int currentQuantity)
             {
-                if (item.MaxStackSize > 1)
+                /*if (item.MaxStackSize > 1)
                 {
                     return item.MaxStackSize * 2;
                 }
@@ -1804,7 +1583,8 @@ namespace Eco.Mods.TechTree
                 {
                     return 20;
                 }
-                return 1;
+                return 1;*/ //SLB
+                return 8;
             }
 
             public override bool SurpassStackSize
@@ -1815,15 +1595,9 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
-
-
-
 
     [Serialized]
     [LocDisplayName("Petit Stockage à bois")]
@@ -1834,7 +1608,6 @@ namespace Eco.Mods.TechTree
     public partial class PetitStockageWoodItem : WorldObjectItem<PetitStockageWoodObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
 
@@ -1878,10 +1651,10 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
+    #region MoyenStockageWood
     // MoyenStockage_____________________________________________________________________
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -1897,11 +1670,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Moyen stockage à bois");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static MoyenStockageWoodObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 0, 2)),
@@ -1987,12 +1758,7 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(6, 3, 1)),
             new BlockOccupancy(new Vector3i(6, 3, 2)),
             };
-
             AddOccupancy<MoyenStockageWoodObject>(BlockOccupancyList);
-
-
-
-
         }
 
         protected override void Initialize()
@@ -2001,7 +1767,7 @@ namespace Eco.Mods.TechTree
         this.GetComponent<StockpileComponent>().Initialize(new Vector3i(6, 3, 2));
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(24); // Le nombre d'emplacement "24" autorisé dans le stockage.
+        component.Initialize(12); //SLB 24 à 12
         component.Storage.AddInvRestriction(new MoyenStockageWoodObject.InventoryMultiply());
         component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
         {
@@ -2009,7 +1775,6 @@ namespace Eco.Mods.TechTree
         }));
         this.ModsPostInitialize();
         }
-
 
         public class InventoryMultiply : InventoryRestriction
         {
@@ -2023,7 +1788,7 @@ namespace Eco.Mods.TechTree
 
             public override int MaxAccepted(Item item, int currentQuantity)
             {
-                if (item.MaxStackSize > 1)
+                /*if (item.MaxStackSize > 1)
                 {
                     return item.MaxStackSize * 3;
                 }
@@ -2031,9 +1796,9 @@ namespace Eco.Mods.TechTree
                 {
                     return 20;
                 }
-                return 1;
+                return 1;*/ //SLB
+                return 12;
             }
-
             public override bool SurpassStackSize
             {
                 get
@@ -2042,14 +1807,9 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
-
-
 
     [Serialized]
     [LocDisplayName("Moyen stockage à bois")]
@@ -2060,7 +1820,6 @@ namespace Eco.Mods.TechTree
     public partial class MoyenStockageWoodItem : WorldObjectItem<MoyenStockageWoodObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
 
@@ -2104,11 +1863,10 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
+    #region GrandStockageWood
     // GrandStockage________________________________________________________________
-
-
     [Serialized]
     [RequireComponent(typeof(PropertyAuthComponent))]
     [RequireComponent(typeof(LinkComponent))]
@@ -2124,11 +1882,9 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Grand Stockage à bois");
         public override TableTextureMode TableTexture => TableTextureMode.Wood;
         static GrandStockageWoodObject()
-
         {
             var BlockOccupancyList = new List<BlockOccupancy>
             {
-
             new BlockOccupancy(new Vector3i(0, 0, 0)),
             new BlockOccupancy(new Vector3i(0, 0, 1)),
             new BlockOccupancy(new Vector3i(0, 0, 2)),
@@ -2255,12 +2011,7 @@ namespace Eco.Mods.TechTree
             new BlockOccupancy(new Vector3i(4, 4, 3)),
             new BlockOccupancy(new Vector3i(4, 4, 4)),
             };
-
             AddOccupancy<GrandStockageWoodObject>(BlockOccupancyList);
-
-
-
-
         }
 
         protected override void Initialize()
@@ -2269,7 +2020,7 @@ namespace Eco.Mods.TechTree
         this.GetComponent<StockpileComponent>().Initialize(new Vector3i(3, 3, 3));
         this.GetComponent<LinkComponent>().Initialize(12); // Maximum connection distance with nearby storage units: 12 meters.
         PublicStorageComponent component = base.GetComponent<PublicStorageComponent>(null);
-        component.Initialize(32); // Le nombre d'emplacement "32" autorisé dans le stockage.
+        component.Initialize(9); //SLB 32 à 9
         component.Storage.AddInvRestriction(new GrandStockageWoodObject.InventoryMultiply());
         component.Inventory.AddInvRestriction(new TagRestriction(new string[] // Les tags autorisées "Wood" à être utilisées dans le stockage.
         {
@@ -2277,8 +2028,6 @@ namespace Eco.Mods.TechTree
         }));
         this.ModsPostInitialize();
         }
-
-
         public class InventoryMultiply : InventoryRestriction
         {
             public override LocString Message
@@ -2288,10 +2037,9 @@ namespace Eco.Mods.TechTree
                     return Localizer.DoStr("Inventory Full");
                 }
             }
-
             public override int MaxAccepted(Item item, int currentQuantity)
             {
-                if (item.MaxStackSize > 1)
+                /*if (item.MaxStackSize > 1)
                 {
                     return item.MaxStackSize * 4;
                 }
@@ -2299,7 +2047,8 @@ namespace Eco.Mods.TechTree
                 {
                     return 20;
                 }
-                return 1;
+                return 1;*/  //SLB
+                return 12;
             }
 
             public override bool SurpassStackSize
@@ -2310,10 +2059,7 @@ namespace Eco.Mods.TechTree
                 }
             }
         }
-
-
         partial void ModsPreInitialize();
-
         partial void ModsPostInitialize();
     }
 
@@ -2326,7 +2072,6 @@ namespace Eco.Mods.TechTree
     public partial class GrandStockageWoodItem : WorldObjectItem<GrandStockageWoodObject>
     {
         protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
-
     }
 
 
@@ -2370,12 +2115,9 @@ namespace Eco.Mods.TechTree
 
         partial void ModsPostInitialize();
     }
+    #endregion
 
-
-
-
-
-
+    #region Tags
     // Icon Tag CrushedRock
     [Serialized]
         [Category("Blocks")]
@@ -2383,12 +2125,9 @@ namespace Eco.Mods.TechTree
         public partial class CrushedRockItem : Item
         {
             public override LocString DisplayName => Localizer.DoStr("CrushedRock");
-
         }
 
-
     // Icon Tag Silica
-
     [Serialized]
     [LocDisplayName("Silica")]
     public partial class SilicaItem : Item
@@ -2396,9 +2135,7 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Silica");
     }
 
-
     // Icon Tag Excavatable
-
     [Serialized]
     [Category("Blocks")]
     [LocDisplayName("Excavatable")]
@@ -2407,9 +2144,7 @@ namespace Eco.Mods.TechTree
         public override LocString DisplayName => Localizer.DoStr("Excavatable");
     }
 
-
     // Icon Tag Excavatable
-
     [Serialized]
     [Category("Blocks")]
     [LocDisplayName("Constructable")]
@@ -2417,7 +2152,5 @@ namespace Eco.Mods.TechTree
     {
         public override LocString DisplayName => Localizer.DoStr("Constructable");
     }
-
-
-
+    #endregion
 }
