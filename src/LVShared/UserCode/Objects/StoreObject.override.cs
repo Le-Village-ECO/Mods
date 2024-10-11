@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Strange Loop Games. All rights reserved.
 // See LICENSE file in the project root for full license information.
-// Le Village - Ajout de l'extension StoreExtComponent
+// Le Village - Ajout de l'extension StoreExtComponent - MISE EN COMMENTAIRE EN ATTENTE SOLUTION POUR INTEGRER TRADE ASSISTANT
 
 namespace Eco.Mods.TechTree
 {
@@ -20,7 +20,7 @@ namespace Eco.Mods.TechTree
     //Attributes must remain in this order: (SharedLinkComponent, StoreComponent) to avoid double Update calls for notification messages
     [RequireComponent(typeof(SharedLinkComponent))]
     [RequireComponent(typeof(StoreComponent))]
-    [RequireComponent(typeof(StoreExtComponent))]
+    //[RequireComponent(typeof(StoreExtComponent))]  //Le Village
     public partial class StoreObject : WorldObject, INullCurrencyAllowed
     {
         protected override void OnCreatePostInitialize()
