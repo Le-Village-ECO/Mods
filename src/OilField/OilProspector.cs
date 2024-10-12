@@ -31,12 +31,11 @@ using Eco.Gameplay.Components;
 using Eco.Gameplay.Items.Recipes;
 using System.Runtime.CompilerServices;
 using Eco.Gameplay.Skills;
-using Village.Eco.Mods.Core;
 using Eco.Gameplay.Systems.Messaging.Notifications;
+using System.Reflection.Emit;
 
 namespace Village.Eco.Mods.OilField
 {
-
     // Definition de l'outil
     [Serialized]
     [LocDisplayName("Oil Prospector")]
@@ -45,27 +44,19 @@ namespace Village.Eco.Mods.OilField
     [Tag("Tool")]
     [Ecopedia("Items", "Tools", createAsSubPage: true)]
     [Weight(1000)]
-    [RequiresTalent(typeof(LoggingToolEfficiencyTalent))]
     public class OilProspectorItem : ToolItem, IInteractor
     {
-        public override float DurabilityRate { get { return 0; } }
+        private static SkillModifiedValue caloriesBurn = CreateCalorieValue(20, typeof(GatheringSkill), typeof(ShovelItem));
+        private static IDynamicValue skilledRepairCost = new ConstantValue(1);
+        private static IDynamicValue tier = new ConstantValue(0);
 
-        private static IDynamicValue skilledRepairCost = new ConstantValue(4);
-        public override IDynamicValue SkilledRepairCost { get { return skilledRepairCost; } }
+        public override IDynamicValue CaloriesBurn => caloriesBurn;
+        public override IDynamicValue Tier => tier;
+        public override IDynamicValue SkilledRepairCost => skilledRepairCost;
 
         [Interaction(InteractionTrigger.LeftClick,"Prospecter le sol")]
         public bool Prospect(Player player, InteractionTriggerInfo triggerInfo, InteractionTarget target)
         {
-            // Le village - Controle du Tier de l'objet
-            var requiredTier = this.Tier.GetCurrentValue(player?.User);
-            var requiredTalent = player?.User.Talentset.HasTalent(typeof(LoggingToolEfficiencyTalent));
-            if (requiredTier > 1 && requiredTalent is false)
-            {
-                NotificationManager.ServerMessageToAllLoc($"Objet Tier = {requiredTier} / Talent = {requiredTalent}");
-                return false;
-            }
-
-
             if (target.IsBlock && base.Durability > 0f)
             {
                 var title = new LocStringBuilder();
@@ -115,25 +106,31 @@ namespace Village.Eco.Mods.OilField
 
         private static float GetOilAmount(Vector2i pos)
         {
-            WorldLayer layer = Singleton<WorldLayerManager>.Obj.GetLayer("Oilfield");
-            float value = 0f;
-            float total = 0f;
-            if (PumpJackObject.Radius > 0f)
-            {
-                layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, delegate (Vector2i x, float val)
-                {
-                    value += val;
-                    //float total = total;  //???
-                    total += 1f;
-                    return total;
-                });
-            }
-            else
-            {
-                value = layer[layer.WorldPosToLayerPos(pos)];
-                total = 1f;
-            }
-            return value / total;
+            //WorldLayer layer = Singleton<WorldLayerManager>.Obj.GetLayer("Oilfield");
+            //float value = 0f;
+            //float total = 0f;
+            //if (PumpJackObject.Radius > 0f)
+            //{
+            //    layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, delegate (Vector2i x, float val)
+            //    {
+            //        value += val;
+            //        //float total = total;  //???
+            //        total += 1f;
+            //        return total;
+            //    });
+            //}
+            //else
+            //{
+            //    value = layer[layer.WorldPosToLayerPos(pos)];
+            //    total = 1f;
+            //}
+            //return value / total;
+
+            //Inspiration de OilToolTip dans PûmpJackObject.cs
+            var layer = WorldLayerManager.Obj.GetLayer(LayerNames.Oilfield);
+            float value = 0.0f;
+            layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, (x, val) => value += val);
+            return value;
         }
     }
 
