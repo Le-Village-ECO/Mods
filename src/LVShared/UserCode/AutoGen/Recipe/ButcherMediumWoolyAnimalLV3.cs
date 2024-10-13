@@ -50,7 +50,7 @@ namespace Eco.Mods.TechTree
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<RawMeatItem>(12),
-                    new CraftingElement<LeatherHideItem>(3),
+                    new CraftingElement<FurPeltItem>(3),
                     
                 });
             this.Recipes = new List<Recipe> { recipe };
