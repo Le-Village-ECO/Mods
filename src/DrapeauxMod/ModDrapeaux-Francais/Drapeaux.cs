@@ -1,5 +1,5 @@
 ﻿// MOD créé par Plex : Modèle 3D et Code.
-// Dernière mise à jour du mod : 30/09/24
+// Dernière mise à jour du mod : 10/10/24
 
 // Merci de ne pas retirer la section "Registered Mod" du code, car elle permet de recevoir une rémunération de la part de Strange Loop Games lors de son utilisation sur un serveur en ligne.
 
@@ -2150,6 +2150,263 @@ namespace Eco.Mods.TechTree
                 items: new List<CraftingElement>
                 {
                     new CraftingElement<Drapeau_AustralieItem>()
+                });
+
+            this.ModsPostInitialize();
+            CraftingComponent.AddTagProduct(typeof(TailoringTableObject), typeof(DrapeauRecipe), this);
+        }
+
+        partial void ModsPostInitialize();
+    }
+
+
+
+
+    // ______________________________________________________ Drapeau_Norvege ______________________________________________________ \\
+
+    [Serialized]
+    [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(OccupancyRequirementComponent))]
+    [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(RoomRequirementsComponent))]
+    [RequireComponent(typeof(PaintableComponent))]
+    [RequireRoomVolume(30)]
+    [Tag("Usable")]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Norvège")]
+    public partial class Drapeau_NorvegeObject : WorldObject, IRepresentsItem
+    {
+        public virtual Type RepresentedItemType => typeof(Drapeau_NorvegeItem);
+        public override LocString DisplayName => Localizer.DoStr("Drapeau Norvège");
+        public override TableTextureMode TableTexture => TableTextureMode.Wood;
+
+
+        protected override void Initialize()
+        {
+            this.ModsPreInitialize();
+            this.GetComponent<HousingComponent>().HomeValue = Drapeau_NorvegeItem.homeValue;
+            this.ModsPostInitialize();
+        }
+
+        partial void ModsPreInitialize();
+        partial void ModsPostInitialize();
+    }
+
+    [Serialized]
+    [LocDisplayName("Drapeau Norvège")]
+    [LocDescription("Ajoutez une touche viking à votre déco avec ce drapeau norvégien sur mât. Parfait pour une ambiance nordique... sans avoir à sortir le drakkar !")]
+    [Ecopedia("Housing Objects", "Drapeau", createAsSubPage: true)]
+    [Tag("Housing")]
+    [Weight(5000)]
+    [Tag(nameof(SurfaceTags.CanBeOnRug))]
+    public partial class Drapeau_NorvegeItem : WorldObjectItem<Drapeau_NorvegeObject>
+    {
+        protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(Drapeau_NorvegeObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Outdoor"),
+            BaseValue = 6,
+            TypeForRoomLimit = Localizer.DoStr("Statue"),
+            DiminishingReturnMultiplier = 0.3f
+
+        };
+
+    }
+
+    [RequiresSkill(typeof(TailoringSkill), 1)]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Norvège")]
+    public partial class Drapeau_NorvegeRecipe : Recipe
+    {
+        public Drapeau_NorvegeRecipe()
+        {
+            this.Init(
+                name: "Drapeau Norvège",
+                displayName: Localizer.DoStr("Drapeau Norvège"),
+
+
+                ingredients: new List<IngredientElement>
+                {
+                    new IngredientElement(typeof(IronBarItem), 3, typeof(TailoringSkill)),
+                    new IngredientElement(typeof(LinenFabricItem), 10, typeof(TailoringSkill)),
+                },
+
+
+                items: new List<CraftingElement>
+                {
+                    new CraftingElement<Drapeau_NorvegeItem>()
+                });
+
+            this.ModsPostInitialize();
+            CraftingComponent.AddTagProduct(typeof(TailoringTableObject), typeof(DrapeauRecipe), this);
+        }
+
+        partial void ModsPostInitialize();
+    }
+
+
+
+
+    // ______________________________________________________ Drapeau_Suede ______________________________________________________ \\
+
+    [Serialized]
+    [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(OccupancyRequirementComponent))]
+    [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(RoomRequirementsComponent))]
+    [RequireComponent(typeof(PaintableComponent))]
+    [RequireRoomVolume(30)]
+    [Tag("Usable")]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Suède")]
+    public partial class Drapeau_SuedeObject : WorldObject, IRepresentsItem
+    {
+        public virtual Type RepresentedItemType => typeof(Drapeau_SuedeItem);
+        public override LocString DisplayName => Localizer.DoStr("Drapeau Suède");
+        public override TableTextureMode TableTexture => TableTextureMode.Wood;
+
+
+        protected override void Initialize()
+        {
+            this.ModsPreInitialize();
+            this.GetComponent<HousingComponent>().HomeValue = Drapeau_SuedeItem.homeValue;
+            this.ModsPostInitialize();
+        }
+
+        partial void ModsPreInitialize();
+        partial void ModsPostInitialize();
+    }
+
+    [Serialized]
+    [LocDisplayName("Drapeau Suède")]
+    [LocDescription("Apportez un brin de fraîcheur suédoise à votre déco avec ce drapeau sur mât. Parfait pour une ambiance scandinave... sans avoir à monter un meuble en kit !")]
+    [Ecopedia("Housing Objects", "Drapeau", createAsSubPage: true)]
+    [Tag("Housing")]
+    [Weight(5000)]
+    [Tag(nameof(SurfaceTags.CanBeOnRug))]
+    public partial class Drapeau_SuedeItem : WorldObjectItem<Drapeau_SuedeObject>
+    {
+        protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(Drapeau_SuedeObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Outdoor"),
+            BaseValue = 6,
+            TypeForRoomLimit = Localizer.DoStr("Statue"),
+            DiminishingReturnMultiplier = 0.3f
+
+        };
+
+    }
+
+    [RequiresSkill(typeof(TailoringSkill), 1)]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Suède")]
+    public partial class Drapeau_SuedeRecipe : Recipe
+    {
+        public Drapeau_SuedeRecipe()
+        {
+            this.Init(
+                name: "Drapeau Suède",
+                displayName: Localizer.DoStr("Drapeau Suède"),
+
+
+                ingredients: new List<IngredientElement>
+                {
+                    new IngredientElement(typeof(IronBarItem), 3, typeof(TailoringSkill)),
+                    new IngredientElement(typeof(LinenFabricItem), 10, typeof(TailoringSkill)),
+                },
+
+
+                items: new List<CraftingElement>
+                {
+                    new CraftingElement<Drapeau_SuedeItem>()
+                });
+
+            this.ModsPostInitialize();
+            CraftingComponent.AddTagProduct(typeof(TailoringTableObject), typeof(DrapeauRecipe), this);
+        }
+
+        partial void ModsPostInitialize();
+    }
+
+
+
+    // ______________________________________________________ Drapeau_Estonie ______________________________________________________ \\
+
+    [Serialized]
+    [RequireComponent(typeof(PropertyAuthComponent))]
+    [RequireComponent(typeof(HousingComponent))]
+    [RequireComponent(typeof(OccupancyRequirementComponent))]
+    [RequireComponent(typeof(ForSaleComponent))]
+    [RequireComponent(typeof(RoomRequirementsComponent))]
+    [RequireComponent(typeof(PaintableComponent))]
+    [RequireRoomVolume(30)]
+    [Tag("Usable")]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Estonie")]
+    public partial class Drapeau_EstonieObject : WorldObject, IRepresentsItem
+    {
+        public virtual Type RepresentedItemType => typeof(Drapeau_EstonieItem);
+        public override LocString DisplayName => Localizer.DoStr("Drapeau Estonie");
+        public override TableTextureMode TableTexture => TableTextureMode.Wood;
+
+
+        protected override void Initialize()
+        {
+            this.ModsPreInitialize();
+            this.GetComponent<HousingComponent>().HomeValue = Drapeau_EstonieItem.homeValue;
+            this.ModsPostInitialize();
+        }
+
+        partial void ModsPreInitialize();
+        partial void ModsPostInitialize();
+    }
+
+    [Serialized]
+    [LocDisplayName("Drapeau Estonie")]
+    [LocDescription("Ajoutez une touche baltique à votre déco avec ce drapeau estonien sur mât. Parfait pour une ambiance high-tech... avec un soupçon de nature sauvage !")]
+    [Ecopedia("Housing Objects", "Drapeau", createAsSubPage: true)]
+    [Tag("Housing")]
+    [Weight(5000)]
+    [Tag(nameof(SurfaceTags.CanBeOnRug))]
+    public partial class Drapeau_EstonieItem : WorldObjectItem<Drapeau_EstonieObject>
+    {
+        protected override OccupancyContext GetOccupancyContext => new SideAttachedContext(0 | DirectionAxisFlags.Down, WorldObject.GetOccupancyInfo(this.WorldObjectType));
+        public override HomeFurnishingValue HomeValue => homeValue;
+        public static readonly HomeFurnishingValue homeValue = new HomeFurnishingValue()
+        {
+            ObjectName = typeof(Drapeau_EstonieObject).UILink(),
+            Category = HousingConfig.GetRoomCategory("Outdoor"),
+            BaseValue = 6,
+            TypeForRoomLimit = Localizer.DoStr("Statue"),
+            DiminishingReturnMultiplier = 0.3f
+
+        };
+
+    }
+
+    [RequiresSkill(typeof(TailoringSkill), 1)]
+    [Ecopedia("Housing Objects", "Drapeau", subPageName: "Drapeau Estonie")]
+    public partial class Drapeau_EstonieRecipe : Recipe
+    {
+        public Drapeau_EstonieRecipe()
+        {
+            this.Init(
+                name: "Drapeau Estonie",
+                displayName: Localizer.DoStr("Drapeau Estonie"),
+
+
+                ingredients: new List<IngredientElement>
+                {
+                    new IngredientElement(typeof(IronBarItem), 3, typeof(TailoringSkill)),
+                    new IngredientElement(typeof(LinenFabricItem), 10, typeof(TailoringSkill)),
+                },
+
+
+                items: new List<CraftingElement>
+                {
+                    new CraftingElement<Drapeau_EstonieItem>()
                 });
 
             this.ModsPostInitialize();
