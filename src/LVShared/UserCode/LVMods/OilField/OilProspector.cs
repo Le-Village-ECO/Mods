@@ -1,38 +1,26 @@
 ﻿//Le Village - Détecteur de pétrole
-//TODO - Revoir et comprendre GetOilAmount
+//TODO - Comprendre pourquoi les valeurs du pétrole disponible et du temps de fabrication diffèrent légèrement entre le détecteur et le chevalet de pompage
 
-using Eco.Core.Plugins.Interfaces;
-using Eco.Core.Utils;
-using Eco.Shared.Utils;
-using Eco.Simulation.WorldLayers.Layers;
-using Eco.Simulation.WorldLayers;
-using Eco.WorldGenerator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Eco.Core.Items;
+using Eco.Gameplay.Components;
+using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Interactions.Interactors;
 using Eco.Gameplay.Items;
-using Eco.Gameplay.DynamicValues;
-using Eco.Shared.SharedTypes;
-using Eco.Core.Items;
-using Eco.Shared.Localization;
-using Eco.Shared.Serialization;
-using System.ComponentModel;
-using Eco.Gameplay.Plants;
-using Eco.Gameplay.Players;
-using Eco.Mods.Organisms;
-using Eco.Shared.Math;
-using Eco.Simulation;
-using Eco.Shared.Voxel;
-using Eco.Mods.TechTree;
-using Eco.Gameplay.Components;
 using Eco.Gameplay.Items.Recipes;
-using System.Runtime.CompilerServices;
+using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
-using Eco.Gameplay.Systems.Messaging.Notifications;
-using System.Reflection.Emit;
+using Eco.Mods.TechTree;
+using Eco.Shared.Localization;
+using Eco.Shared.Math;
+using Eco.Shared.Serialization;
+using Eco.Shared.SharedTypes;
+using Eco.Shared.Utils;
+using Eco.Simulation.WorldLayers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Village.Eco.Mods.OilField
 {
@@ -106,27 +94,7 @@ namespace Village.Eco.Mods.OilField
 
         private static float GetOilAmount(Vector2i pos)
         {
-            //WorldLayer layer = Singleton<WorldLayerManager>.Obj.GetLayer("Oilfield");
-            //float value = 0f;
-            //float total = 0f;
-            //if (PumpJackObject.Radius > 0f)
-            //{
-            //    layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, delegate (Vector2i x, float val)
-            //    {
-            //        value += val;
-            //        //float total = total;  //???
-            //        total += 1f;
-            //        return total;
-            //    });
-            //}
-            //else
-            //{
-            //    value = layer[layer.WorldPosToLayerPos(pos)];
-            //    total = 1f;
-            //}
-            //return value / total;
-
-            //Inspiration de OilToolTip dans PûmpJackObject.cs
+            //Inspiration de OilToolTip dans PumpJackObject.cs
             var layer = WorldLayerManager.Obj.GetLayer(LayerNames.Oilfield);
             float value = 0.0f;
             layer.ForRadius(layer.WorldPosToLayerPos(pos), PumpJackObject.Radius, (x, val) => value += val);
