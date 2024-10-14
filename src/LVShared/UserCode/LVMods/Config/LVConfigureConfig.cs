@@ -19,15 +19,17 @@ namespace Village.Eco.Mods.Core
         [LocDescription("Si vrai, récupère le temps raté après une connexion tardive")]
         [SyncToView] public bool ExhaustInitialBoost { get; set; } = true;
 
+        #region OilField
         [Category("Oil Field")]
         [LocDisplayName("Cacher champs pétroliers")]
         [LocDescription("Si vrai, les champs pétroliers seront cachés")]
-        [SyncToView] public bool HiddenOilField { get; set; } = true;
+        [SyncToView] public bool HiddenOilField { get; set; } = false;
         
         [Category("Oil Field")]
         [LocDisplayName("Dévoiler champs pétroliers")]
         [LocDescription("Si vrai, les champs pétroliers seront révélés en découvrant la spécialité")]
         [SyncToView] public bool RevealOilField { get; set; } = true;
+        #endregion
 
         [Category("Admin")]
         [LocDisplayName("Permettre aux joueurs de voler (Fly)")]
@@ -43,14 +45,14 @@ namespace Village.Eco.Mods.Core
         [Category("Monnaie")]
         [LocDisplayName("Montant monnaie perso")]
         [LocDescription("Montant de la monnaie personnelle dans le compte personnel du joueur")]
-        [SyncToView] public float MonnaiePerso { get; set; } = 1000f;
+        [SyncToView] public float MonnaiePerso { get; set; } = 100f;
         #endregion
 
         #region Nutrition
         [Category("Nutrition")]
         [LocDisplayName("Paliers de bonus de nourriture")]
         [LocDescription("Palier pour chaque étoile, au delà, pour les autres étoiles la valeur du palier ne change plus")]
-        [SyncToView] public int[] DietTiers { get; set; } = new int[] { 0, 20, 32, 44 };
+        [SyncToView] public int[] DietTiers { get; set; } = new int[] { 10, 20, 30, 40, 50, 60 };
         
         [Category("Nutrition")]
         [LocDisplayName("Écart avec le palier")]
