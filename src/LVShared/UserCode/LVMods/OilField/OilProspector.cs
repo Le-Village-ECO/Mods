@@ -102,7 +102,7 @@ namespace Village.Eco.Mods.OilField
         }
     }
 
-    [RequiresSkill(typeof(GatheringSkill), 7)]
+    [RequiresSkill(typeof(GatheringSkill), 5)]
     public partial class OilProspectorRecipe : RecipeFamily 
     {
         public OilProspectorRecipe()
