@@ -41,7 +41,7 @@ namespace Eco.Mods.TechTree
     [Serialized]
     [LocDisplayName("Loggers Luck: Logging")]
     //[LocDescription("[WIP - No functionality yet]Every hit has a chance of destroying tree stumps and splitting trunks immediately.")]  //Le Village
-    [LocDescription("[Le Village] L'abattage d'un arbre élimine la souche et récupère les copeaux de celle-ci.")]  //Le Village
+    [LocDescription("[Le Village] Souches : Élimination automatique lors d'un abattage et récupèration dans l'inventaire de leurs copeaux de bois.")]  //Le Village
     public partial class LoggingLoggersLuckTalentGroup : TalentGroup
     {
         public LoggingLoggersLuckTalentGroup()

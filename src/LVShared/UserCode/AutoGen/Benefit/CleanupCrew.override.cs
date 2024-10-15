@@ -41,7 +41,7 @@ namespace Eco.Mods.TechTree
     [Serialized]
     [LocDisplayName("Cleanup Crew: Logging")]
     //[LocDescription("[WIP - No functionality yet] Allows to pick up debris by hand that costs no calories.")]  //Le Village
-    [LocDescription("[Le village] Copeaux de bois : Récupération automatique lors d'un abattage & aucune dépense de calorie pour le ramassage.")]  //Le Village
+    [LocDescription("[Le village] Débris : Récupération automatique lors d'un abattage & aucune dépense de calorie pour leur ramassage.")]  //Le Village
     public partial class LoggingCleanupCrewTalentGroup : TalentGroup
     {
         public LoggingCleanupCrewTalentGroup()
