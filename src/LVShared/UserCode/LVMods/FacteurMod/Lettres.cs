@@ -21,6 +21,7 @@ namespace Eco.Mods.TechTree
     [LocDescription("Un petit bout de papier aux possibilitées infinies. Clic-droit pour écrire.")]
     [Ecopedia("Crafted Objects", "Signs", createAsSubPage: true)]
     [Weight(1000)]
+    [MaxStackSize(1)]
     public partial class LettreItem : RepairableItem
     {
         // Implémentation du RepairableItem
