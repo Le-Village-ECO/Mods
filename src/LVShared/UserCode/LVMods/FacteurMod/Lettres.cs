@@ -53,7 +53,7 @@ namespace Eco.Mods.TechTree
 
             //Mise à jour de la durabilité
             var item = itemStack.Item as RepairableItem;
-            item.Durability -= 10f;  //Réduction en %
+            item.Durability = item.Durability > 10f ? item.Durability - 10f : 0f;  //Réduction en %
             if (item.DurabilityPercent > 0f && item.DurabilityPercent <= 0.5f)
                 player.InfoBoxLocStr($"La {itemStack.Item.DisplayName} commence à s'abimée ({item.DurabilityPercent * 100}%).");
         }
