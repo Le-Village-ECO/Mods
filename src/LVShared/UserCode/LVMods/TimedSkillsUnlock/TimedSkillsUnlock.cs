@@ -2,6 +2,7 @@
 // Le joueur ne peut pas apprendre la spécialité (comprendre lire le parchemin) avant le jour X du serveur
 // Pour chaque spécialité, il faut changer la valeur en jour dans le dictionnaire
 
+using Eco.Core.Plugins.Interfaces;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Shared.Utils;
@@ -11,6 +12,16 @@ using System.Collections.Generic;
 
 namespace Eco.Mods.TechTree
 {
+    public class MyMod : IModInit
+    {
+        public static ModRegistration Register() => new()
+        {
+            ModName = "TimedSkillsUnlock",
+            ModDescription = "This mod allows associating a server day with the skill scroll that players can read.",
+            ModDisplayName = "Timed Skills Unlock",
+        };
+    }
+
     public static class TSUSettings
     {
         public static readonly Dictionary<Type, int> Planning = new Dictionary<Type, int>
