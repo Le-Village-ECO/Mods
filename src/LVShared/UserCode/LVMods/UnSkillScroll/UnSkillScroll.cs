@@ -1,6 +1,6 @@
 ﻿// Le Village
 // Ce parchemin permet, une fois utilisé, d'oublier une spécialité à condition de :
-// 1- Ne plus avoir d'ordre de fabrication en cours dessus
+// 1- Ne plus être contributeur d'un ordre de fabrication avec cette spécialité
 // 2- Etre au niveau maximum de la spécialité (généralement 7)
 // 3- Ne pas avoir déjà oublié une spécialité par un parchemin au cours des 2 derniers jours
 
@@ -25,6 +25,7 @@ using Eco.Shared.Utils;
 using Eco.Simulation.Time;
 using Village.Eco.Mods.Core;
 using static Eco.Shared.Utils.TimeFormatter;
+using Eco.Core.Systems;
 
 namespace Village.Eco.Mods.UnSkillScroll
 {
@@ -69,10 +70,10 @@ namespace Village.Eco.Mods.UnSkillScroll
             }
 
             //Recuperation des ordres de travails contenant la specialite
-            var hasWorkOrders = player.User.GetWatchedWorkOrders.Any(workOrder =>
-                workOrder.Recipe!.RequiredSkills.Any(a => a.SkillType == SkillType));
-            //Il ne faut aucun ordre en cours, quelque soit leur statut, demandant la specialite
-            if (hasWorkOrders)
+            //var hasWorkOrders = player.User.GetWatchedWorkOrders.Any(workOrder => workOrder.Recipe!.RequiredSkills.Any(a => a.SkillType == SkillType));
+            var outstandingWorkOrders = Registrars.All<WorkOrder>().Where(x => (x.Recipe.RequiredSkills?.Any(x => x.SkillType == SkillType) ?? false) && x.ContributedLabor(player.User));
+            //On vérifie si le joueur a participé dans un ordre de fabrication avec cette spécialité
+            if (outstandingWorkOrders.Any())
             {
                 message = Localizer.Do($"Impossible d'oublier {skill.UILink()} tant que des fabrications l'utilisant sont en cours.");
                 player.OkBoxLocStr(message);
