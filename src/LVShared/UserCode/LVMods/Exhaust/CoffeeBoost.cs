@@ -11,6 +11,8 @@ using Eco.Shared.Serialization;
 using System.Collections.Generic;
 using Eco.Mods.TechTree;
 using System.ComponentModel;
+using Eco.Gameplay.Players;
+using Eco.Shared.Time;
 
 namespace Village.Eco.Mods.ExhaustionMod
 {
@@ -23,6 +25,10 @@ namespace Village.Eco.Mods.ExhaustionMod
     [Ecopedia("Food", "Boost", createAsSubPage: true)]  //Page ECOpedia
     public partial class LVBCoffeeItem : ExhaustionBoost
     {
+        public override float Calories => 100;
+        public override Nutrients Nutrition => new Nutrients() { Carbs = 10, Fat = 10, Protein = 10, Vitamins = 10 };
+        protected override float BaseShelfLife => (float)TimeUtil.HoursToSeconds(24);
+
         public override float BoostTime => 0.25f; //15min de boost
         public override bool CheckDate => true; //Vérifie consommation 1 fois par jour
     }
